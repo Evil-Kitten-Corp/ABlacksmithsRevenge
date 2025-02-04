@@ -20,8 +20,8 @@ namespace Placement
             _gridManager = FindObjectOfType<GridManager>();
             
             _previewTurret = Instantiate(turret.prefab);
-            _previewTurret.GetComponent<Collider>().enabled = false;
-            _previewTurret.GetComponent<Renderer>().material.color = new Color(0, 1, 0, 0.5f);
+            _previewTurret.GetComponentInChildren<Collider>().enabled = false;
+            _previewTurret.GetComponentInChildren<Renderer>().material.color = new Color(0, 1, 0, 0.5f);
         }
 
         private void Update() 
@@ -54,7 +54,7 @@ namespace Placement
             if (!_gridManager.IsPositionOccupied(placementPos)) 
             {
                 GameObject myTurret = Instantiate(turret.prefab, _previewTurret.transform.position, Quaternion.identity);
-                myTurret.AddComponent<DefenseBrain>().AssignDefense(turret);
+                myTurret.GetComponent<DefenseBrain>().AssignDefense(turret);
                 _gridManager.SetOccupied(placementPos, myTurret);
             }
         }
