@@ -8,14 +8,12 @@ namespace Data
     public class Turret : Defense
     {
         public GameObject projectilePrefab;
-
-        public override void ActivateBrain()
-        {
-        }
-
-        public override void DeactivateBrain()
-        {
-        }
+        
+        [Header("Turret")]
+        public float damage;
+        public float range = 5f;
+        public float fireRate = 1f;
+        public LayerMask enemyLayer;
 
         public override void OnInterval(Transform transform, Transform firePoint)
         {
@@ -29,7 +27,7 @@ namespace Data
 
         private GameObject FindTarget(Transform transform)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, enemyLayer);
 
             return (from hitCollider in hitColliders where hitCollider.CompareTag("Enemy")
                 select hitCollider.gameObject).FirstOrDefault();

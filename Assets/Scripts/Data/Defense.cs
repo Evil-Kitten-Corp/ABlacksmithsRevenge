@@ -8,12 +8,13 @@ namespace Data
         
         [Header("Stats")]
         public float health;
-        public float damage;
-        public float range = 5f; 
-        public float fireRate = 1f; 
+        public float manaCost = 50f;
 
-        public abstract void ActivateBrain();
-        public abstract void DeactivateBrain();
-        public abstract void OnInterval(Transform transform, Transform firePoint);
+        [Header("Buying")] 
+        public bool unlocked;
+
+        public virtual void ActivateBrain() {}
+        public virtual void DeactivateBrain() {}
+        public virtual void OnInterval(Transform transform, Transform firePoint) {}
     }
 }

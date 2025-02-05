@@ -9,10 +9,16 @@ namespace Data
         public List<Enemy> enemiesToSpawn;
         public float spawnInterval = 5f;
         public int enemiesPerWave = 5;
+        public Defense reward;
 
         public Enemy GetRandom()
         {
             return enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
+        }
+
+        public void Reward()
+        {
+            reward.unlocked = true;
         }
     }
 }

@@ -8,5 +8,9 @@ namespace Data
 
         public float health;
         public float speed;
+
+        public float damage;
+        public float range;
+        [Range(0.1f, 3f)] public float attacksPerSecond;
     }
 }

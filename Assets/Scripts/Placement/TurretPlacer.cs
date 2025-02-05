@@ -1,6 +1,7 @@
 using System.Linq;
 using Brains;
 using Data;
+using Game_Systems;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,17 +9,26 @@ namespace Placement
 {
     public class TurretPlacer : MonoBehaviour
     {
-        public Defense turret;
         public Transform vrController;
         public InputActionReference placeAction;
         
         private GridManager _gridManager;
         private GameObject _previewTurret;
+        private Defense _placingTurret;
 
         private void Start() 
         {
             _gridManager = FindObjectOfType<GridManager>();
+        }
+        
+        public void StartPlacing(Defense turret) 
+        {
+            if (!ManaManager.Instance.SpendMana(turret.manaCost))
+            {
+                return;
+            }
             
+            _placingTurret = turret;
             _previewTurret = Instantiate(turret.prefab);
             _previewTurret.GetComponentInChildren<Collider>().enabled = false;
             _previewTurret.GetComponentInChildren<Renderer>().material.color = new Color(0, 1, 0, 0.5f);
@@ -53,9 +63,10 @@ namespace Placement
     
             if (!_gridManager.IsPositionOccupied(placementPos)) 
             {
-                GameObject myTurret = Instantiate(turret.prefab, _previewTurret.transform.position, Quaternion.identity);
-                myTurret.GetComponent<DefenseBrain>().AssignDefense(turret);
+                GameObject myTurret = Instantiate(_placingTurret.prefab, _previewTurret.transform.position, Quaternion.identity);
+                myTurret.GetComponent<DefenseBrain>().AssignDefense(_placingTurret);
                 _gridManager.SetOccupied(placementPos, myTurret);
+                Destroy(_previewTurret);
             }
         }
     }

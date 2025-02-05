@@ -1,6 +1,7 @@
 using System;
 using Data;
 using Effects;
+using Game_Systems;
 using Interfaces;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace Brains
         
         public Transform firePoint;
         private float _fireCooldown;
+        private float _manaTimer;
 
         private void Start()
         {
@@ -37,12 +39,26 @@ namespace Brains
         {
             if (defenseType != null)
             {
-                _fireCooldown -= Time.deltaTime;
-
-                if (_fireCooldown <= 0)
+                if (defenseType is Turret turret)
                 {
-                    defenseType.OnInterval(transform, firePoint);
-                    _fireCooldown = 1 / defenseType.fireRate;
+                    _fireCooldown -= Time.deltaTime;
+
+                    if (_fireCooldown <= 0)
+                    {
+                        turret.OnInterval(transform, firePoint);
+                        _fireCooldown = 1 / turret.fireRate;
+                    }
+                }
+                
+                if (defenseType is ManaGenerator manaGenerator)
+                {
+                    _manaTimer += Time.deltaTime;
+
+                    if (_manaTimer >= manaGenerator.interval)
+                    {
+                        ManaManager.Instance.AddMana(manaGenerator.manaPerInterval);
+                        _manaTimer = 0f;
+                    }
                 }
                 
                 if (defenseState == DefenseState.Destroyed)
@@ -106,10 +122,10 @@ namespace Brains
 
         private void OnDrawGizmosSelected()
         {
-            if (defenseType)
+            if (defenseType is Turret turret)
             {
                 Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.position, defenseType.range);
+                Gizmos.DrawWireSphere(transform.position, turret.range);
             }
         }
     }
