@@ -1803,6 +1803,7 @@ GameObject:
   - component: {fileID: 6407803034200858851}
   - component: {fileID: 5466427886166313116}
   - component: {fileID: 7424384039936724109}
+  - component: {fileID: 7424384039936724110}
   m_Layer: 0
   m_Name: BowAttach
   m_TagString: Untagged
@@ -1911,6 +1912,33 @@ MonoBehaviour:
   start: {fileID: 2987976787810079717}
   end: {fileID: 9073215828327402860}
   bowString: {fileID: 8985568595035195986}
+--- !u!54 &7424384039936724110
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424384039936724108}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &8005533761837125836
 Rigidbody:
   m_ObjectHideFlags: 0
