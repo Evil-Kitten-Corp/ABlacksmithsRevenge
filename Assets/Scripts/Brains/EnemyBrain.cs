@@ -16,7 +16,7 @@ namespace Brains
             _data = en;
             _currentHealth = _data.health;
             
-            GridManager grid = FindObjectOfType<GridManager>();
+            GridManager grid = FindAnyObjectByType<GridManager>();
             int rowIndex = grid.spawnPositions.IndexOf(spawnPos);
 
             if (rowIndex != -1)
