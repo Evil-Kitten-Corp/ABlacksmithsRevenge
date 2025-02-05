@@ -4,10 +4,14 @@ namespace Tools
 {
     public class Arrow : MonoBehaviour
     {
-        public void UpdateRotation(Transform lookAt)
+        public Transform bowSocket;
+        
+        //call on exit selection
+        public void UpdateRotation()
         {
             Debug.Log("Tried to rotate arrow");
-            transform.LookAt(lookAt);
+            Vector3 directionToBowStart = bowSocket.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(directionToBowStart);
         }
     }
 }
