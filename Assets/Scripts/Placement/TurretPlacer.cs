@@ -36,16 +36,19 @@ namespace Placement
 
         private void Update() 
         {
-            if (Physics.Raycast(vrController.position, vrController.forward, 
-                    out RaycastHit hit, 10f)) 
+            if (_previewTurret)
             {
-                Vector3 closestGridPos = _gridManager.GetClosestGridPosition(hit.point);
-                _previewTurret.transform.position = closestGridPos;
-            }
+                if (Physics.Raycast(vrController.position, vrController.forward, 
+                        out RaycastHit hit, 10f)) 
+                {
+                    Vector3 closestGridPos = _gridManager.GetClosestGridPosition(hit.point);
+                    _previewTurret.transform.position = closestGridPos;
+                }
 
-            if (placeAction.action.triggered) 
-            {
-                PlaceTurret();
+                if (placeAction.action.triggered) 
+                {
+                    PlaceTurret();
+                }
             }
         }
 

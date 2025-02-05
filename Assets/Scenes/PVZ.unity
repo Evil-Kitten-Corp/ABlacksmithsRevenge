@@ -343,7 +343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &546589677
 Transform:
   m_ObjectHideFlags: 0
@@ -409,7 +409,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4293940568689250495}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -1304,6 +1316,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4130b9d3b94b55a4bbdc31c1d18f7d74, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3836723023460084713}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4130b9d3b94b55a4bbdc31c1d18f7d74, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4882492603649822680}
   m_SourcePrefab: {fileID: 100100000, guid: 4130b9d3b94b55a4bbdc31c1d18f7d74, type: 3}
 --- !u!114 &3667092170684915734
 MonoBehaviour:
@@ -1579,7 +1594,6 @@ GameObject:
   - component: {fileID: 8005533761837125836}
   - component: {fileID: 3667092170684915734}
   - component: {fileID: 1550956798}
-  - component: {fileID: 8005533761837125837}
   m_Layer: 0
   m_Name: Bow_Wooden
   m_TagString: Untagged
@@ -1614,6 +1628,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4882492603649822680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530142672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c5132adc264502b4cf78e1d1d021bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4988603163512185583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,7 +1650,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2065428272809644933}
   - component: {fileID: 8985568595035195986}
-  - component: {fileID: 8985568595035195987}
   - component: {fileID: 8985568595035195988}
   m_Layer: 0
   m_Name: String
@@ -1662,7 +1687,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4882492603649822680}
+        m_TargetAssemblyTypeName: Tools.Arrow, Assembly-CSharp
+        m_MethodName: UpdateRotation
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2987976787810079717}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -1765,6 +1802,7 @@ GameObject:
   - component: {fileID: 1898302866301519327}
   - component: {fileID: 6407803034200858851}
   - component: {fileID: 5466427886166313116}
+  - component: {fileID: 7424384039936724109}
   m_Layer: 0
   m_Name: BowAttach
   m_TagString: Untagged
@@ -1772,6 +1810,107 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7424384039936724109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424384039936724108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4ae38d4a294610bff735c437b6a6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders:
+  - {fileID: 6407803034200858851}
+  - {fileID: 508526022692162480}
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7424384039936724109}
+        m_TargetAssemblyTypeName: Tools.Bow, Assembly-CSharp
+        m_MethodName: SetPull
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7424384039936724109}
+        m_TargetAssemblyTypeName: Tools.Bow, Assembly-CSharp
+        m_MethodName: Release
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  start: {fileID: 2987976787810079717}
+  end: {fileID: 9073215828327402860}
+  bowString: {fileID: 8985568595035195986}
 --- !u!54 &8005533761837125836
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1799,20 +1938,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8005533761837125837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4293940568689250495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ceb0a735724f67811a48db0f31a4b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bowString: {fileID: 8985568595035195988}
-  midPointGrabObject: {fileID: 546589677}
 --- !u!4 &8488297246922624538
 Transform:
   m_ObjectHideFlags: 0
@@ -1936,27 +2061,6 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!135 &8985568595035195987
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4988603163512185583}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.008
-  m_Center: {x: -0.01, y: 0, z: 0}
 --- !u!114 &8985568595035195988
 MonoBehaviour:
   m_ObjectHideFlags: 0
