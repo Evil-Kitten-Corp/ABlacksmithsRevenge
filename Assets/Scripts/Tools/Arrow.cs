@@ -6,6 +6,7 @@ namespace Tools
     {
         public void UpdateRotation(Transform lookAt)
         {
+            Debug.Log("Tried to rotate arrow");
             transform.LookAt(lookAt);
         }
     }

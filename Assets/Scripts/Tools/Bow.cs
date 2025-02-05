@@ -14,19 +14,24 @@ namespace Tools
         [SerializeField] private Transform end;
         [SerializeField] private LineRenderer bowString;
 
+        public Transform cube;
+
         private float _pullVal;
         private IXRSelectInteractor _interactor;
 
         public void SetPull(SelectEnterEventArgs args)
         {
+            Debug.Log("SetPull");
             _interactor = args.interactorObject;
         }
 
         public void Release()
         {
+            Debug.Log("Release");
             PullActionReleased?.Invoke(_pullVal);
             _interactor = null;
             _pullVal = 0;
+            cube.position = new Vector3(cube.localPosition.x, cube.localPosition.y, 0f);
             UpdateString();
         }
 
@@ -38,6 +43,7 @@ namespace Tools
             {
                 if (isSelected)
                 {
+                    Debug.Log("Bow: ProcessInteractable");
                     Vector3 pullPos = _interactor.transform.position;
                     _pullVal = CalculatePull(pullPos);
                     UpdateString();
@@ -49,6 +55,7 @@ namespace Tools
         {
             Vector3 linePos = Vector3.forward *
                               Mathf.Lerp(start.transform.localPosition.z, end.transform.localPosition.z, _pullVal);
+            cube.transform.position = new Vector3(cube.localPosition.x, cube.localPosition.y, linePos.z + .2f);
             bowString.SetPosition(1, linePos);
         }
 
