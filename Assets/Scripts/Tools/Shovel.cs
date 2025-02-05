@@ -14,7 +14,7 @@ namespace Tools
 
         private void Start() 
         {
-            _gridManager = FindObjectOfType<GridManager>();
+            _gridManager = FindAnyObjectByType<GridManager>();
         }
 
         private void Update() 

@@ -18,7 +18,7 @@ namespace Placement
 
         private void Start() 
         {
-            _gridManager = FindObjectOfType<GridManager>();
+            _gridManager = FindAnyObjectByType<GridManager>();
         }
         
         public void StartPlacing(Defense turret) 
