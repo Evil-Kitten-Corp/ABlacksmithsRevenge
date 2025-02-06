@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88691ac015104ff688912eaa201b655e, type: 3}
-  m_Name: EnemyWave
+  m_Name: FirstWave
   m_EditorClassIdentifier: 
-  enemiesToSpawn: []
+  enemiesSpawn:
+    _serializedList: []
   spawnInterval: 5
-  enemiesPerWave: 5
+  maxEnemiesToSpawn: 5
+  reward: {fileID: 11400000, guid: 7d419ca05a061554a8dfdd64301766c7, type: 2}

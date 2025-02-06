@@ -10,6 +10,14 @@ namespace Brains
         private float _currentHealth;
         private Vector3 _target;
         private Enemy _data;
+        
+        public event System.Action OnDeath;
+
+        private void Die()
+        {
+            OnDeath?.Invoke();
+            Destroy(gameObject);
+        }
 
         public void Activate(Enemy en, Vector3 spawnPos)
         {
@@ -40,7 +48,7 @@ namespace Brains
 
             if (_currentHealth <= 0)
             {
-                Destroy(gameObject);
+                Die();
             }
         }
     }

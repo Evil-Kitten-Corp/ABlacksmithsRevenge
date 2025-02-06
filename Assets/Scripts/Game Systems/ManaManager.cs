@@ -13,6 +13,7 @@ namespace Game_Systems
         [SerializeField] private float maxMana = 100f;
         [SerializeField] private float currentMana;
         [SerializeField] private float manaRegenRate = 5f;
+        [SerializeField] private float manaRegenTime = 5f;
     
         private void Awake()
         {
@@ -29,7 +30,7 @@ namespace Game_Systems
         private void Start()
         {
             currentMana = maxMana;
-            InvokeRepeating(nameof(RegenerateMana), 1f, 1f);
+            InvokeRepeating(nameof(RegenerateMana), 1f, manaRegenTime);
         }
 
         private void RegenerateMana()

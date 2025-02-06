@@ -1,16 +1,20 @@
 using System.Linq;
+using AYellowpaper;
 using Brains;
 using Data;
 using Game_Systems;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Casters;
 
 namespace Placement
 {
     public class TurretPlacer : MonoBehaviour
     {
-        public Transform vrController;
-        public InputActionReference placeAction;
+        public InputActionReference[] placeActions;
+        public InterfaceReference<IXRRayProvider> rayProvider;
         
         private GridManager _gridManager;
         private GameObject _previewTurret;
@@ -23,6 +27,11 @@ namespace Placement
         
         public void StartPlacing(Defense turret) 
         {
+            if (_placingTurret != null)
+            {
+                return;
+            }
+            
             if (!ManaManager.instance.SpendMana(turret.manaCost))
             {
                 return;
@@ -38,17 +47,28 @@ namespace Placement
         {
             if (_previewTurret)
             {
-                if (Physics.Raycast(vrController.position, vrController.forward, 
-                        out RaycastHit hit, 10f)) 
+                if (rayProvider != null)
                 {
-                    Vector3 closestGridPos = _gridManager.GetClosestGridPosition(hit.point);
+                    Vector3 closestGridPos = _gridManager.GetClosestGridPosition(rayProvider.Value.rayEndPoint);
                     _previewTurret.transform.position = closestGridPos;
                 }
+                
+                // if (Physics.Raycast(vrController.position, vrController.forward, 
+                //         out RaycastHit hit, 10f)) 
+                // {
+                //     Vector3 closestGridPos = _gridManager.GetClosestGridPosition(hit.point);
+                //     _previewTurret.transform.position = closestGridPos;
+                // }
 
-                if (placeAction.action.triggered) 
+                if (placeActions.Any(input => input.action.triggered))
                 {
                     PlaceTurret();
                 }
+                
+                // if (placeAction.action.triggered) 
+                // {
+                //     PlaceTurret();
+                // }
             }
         }
 
