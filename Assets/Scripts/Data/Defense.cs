@@ -12,6 +12,7 @@ namespace Data
 
         [Header("Buying")] 
         public bool unlocked;
+        public Sprite icon;
 
         public virtual void ActivateBrain() {}
         public virtual void DeactivateBrain() {}

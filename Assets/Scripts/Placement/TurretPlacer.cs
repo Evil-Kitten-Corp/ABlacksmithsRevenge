@@ -23,7 +23,7 @@ namespace Placement
         
         public void StartPlacing(Defense turret) 
         {
-            if (!ManaManager.Instance.SpendMana(turret.manaCost))
+            if (!ManaManager.instance.SpendMana(turret.manaCost))
             {
                 return;
             }

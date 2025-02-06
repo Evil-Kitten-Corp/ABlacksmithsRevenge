@@ -56,7 +56,7 @@ namespace Brains
 
                     if (_manaTimer >= manaGenerator.interval)
                     {
-                        ManaManager.Instance.AddMana(manaGenerator.manaPerInterval);
+                        ManaManager.instance.AddMana(manaGenerator.manaPerInterval);
                         _manaTimer = 0f;
                     }
                 }

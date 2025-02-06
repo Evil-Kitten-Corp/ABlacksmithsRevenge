@@ -4,7 +4,7 @@ namespace Game_Systems
 {
     public class ManaManager : MonoBehaviour
     {
-        public static ManaManager Instance
+        public static ManaManager instance
         {
             get; 
             private set;
@@ -16,9 +16,9 @@ namespace Game_Systems
     
         private void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
             }
             else
             {
@@ -52,5 +52,7 @@ namespace Game_Systems
         {
             currentMana = Mathf.Min(currentMana + amount, maxMana);
         }
+
+        public float CurrentMana() => currentMana;
     }
 }
