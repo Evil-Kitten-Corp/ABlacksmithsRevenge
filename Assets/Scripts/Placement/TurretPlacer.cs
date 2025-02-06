@@ -70,6 +70,7 @@ namespace Placement
                 myTurret.GetComponent<DefenseBrain>().AssignDefense(_placingTurret);
                 _gridManager.SetOccupied(placementPos, myTurret);
                 Destroy(_previewTurret);
+                _previewTurret = null;
             }
         }
     }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6098931634881394912}
   - component: {fileID: 2059668137113888040}
   - component: {fileID: 6459365294090591535}
+  - component: {fileID: 7807946991711030965}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -74,3 +75,18 @@ MonoBehaviour:
   wristShakeThreshold: 2
   useAlternativeInput: 0
   alternativeInputAction: {fileID: 0}
+--- !u!114 &7807946991711030965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248629864731809888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e70857acb3f4561a99bc38e4ecf6f38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMana: 100
+  currentMana: 0
+  manaRegenRate: 5

@@ -48,6 +48,7 @@ namespace UI
             {
                 if (alternativeInputAction.action.triggered)
                 {
+                    Debug.Log("Menu toggled via alt input");
                     ToggleMenu();
                 }
             }
@@ -55,6 +56,7 @@ namespace UI
             {
                 DetectWristShake(); 
             }
+
             UpdateManaUI();
         }
 

@@ -863,39 +863,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5652554
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.36806512
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.45672473
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.58001465
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.26
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 71.07
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -15.99
       objectReference: {fileID: 0}
     - target: {fileID: 5715498187899605673, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 80.02
       objectReference: {fileID: 0}
     - target: {fileID: 8417639707702528314, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_Camera
@@ -1039,6 +1039,14 @@ PrefabInstance:
       propertyPath: turretTabButton
       value: 
       objectReference: {fileID: 2049995441}
+    - target: {fileID: 6459365294090591535, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      propertyPath: useAlternativeInput
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459365294090591535, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      propertyPath: alternativeInputAction
+      value: 
+      objectReference: {fileID: -8212880625336903624, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 8248629864731809888, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: m_Name
       value: Manager
