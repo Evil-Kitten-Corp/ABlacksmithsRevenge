@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Interfaces;
 using UnityEngine;
 
 namespace Placement
@@ -51,7 +52,7 @@ namespace Placement
                             spawnPositions.Add(spawnPos);
                         }
                     }
-                    // If it's the last column, mark it as a spawn point
+                    //if it's the last column, mark it as a spawn point
                     else if (x == gridWidth - 1)
                     {
                         Vector3 spawnPos = worldPos + new Vector3(laneSeparation, 0, 0);
@@ -108,6 +109,11 @@ namespace Placement
                 _occupiedGridSpots.Remove(position);
             }
         }
+        
+        public GameObject GetTargetOnPosition(Vector3 target)
+        {
+            return _occupiedGridSpots[target];
+        }
 
         private void OnDrawGizmosSelected()
         {
@@ -151,5 +157,7 @@ namespace Placement
                 }
             }
         }
+
+        
     }
 }

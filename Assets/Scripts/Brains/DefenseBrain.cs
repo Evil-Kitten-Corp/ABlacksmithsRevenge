@@ -1,5 +1,6 @@
 using System;
 using Data;
+using Data.Structs;
 using Effects;
 using Game_Systems;
 using Interfaces;
@@ -20,6 +21,8 @@ namespace Brains
         public Transform firePoint;
         private float _fireCooldown;
         private float _manaTimer;
+        
+        public event Action OnDeath;
 
         private void Start()
         {
@@ -45,7 +48,7 @@ namespace Brains
 
                     if (_fireCooldown <= 0)
                     {
-                        turret.OnInterval(transform, firePoint);
+                        turret.OnInterval(new DefenseIntervalArgs(transform, firePoint));
                         _fireCooldown = 1 / turret.fireRate;
                     }
                 }
@@ -70,6 +73,7 @@ namespace Brains
 
         private void Destroy()
         {
+            OnDeath?.Invoke();
             defenseType.DeactivateBrain();
             defenseType = null;
             Destroy(gameObject);

@@ -1,3 +1,4 @@
+using Data.Structs;
 using UnityEngine;
 
 namespace Data
@@ -16,6 +17,6 @@ namespace Data
 
         public virtual void ActivateBrain() {}
         public virtual void DeactivateBrain() {}
-        public virtual void OnInterval(Transform transform, Transform firePoint) {}
+        public virtual void OnInterval(DefenseIntervalArgs args) {}
     }
 }

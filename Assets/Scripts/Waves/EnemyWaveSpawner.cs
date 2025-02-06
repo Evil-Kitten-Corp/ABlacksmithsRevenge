@@ -1,20 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Brains;
 using Data;
 using Placement;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Waves
 {
     public class EnemyWaveSpawner : MonoBehaviour
     {
+        public static event Action GameOver;
+        
         public List<EnemyWave> wavesInOrder;
         public GridManager gridManager;
         public float intervalBetweenWaves;
 
-        private int _currentWaveIndex = 0;
-        private List<GameObject> activeEnemies = new List<GameObject>();
+        private int _currentWaveIndex;
+        private readonly List<GameObject> _activeEnemies = new();
 
         private void Start()
         {
@@ -29,7 +33,7 @@ namespace Waves
                 StartWave();
 
                 // wait until all spawned enemies are dead
-                yield return new WaitUntil(() => activeEnemies.Count == 0);
+                yield return new WaitUntil(() => _activeEnemies.Count == 0);
 
                 // reward the player
                 wavesInOrder[_currentWaveIndex].Reward();
@@ -46,7 +50,7 @@ namespace Waves
 
         void StartWave()
         {
-            activeEnemies.Clear();
+            _activeEnemies.Clear();
             
             for (int i = 0; i < wavesInOrder[_currentWaveIndex].maxEnemiesToSpawn; i++)
             {
@@ -64,8 +68,13 @@ namespace Waves
             GameObject enemy = Instantiate(en.prefab, spawnPos, Quaternion.identity);
             enemy.AddComponent<EnemyBrain>().Activate(en, spawnPos);
             
-            activeEnemies.Add(enemy);
-            enemy.GetComponent<EnemyBrain>().OnDeath += () => activeEnemies.Remove(enemy);
+            _activeEnemies.Add(enemy);
+            enemy.GetComponent<EnemyBrain>().OnDeath += () => _activeEnemies.Remove(enemy);
+        }
+
+        public static void OnGameOver()
+        {
+            GameOver?.Invoke();
         }
     }
 }

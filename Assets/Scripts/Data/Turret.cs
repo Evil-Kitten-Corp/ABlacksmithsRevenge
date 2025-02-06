@@ -1,5 +1,6 @@
 using System.Linq;
 using Brains;
+using Data.Structs;
 using UnityEngine;
 
 namespace Data
@@ -15,13 +16,13 @@ namespace Data
         public float fireRate = 1f;
         public LayerMask enemyLayer;
 
-        public override void OnInterval(Transform transform, Transform firePoint)
+        public override void OnInterval(DefenseIntervalArgs args)
         {
-            GameObject target = FindTarget(transform);
+            GameObject target = FindTarget(args.Transform);
             
             if (target != null)
             {
-                Shoot(target, firePoint);
+                Shoot(target, args.FirePoint);
             }
         }
 
@@ -37,7 +38,8 @@ namespace Data
         {
             if (projectilePrefab != null && firePoint != null)
             {
-                GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+                GameObject projectile = Instantiate(projectilePrefab, 
+                    firePoint.position, Quaternion.identity);
                 Projectile projScript = projectile.GetComponent<Projectile>();
                 projScript.Initialize(target.transform, damage);
             }
