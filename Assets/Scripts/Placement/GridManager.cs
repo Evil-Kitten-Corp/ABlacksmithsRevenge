@@ -7,7 +7,7 @@ namespace Placement
     {
         [Range(0, 10)] public int gridWidth = 5;
         [Range(0, 3)] public int gridHeight = 3;
-        public float offsetBetweenColumns = 0;
+        public float rowSpacing = 1.0f;
         public float cellSize = 1.5f;
         public float laneSeparation = 2f;
 
@@ -20,10 +20,14 @@ namespace Placement
         }
         
         private readonly Dictionary<Vector3, GameObject> _occupiedGridSpots = new();
+        
+        [Header("Debug ONLY")]
         public List<Vector3> spawnPositions = new();
         
         public void Start() 
         {
+            spawnPositions.Clear();
+            gridPositions = new Vector3[gridWidth, gridHeight];
             GenerateGrid();
         }
 
@@ -35,7 +39,7 @@ namespace Placement
             {
                 for (int y = 0; y < gridHeight; y++) 
                 {
-                    Vector3 worldPos = transform.position + new Vector3(x * cellSize, 0, y * cellSize + offsetBetweenColumns);
+                    Vector3 worldPos = transform.position + new Vector3(x * cellSize, 0, y * (cellSize + rowSpacing));
                     gridPositions[x, y] = worldPos;
                     
                     // If it's the last column, mark it as a spawn point
@@ -45,14 +49,16 @@ namespace Placement
                         spawnPositions.Add(spawnPos);
                     }
 
-                    if (debug)
+                    if (Application.isPlaying)
                     {
-                        GameObject marker = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        marker.transform.position = worldPos;
-                        marker.transform.localScale = Vector3.one * 0.2f;
-                        marker.GetComponent<Collider>().enabled = false;
+                        if (debug)
+                        {
+                            GameObject marker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                            marker.transform.position = worldPos;
+                            marker.transform.localScale = Vector3.one * 0.2f;
+                            marker.GetComponent<Collider>().enabled = false;
+                        }
                     }
-                    
                 }
             }
         }
@@ -96,7 +102,36 @@ namespace Placement
 
         private void OnDrawGizmosSelected()
         {
-            //draw the preview aka the cubes to mark the cells, can be spheres instead of cubes all it matters is we see the final grid positions
+            spawnPositions.Clear();
+            GenerateGrid();
+            
+            if (gridPositions == null)
+            {
+                return;
+            }
+
+            //grid positions
+            Gizmos.color = Color.green;
+            foreach (Vector3 pos in gridPositions)
+            {
+                Gizmos.DrawCube(pos, Vector3.one * 0.3f);
+            }
+
+            //spawn points
+            Gizmos.color = Color.red;
+            foreach (Vector3 spawnPos in spawnPositions)
+            {
+                Gizmos.DrawCube(spawnPos, Vector3.one * 0.3f);
+            }
+
+            //spacing view
+            Gizmos.color = Color.red;
+            for (int y = 0; y < gridHeight; y++)
+            {
+                Vector3 lastColumnPos = gridPositions[gridWidth - 1, y];
+                Vector3 spawnPos = spawnPositions[y];
+                Gizmos.DrawLine(lastColumnPos, spawnPos);
+            }
         }
     }
 }
