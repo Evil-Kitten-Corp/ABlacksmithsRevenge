@@ -10,6 +10,7 @@ namespace Placement
         public float rowSpacing = 1.0f;
         public float cellSize = 1.5f;
         public float laneSeparation = 2f;
+        public bool invertSpawnPoints = false;
 
         public bool debug;
 
@@ -41,9 +42,17 @@ namespace Placement
                 {
                     Vector3 worldPos = transform.position + new Vector3(x * cellSize, 0, y * (cellSize + rowSpacing));
                     gridPositions[x, y] = worldPos;
-                    
+
+                    if (invertSpawnPoints)
+                    {
+                        if (x == 0)
+                        {
+                            Vector3 spawnPos = worldPos + new Vector3(laneSeparation, 0, 0);
+                            spawnPositions.Add(spawnPos);
+                        }
+                    }
                     // If it's the last column, mark it as a spawn point
-                    if (x == gridWidth - 1)
+                    else if (x == gridWidth - 1)
                     {
                         Vector3 spawnPos = worldPos + new Vector3(laneSeparation, 0, 0);
                         spawnPositions.Add(spawnPos);
@@ -128,9 +137,18 @@ namespace Placement
             Gizmos.color = Color.red;
             for (int y = 0; y < gridHeight; y++)
             {
-                Vector3 lastColumnPos = gridPositions[gridWidth - 1, y];
-                Vector3 spawnPos = spawnPositions[y];
-                Gizmos.DrawLine(lastColumnPos, spawnPos);
+                if (!invertSpawnPoints)
+                {
+                    Vector3 lastColumnPos = gridPositions[gridWidth - 1, y];
+                    Vector3 spawnPos = spawnPositions[y];
+                    Gizmos.DrawLine(lastColumnPos, spawnPos);
+                }
+                else 
+                {
+                    Vector3 lastColumnPos = gridPositions[0, y];
+                    Vector3 spawnPos = spawnPositions[y];
+                    Gizmos.DrawLine(lastColumnPos, spawnPos);
+                }
             }
         }
     }
