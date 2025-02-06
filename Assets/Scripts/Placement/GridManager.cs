@@ -7,6 +7,7 @@ namespace Placement
     {
         [Range(0, 10)] public int gridWidth = 5;
         [Range(0, 3)] public int gridHeight = 3;
+        public float offsetBetweenColumns = 0;
         public float cellSize = 1.5f;
         public float laneSeparation = 2f;
 
@@ -34,7 +35,7 @@ namespace Placement
             {
                 for (int y = 0; y < gridHeight; y++) 
                 {
-                    Vector3 worldPos = transform.position + new Vector3(x * cellSize, 0, y * cellSize);
+                    Vector3 worldPos = transform.position + new Vector3(x * cellSize, 0, y * cellSize + offsetBetweenColumns);
                     gridPositions[x, y] = worldPos;
                     
                     // If it's the last column, mark it as a spawn point
@@ -91,6 +92,11 @@ namespace Placement
             {
                 _occupiedGridSpots.Remove(position);
             }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            //draw the preview aka the cubes to mark the cells, can be spheres instead of cubes all it matters is we see the final grid positions
         }
     }
 }
