@@ -17,7 +17,7 @@ namespace Placement
         public InterfaceReference<IXRRayProvider> rayProvider;
         
         private GridManager _gridManager;
-        private GameObject _previewTurret;
+        [Header("DEBUG ONLY")] [SerializeField] private GameObject _previewTurret;
         private Defense _placingTurret;
 
         private void Start() 
@@ -27,13 +27,15 @@ namespace Placement
         
         public void StartPlacing(Defense turret) 
         {
-            if (_placingTurret != null)
+            if (_previewTurret != null)
             {
+                Debug.Log("Can't place new turret.");
                 return;
             }
             
             if (!ManaManager.instance.SpendMana(turret.manaCost))
             {
+                Debug.Log("Not enough mana.");
                 return;
             }
             
@@ -89,6 +91,7 @@ namespace Placement
                 GameObject myTurret = Instantiate(_placingTurret.prefab, _previewTurret.transform.position, Quaternion.identity);
                 myTurret.GetComponent<DefenseBrain>().AssignDefense(_placingTurret);
                 _gridManager.SetOccupied(placementPos, myTurret);
+                Debug.Log("Purchased: " + _placingTurret.name);
                 Destroy(_previewTurret);
                 _previewTurret = null;
             }

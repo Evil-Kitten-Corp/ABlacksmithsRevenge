@@ -120,11 +120,6 @@ namespace UI
             {
                 _turretPlacer.StartPlacing(unit);
                 UpdateButtonStates();
-                Debug.Log("Purchased: " + unit.name);
-            }
-            else
-            {
-                Debug.Log("Not enough mana!");
             }
         }
 
