@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: SecondWave
   m_EditorClassIdentifier: 
   enemiesSpawn:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 11400000, guid: db15621b3e7e3e74b9ebfdc1febaf8da, type: 2}
+      Value: 0.5
+    - Key: {fileID: 11400000, guid: 6a06c7da841c1f74881a7d8d9f488c0a, type: 2}
+      Value: 0.3
+    - Key: {fileID: 11400000, guid: bc5a86228efc54146aa3a5f15663727e, type: 2}
+      Value: 0.6
+    - Key: {fileID: 11400000, guid: 6ab3509e348e6f44ab2ae897a0993bb4, type: 2}
+      Value: 0.2
   spawnInterval: 5
-  maxEnemiesToSpawn: 5
+  maxEnemiesToSpawn: 7
   reward: {fileID: 11400000, guid: d85361ef9d61c484cb1f2e73facf576b, type: 2}

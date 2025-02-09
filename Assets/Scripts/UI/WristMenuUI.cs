@@ -33,6 +33,8 @@ namespace UI
 
         private void Start()
         {
+            EnemyWave.OnRewardUnlocked += PopulateButtons;
+            
             _turretPlacer = FindAnyObjectByType<TurretPlacer>();
             _manaManager = ManaManager.instance;
             LoadBuyableUnits();

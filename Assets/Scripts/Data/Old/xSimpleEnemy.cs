@@ -1,15 +1,14 @@
-using Data.Structs;
 using UnityEngine;
 
-namespace Data
+namespace Data.Old
 {
-    [CreateAssetMenu(fileName = "Enemy", menuName = "Enemies/Simple", order = 0)]
-    public class SimpleEnemy : Enemy
+    
+    public class xSimpleEnemy : xEnemy
     {
         [Header("Sword Animation")] 
         public string animationTrigger;
         
-        public override void OnInterval(EnemyIntervalArgs args)
+        public override void OnInterval(xEnemyIntervalArgs args)
         {
             if (args.CanAttack)
             {

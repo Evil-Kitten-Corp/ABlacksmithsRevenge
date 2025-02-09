@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: FirstWave
   m_EditorClassIdentifier: 
   enemiesSpawn:
-    _serializedList: []
-  spawnInterval: 5
+    _serializedList:
+    - Key: {fileID: 11400000, guid: bc5a86228efc54146aa3a5f15663727e, type: 2}
+      Value: 0.5
+    - Key: {fileID: 11400000, guid: 6ab3509e348e6f44ab2ae897a0993bb4, type: 2}
+      Value: 0.3
+  spawnInterval: 20
   maxEnemiesToSpawn: 5
   reward: {fileID: 11400000, guid: 7d419ca05a061554a8dfdd64301766c7, type: 2}

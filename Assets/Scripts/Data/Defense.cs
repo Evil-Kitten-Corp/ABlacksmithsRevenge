@@ -15,8 +15,6 @@ namespace Data
         public bool unlocked;
         public Sprite icon;
 
-        public virtual void ActivateBrain() {}
-        public virtual void DeactivateBrain() {}
         public virtual void OnInterval(DefenseIntervalArgs args) {}
     }
 }

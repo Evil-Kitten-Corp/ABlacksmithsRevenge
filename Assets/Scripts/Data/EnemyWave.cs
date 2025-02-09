@@ -1,12 +1,16 @@
+using System;
 using System.Linq;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Data
 {
     [CreateAssetMenu(fileName = "EnemyWave", menuName = "Waves/New...", order = 0)]
     public class EnemyWave : ScriptableObject
     {
+        public static event Action OnRewardUnlocked;
+        
         [SerializedDictionary("Enemies", "Chance To Spawn from 0 to 1")]
         public SerializedDictionary<Enemy, float> enemiesSpawn;
         public float spawnInterval = 5f;
@@ -35,6 +39,7 @@ namespace Data
         public void Reward()
         {
             reward.unlocked = true;
+            OnRewardUnlocked?.Invoke();
         }
     }
 }

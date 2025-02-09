@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 1249617919}
   - component: {fileID: 1249617918}
   - component: {fileID: 1249617922}
+  - component: {fileID: 1249617923}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -668,6 +669,38 @@ MonoBehaviour:
   m_Teleporting:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1249617923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249617917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 69ea721198e0aa144ad95ff93ce85ad5, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1977615598 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3155720831915995493, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
@@ -982,6 +1015,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: gridWidth
       value: 5
       objectReference: {fileID: 0}
@@ -1015,7 +1052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: spawnPositions.Array.data[1].z
-      value: 1.1
+      value: 3.55
       objectReference: {fileID: 0}
     - target: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: spawnPositions.Array.data[2].x
@@ -1027,7 +1064,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: spawnPositions.Array.data[2].z
-      value: 2.2
+      value: 7.1
       objectReference: {fileID: 0}
     - target: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: spawnPositions.Array.data[3].x
@@ -16760,8 +16797,44 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8248629864731809888, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6783616848854863611}
   m_SourcePrefab: {fileID: 100100000, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+--- !u!1 &6783616848854863609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8248629864731809888, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+  m_PrefabInstance: {fileID: 6783616848854863608}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6783616848854863610 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2059668137113888040, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+  m_PrefabInstance: {fileID: 6783616848854863608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6783616848854863609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e57af95ad31f646aad89358d4edf24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6783616848854863611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6783616848854863609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19ac688d47045f096dcb14bd6f42ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wavesInOrder:
+  - {fileID: 11400000, guid: cf502a6cd15a67545b995ffeaca0696a, type: 2}
+  - {fileID: 11400000, guid: b5b2bfae7680c9e4193bd5bb4299fc4d, type: 2}
+  gridManager: {fileID: 6783616848854863610}
+  intervalBetweenWaves: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

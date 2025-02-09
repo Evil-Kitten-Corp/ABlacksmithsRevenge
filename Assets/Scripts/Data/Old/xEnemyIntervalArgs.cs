@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace Data.Structs
+namespace Data.Old
 {
-    public struct EnemyIntervalArgs
+    public struct xEnemyIntervalArgs
     {
         public Animator Animator;
         public bool CanAttack;
 
-        public EnemyIntervalArgs(Animator animator, bool attack)
+        public xEnemyIntervalArgs(Animator animator, bool attack)
         {
             Animator = animator;
             CanAttack = attack;

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Brains;
 using Data;
+using Data.Old;
 using Placement;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,19 +29,16 @@ namespace Waves
         {
             while (_currentWaveIndex < wavesInOrder.Count)
             {
-                yield return new WaitForSeconds(wavesInOrder[_currentWaveIndex].spawnInterval);
+                yield return new WaitForSeconds(intervalBetweenWaves);
                 StartWave();
 
-                // wait until all spawned enemies are dead
                 yield return new WaitUntil(() => _activeEnemies.Count == 0);
 
-                // reward the player
+                Debug.Log("Enemies dead, rewarding now");
                 wavesInOrder[_currentWaveIndex].Reward();
 
-                // wait before starting next wave
                 yield return new WaitForSeconds(intervalBetweenWaves);
 
-                // move to next wave
                 _currentWaveIndex++;
             }
 
@@ -50,11 +47,18 @@ namespace Waves
 
         void StartWave()
         {
+            Debug.Log("Starting wave " +  _currentWaveIndex);
             _activeEnemies.Clear();
-            
+
+            StartCoroutine(StartSpawning());
+        }
+
+        IEnumerator StartSpawning()
+        {
             for (int i = 0; i < wavesInOrder[_currentWaveIndex].maxEnemiesToSpawn; i++)
             {
                 SpawnEnemy();
+                yield return new WaitForSeconds(wavesInOrder[_currentWaveIndex].spawnInterval);
             }
         }
 
@@ -63,10 +67,12 @@ namespace Waves
             if (gridManager.spawnPositions.Count == 0) 
                 return;
 
+            Debug.Log("Spawning Enemy, Spawn Pos Is Valid");
             Vector3 spawnPos = gridManager.spawnPositions[Random.Range(0, gridManager.spawnPositions.Count)];
             var en = wavesInOrder[_currentWaveIndex].GetRandom();
             GameObject enemy = Instantiate(en.prefab, spawnPos, Quaternion.identity);
-            enemy.AddComponent<EnemyBrain>().Activate(en, spawnPos);
+            Debug.Log(enemy.name + " successfully spawned!");
+            enemy.GetComponent<EnemyBrain>().Activate(en, spawnPos);
             
             _activeEnemies.Add(enemy);
             enemy.GetComponent<EnemyBrain>().OnDeath += () => _activeEnemies.Remove(enemy);
@@ -74,6 +80,7 @@ namespace Waves
 
         public static void OnGameOver()
         {
+            Debug.Log("OnGameOver called");
             GameOver?.Invoke();
         }
     }

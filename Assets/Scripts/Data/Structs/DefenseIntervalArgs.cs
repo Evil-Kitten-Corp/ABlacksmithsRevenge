@@ -4,8 +4,8 @@ namespace Data.Structs
 {
     public struct DefenseIntervalArgs
     {
-        public Transform Transform;
-        public Transform FirePoint;
+        public readonly Transform Transform;
+        public readonly Transform FirePoint;
 
         public DefenseIntervalArgs(Transform transform, Transform firePoint)
         {

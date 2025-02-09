@@ -1,5 +1,4 @@
 using System;
-using Data;
 using Data.Structs;
 using Interfaces;
 using Placement;
@@ -7,10 +6,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using Waves;
 
-namespace Brains
+namespace Data.Old
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
-    public class EnemyBrain : MonoBehaviour, IDamageable
+    public class xEnemyBrain : MonoBehaviour, IDamageable
     {
         #region Events
 
@@ -22,7 +21,7 @@ namespace Brains
         
         private float _currentHealth;
         private Vector3 _target;
-        private Enemy _data;
+        private xEnemy _data;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         
@@ -69,7 +68,7 @@ namespace Brains
             Destroy(gameObject);
         }
 
-        public void Activate(Enemy en, Vector3 spawnPos)
+        public void Activate(xEnemy en, Vector3 spawnPos)
         {
             _data = en;
             _currentHealth = _data.health;
@@ -143,7 +142,7 @@ namespace Brains
             //or are we fighting?
             else if (_forceAttack)
             {
-                _data.OnInterval(new EnemyIntervalArgs(_animator, _attackCooldown <= 0));
+                _data.OnInterval(new xEnemyIntervalArgs(_animator, _attackCooldown <= 0));
 
                 if (_attackCooldown <= 0)
                 {

@@ -34,9 +34,10 @@ namespace Brains
         {
             defenseType = def;
             currentHealth = defenseType.health;
-            defenseType.ActivateBrain();
             defenseState = DefenseState.Pristine;
         }
+        
+        public Defense GetDefenseType() => defenseType;
 
         private void Update()
         {
@@ -74,7 +75,6 @@ namespace Brains
         private void Destroy()
         {
             OnDeath?.Invoke();
-            defenseType.DeactivateBrain();
             defenseType = null;
             Destroy(gameObject);
         }
