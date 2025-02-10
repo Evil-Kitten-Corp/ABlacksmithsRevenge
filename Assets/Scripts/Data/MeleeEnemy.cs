@@ -8,7 +8,7 @@ namespace Data
     public class MeleeEnemy : Enemy
     {
         private static readonly int Attack = Animator.StringToHash("Attack");
-
+        
         public override void UpdateBehavior(EnemyArgs args)
         {
             args.EnemyBrain.attackTimer += Time.deltaTime;
@@ -69,6 +69,9 @@ namespace Data
 
         public override void DealDamage(EnemyArgs args)
         {
+            AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+            args.EnemyBrain.audioSource.PlayOneShot(clip);
+            
             //get the defense in our cell
             var def = args.GridManager.GetTargetOnPosition(args.EnemyBrain.GetCurrentCellPosition());
             

@@ -5,7 +5,8 @@ namespace Effects
     [RequireComponent(typeof(AudioSource))]
     public class DefenseAudioState : MonoBehaviour
     {
-        [SerializeField] private AudioClip repairSound;
+        [SerializeField] private AudioClip[] repairSounds;
+        [SerializeField] private AudioClip[] shovelSounds;
         
         private AudioSource _source;
 
@@ -16,7 +17,14 @@ namespace Effects
 
         public void PlayRepairSound()
         {
-            _source.PlayOneShot(repairSound);
+            AudioClip clip = repairSounds[Random.Range(0, repairSounds.Length)];
+            _source.PlayOneShot(clip);
+        }
+
+        public void PlayShovelSound()
+        {
+            AudioClip clip = shovelSounds[Random.Range(0, shovelSounds.Length)];
+            _source.PlayOneShot(clip);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Brains;
 using Data.Structs;
@@ -26,6 +25,10 @@ namespace Data
                 {
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
+                    
+                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    args.EnemyBrain.audioSource.PlayOneShot(clip);
+                    
                     args.EnemyBrain.attackTimer = 0f;
                 }
             }
@@ -84,6 +87,10 @@ namespace Data
                 {
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
+                    
+                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    args.EnemyBrain.audioSource.PlayOneShot(clip);
+                    
                     args.EnemyBrain.attackTimer = 0f;
                 }
                 

@@ -12,6 +12,12 @@ namespace Data
         public int damage = 20;
         public float attackCooldown = 1f;
         
+        [Header("Audio")]
+        public AudioClip[] damageSounds;
+        public AudioClip[] weaponHitSounds;
+        public AudioClip[] deathSounds;
+        public AudioClip[] footstepSounds;
+        
         /// <summary>
         /// Called each frame so the behavior can check for targets, manage cooldowns, etc.
         /// </summary>

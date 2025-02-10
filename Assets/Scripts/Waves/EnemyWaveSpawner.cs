@@ -19,6 +19,13 @@ namespace Waves
         
         public TextMeshProUGUI countdownText;
         public AudioSource horn;
+
+        public AudioSource countdown;
+        
+        [Header("Audio")]
+        public AudioClip countdownClip;
+        public AudioClip winClip;
+        public AudioClip loseClip;
         
         private int _currentWaveIndex;
         private readonly List<GameObject> _activeEnemies = new();
@@ -32,6 +39,11 @@ namespace Waves
         {
             GameData.Instance.Pause += OnPause;
             GameData.Instance.Resume += OnResume;
+
+            GameData.Instance.GameOver += () =>
+            {
+                countdown.PlayOneShot(loseClip);
+            };
 
             StartCoroutine(SpawnWaves());
         }
@@ -71,7 +83,7 @@ namespace Waves
 
                 _currentWaveIndex++;
             }
-
+            
             Debug.Log("All waves completed!");
         }
 
@@ -89,6 +101,11 @@ namespace Waves
                     }
                     
                     yield return null;
+                }
+
+                if (i == 3 && !countdown.isPlaying)
+                {
+                    countdown.PlayOneShot(countdownClip);
                 }
                 
                 countdownText.text = i.ToString();

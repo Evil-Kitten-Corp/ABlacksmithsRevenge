@@ -8,20 +8,21 @@ namespace Tools
     public class VRBowController : MonoBehaviour
     {
         [SerializeField] private VRBowString bowString;
-        private XRGrabInteractable _interactable;
-
         [SerializeField] private Transform midPointGrabObject, midPointVisualObject, midPointParent;
         [SerializeField] private float bowStringStretchLimit = 0.3f;
-        
-        private Transform _interactor;
-
-        private float _strength, _previousStrength;
-
         [SerializeField] private float stringSoundThreshold = 0.001f;
+        
+        [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
-
-        public UnityEvent OnBowPulled;
-        public UnityEvent<float> OnBowReleased;
+        [SerializeField] private AudioClip pickUpBow;
+        [SerializeField] private AudioClip putDownBow;
+        
+        private XRGrabInteractable _interactable;
+        private Transform _interactor;
+        private float _strength, _previousStrength;
+        
+        public UnityEvent onBowPulled;
+        public UnityEvent<float> onBowReleased;
 
         private void Awake()
         {
@@ -118,12 +119,12 @@ namespace Tools
         private void PrepareBowString(SelectEnterEventArgs arg0)
         {
             _interactor = arg0.interactorObject.transform;
-            OnBowPulled?.Invoke();
+            onBowPulled?.Invoke();
         }
 
         private void ResetBowString(SelectExitEventArgs arg0)
         {
-            OnBowReleased?.Invoke(_strength);
+            onBowReleased?.Invoke(_strength);
             _strength = 0;
             _previousStrength = 0;
             audioSource.pitch = 1;
@@ -133,6 +134,16 @@ namespace Tools
             midPointGrabObject.localPosition = Vector3.zero;
             midPointVisualObject.localPosition = Vector3.zero;
             bowString.CreateString(null);
+        }
+
+        public void PickUp()
+        {
+            audioSource.PlayOneShot(pickUpBow);
+        }
+
+        public void Drop()
+        {
+            audioSource.PlayOneShot(putDownBow);
         }
     }
 }

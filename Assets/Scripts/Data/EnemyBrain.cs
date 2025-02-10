@@ -5,6 +5,7 @@ using Placement;
 using UnityEngine;
 using UnityEngine.AI;
 using Waves;
+using Random = UnityEngine.Random;
 
 namespace Data
 {
@@ -15,6 +16,8 @@ namespace Data
         public NavMeshAgent agent { get; private set; }
         
         public GameObject Target { get; set; }
+
+        public AudioSource audioSource;
 
         [Header("Transforms")] 
         public Transform firePoint;
@@ -37,6 +40,14 @@ namespace Data
         private bool _hasPath;
 
         public event Action OnDeath;
+
+        private void Start()
+        {
+            OnDeath += () =>
+            {
+                audioSource.PlayOneShot(_enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)]);
+            };
+        }
 
         /// <summary>
         /// Call this method from the spawner.
@@ -112,7 +123,7 @@ namespace Data
             if (_health <= 0)
             {
                 OnDeath?.Invoke();
-                Destroy(gameObject);
+                Destroy(gameObject, 1f);
                 return;
             }
 
@@ -141,6 +152,11 @@ namespace Data
         public void Damage(float damageAmount)
         {
             _health -= damageAmount;
+
+            if (_health > 0)
+            {
+                audioSource.PlayOneShot(_enemySo.damageSounds[Random.Range(0, _enemySo.damageSounds.Length)]);
+            }
         }
 
         private void OnDrawGizmosSelected()
@@ -208,6 +224,11 @@ namespace Data
             }
 
             return false;
+        }
+
+        public void OnFootstep()
+        {
+            audioSource.PlayOneShot(_enemySo.footstepSounds[Random.Range(0, _enemySo.footstepSounds.Length)]);
         }
     }
 }

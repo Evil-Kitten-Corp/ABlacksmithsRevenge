@@ -23,6 +23,10 @@ namespace Data
                 {
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Shoot);
+                    
+                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    args.EnemyBrain.audioSource.PlayOneShot(clip);
+                    
                     args.EnemyBrain.attackTimer = 0f;
                 }
             }
@@ -81,6 +85,10 @@ namespace Data
                 {
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Shoot);
+                    
+                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    args.EnemyBrain.audioSource.PlayOneShot(clip);
+                    
                     args.EnemyBrain.attackTimer = 0f;
                 }
                 
