@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2059668137113888040}
   - component: {fileID: 6459365294090591535}
   - component: {fileID: 7807946991711030965}
+  - component: {fileID: 3703169154741624166}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -48,10 +49,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridWidth: 5
   gridHeight: 3
+  rowSpacing: 2.05
   cellSize: 1.5
-  laneSeparation: 5
-  debug: 1
-  spawnPositions: []
+  laneSeparation: -9.42
+  invertSpawnPoints: 1
+  debug: 0
+  spawnPositions:
+  - {x: -9.42, y: 1, z: 0}
+  - {x: -9.42, y: 1, z: 3.55}
+  - {x: -9.42, y: 1, z: 7.1}
 --- !u!114 &6459365294090591535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,8 +79,8 @@ MonoBehaviour:
   buttonContainer: {fileID: 0}
   buttonPrefab: {fileID: 1177286128397563558, guid: c60d8ffc92ec7a649be757266d645eb3, type: 3}
   wristShakeThreshold: 2
-  useAlternativeInput: 0
-  alternativeInputAction: {fileID: 0}
+  useAlternativeInput: 1
+  alternativeInputAction: {fileID: -8212880625336903624, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &7807946991711030965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,3 +96,24 @@ MonoBehaviour:
   maxMana: 100
   currentMana: 0
   manaRegenRate: 5
+  manaRegenTime: 5
+--- !u!114 &3703169154741624166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248629864731809888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19ac688d47045f096dcb14bd6f42ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wavesInOrder:
+  - {fileID: 11400000, guid: cf502a6cd15a67545b995ffeaca0696a, type: 2}
+  - {fileID: 11400000, guid: b5b2bfae7680c9e4193bd5bb4299fc4d, type: 2}
+  gridManager: {fileID: 2059668137113888040}
+  intervalBetweenWaves: 10
+  restTime: 1
+  countdownText: {fileID: 0}
+  horn: {fileID: 0}

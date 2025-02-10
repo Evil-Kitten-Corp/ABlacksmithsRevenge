@@ -18,16 +18,17 @@ namespace Data
 
         [Header("Transforms")] 
         public Transform firePoint;
-        
+
+        private bool _pausedGame;
         
         //TBD
-        public int laneIndex { get; internal set; }
+        public int laneIndex { get; private set; }
         public int currentColumn { get; internal set; }
 
         private Enemy _enemySo;
         private GridManager _grid;
         private float _health;
-        private bool _activated = false;
+        private bool _activated;
 
         [Header("Debug, do NOT modify")]
         public int coluna = 0;
@@ -82,6 +83,18 @@ namespace Data
             
             Vector3 startCell = _grid.gridPositions[linha, coluna];
             
+            GameData.Instance.Pause += () =>
+            {
+                _pausedGame = true;
+                agent.isStopped = true;
+            };
+            
+            GameData.Instance.Resume += () =>
+            {
+                _pausedGame = false;
+                agent.isStopped = false;
+            };
+            
             _activated = true;
             agent.SetDestination(startCell);
         }
@@ -92,7 +105,10 @@ namespace Data
         {
             if (!_activated)
                 return;
-            
+
+            if (_pausedGame)
+                return;
+
             if (_health <= 0)
             {
                 OnDeath?.Invoke();
@@ -153,13 +169,20 @@ namespace Data
                 }
             }
             
-            EnemyWaveSpawner.OnGameOver();
+            GameData.Instance.OnGameOver();
             return false;
         }
 
         public void GoToNext()
         {
-            linha--;
+            if (_grid.invertSpawnPoints)
+            {
+                linha++;
+            }
+            else
+            {
+                linha--;
+            }
             
             Vector3 targetPos = _grid.gridPositions[linha, coluna];
             agent.SetDestination(targetPos);

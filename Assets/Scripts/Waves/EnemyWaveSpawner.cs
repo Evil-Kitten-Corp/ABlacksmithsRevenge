@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
-using Data.Old;
+using DG.Tweening;
 using Placement;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,25 +12,54 @@ namespace Waves
 {
     public class EnemyWaveSpawner : MonoBehaviour
     {
-        public static event Action GameOver;
-        
         public List<EnemyWave> wavesInOrder;
         public GridManager gridManager;
         public float intervalBetweenWaves;
-
+        public float restTime;
+        
+        public TextMeshProUGUI countdownText;
+        public AudioSource horn;
+        
         private int _currentWaveIndex;
         private readonly List<GameObject> _activeEnemies = new();
 
+        private bool _paused;
+        private Coroutine _spawningCoroutine;
+        
+        private Tween _pausedTween;
+
         private void Start()
         {
+            GameData.Instance.Pause += OnPause;
+            GameData.Instance.Resume += OnResume;
+
             StartCoroutine(SpawnWaves());
+        }
+
+        private void OnDestroy()
+        {
+            if (GameData.Instance != null)
+            {
+                GameData.Instance.Pause -= OnPause;
+                GameData.Instance.Resume -= OnResume;
+            }
+        }
+
+        private void OnPause()
+        {
+            _paused = true;
+        }
+
+        private void OnResume()
+        {
+            _paused = false;
         }
 
         private IEnumerator SpawnWaves()
         {
             while (_currentWaveIndex < wavesInOrder.Count)
             {
-                yield return new WaitForSeconds(intervalBetweenWaves);
+                yield return StartCoroutine(ShowCountdown(intervalBetweenWaves));
                 StartWave();
 
                 yield return new WaitUntil(() => _activeEnemies.Count == 0);
@@ -37,7 +67,7 @@ namespace Waves
                 Debug.Log("Enemies dead, rewarding now");
                 wavesInOrder[_currentWaveIndex].Reward();
 
-                yield return new WaitForSeconds(intervalBetweenWaves);
+                yield return new WaitForSeconds(restTime);
 
                 _currentWaveIndex++;
             }
@@ -45,8 +75,53 @@ namespace Waves
             Debug.Log("All waves completed!");
         }
 
+        private IEnumerator ShowCountdown(float duration)
+        {
+            for (int i = Mathf.CeilToInt(duration); i > 0; i--)
+            {
+                while (_paused)
+                {
+                    if (countdownText.alpha != 0 && _pausedTween == null)
+                    {
+                        _pausedTween = countdownText
+                            .DOFade(0, 0.5f)
+                            .OnComplete(() => _pausedTween = null);
+                    }
+                    
+                    yield return null;
+                }
+                
+                countdownText.text = i.ToString();
+                countdownText.transform.localScale = Vector3.one * 1.5f;
+                countdownText.DOFade(1, 0.1f);
+                countdownText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
+
+                yield return new WaitForSeconds(1f);
+            }
+            
+            while (_paused)
+            {
+                if (countdownText.alpha != 0 && _pausedTween == null)
+                {
+                    _pausedTween = countdownText
+                        .DOFade(0, 0.5f)
+                        .OnComplete(() => _pausedTween = null);
+                }
+                
+                yield return null;
+            }
+
+            countdownText.text = "GO!";
+            countdownText.transform.localScale = Vector3.one * 1.5f;
+            countdownText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
+
+            yield return new WaitForSeconds(0.5f);
+            countdownText.DOFade(0, 0.5f);
+        }
+        
         void StartWave()
         {
+            horn.Play();
             Debug.Log("Starting wave " +  _currentWaveIndex);
             _activeEnemies.Clear();
 
@@ -57,6 +132,11 @@ namespace Waves
         {
             for (int i = 0; i < wavesInOrder[_currentWaveIndex].maxEnemiesToSpawn; i++)
             {
+                while (_paused)
+                {
+                    yield return null;
+                }
+                
                 SpawnEnemy();
                 yield return new WaitForSeconds(wavesInOrder[_currentWaveIndex].spawnInterval);
             }
@@ -76,12 +156,6 @@ namespace Waves
             
             _activeEnemies.Add(enemy);
             enemy.GetComponent<EnemyBrain>().OnDeath += () => _activeEnemies.Remove(enemy);
-        }
-
-        public static void OnGameOver()
-        {
-            Debug.Log("OnGameOver called");
-            GameOver?.Invoke();
         }
     }
 }

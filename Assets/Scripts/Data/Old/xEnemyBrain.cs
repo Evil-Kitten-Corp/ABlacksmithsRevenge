@@ -134,7 +134,7 @@ namespace Data.Old
                         }
                         else
                         {
-                            EnemyWaveSpawner.OnGameOver();
+                            GameData.Instance.OnGameOver();
                         }
                     }
                 }
