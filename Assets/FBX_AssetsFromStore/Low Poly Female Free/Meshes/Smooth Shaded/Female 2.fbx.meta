@@ -1,5 +1,13 @@
 fileFormatVersion: 2
 guid: cfae68b1fd998c54ea72f691d0499522
+AssetOrigin:
+  serializedVersion: 1
+  productId: 299182
+  packageName: Low Poly Female FREE - Low poly 3D by Shokubutsu
+  packageVersion: 1.0
+  assetPath: Assets/Shokubutsu Studio/Low Poly Female Free/Meshes/Smooth Shaded/Female
+    2.fbx
+  uploadId: 699920
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +24,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -99,7 +105,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
@@ -107,11 +113,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 299182
-  packageName: Low Poly Female FREE - Low poly 3D by Shokubutsu
-  packageVersion: 1.0
-  assetPath: Assets/Shokubutsu Studio/Low Poly Female Free/Meshes/Smooth Shaded/Female
-    2.fbx
-  uploadId: 699920
