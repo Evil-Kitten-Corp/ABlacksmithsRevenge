@@ -1,5 +1,8 @@
-﻿using Data.Structs;
-using Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Brains;
+using Data.Structs;
 using UnityEngine;
 
 namespace Data
@@ -7,99 +10,135 @@ namespace Data
     [CreateAssetMenu(fileName = "Enemy", menuName = "Enemies/Mage", order = 0)]
     public class MageEnemy : Enemy
     {
-        private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Cast = Animator.StringToHash("Cast");
+
+        public GameObject projectilePrefab;
 
         public override void UpdateBehavior(EnemyArgs args)
         {
-            // Mage scans the lane for any defense target
-            bool targetFound = false;
-            int step = args.GridManager.invertSpawnPoints ? 1 : -1;
-            int scanStart = args.EnemyBrain.currentColumn;
-            int scanEnd = args.GridManager.invertSpawnPoints ? args.GridManager.gridWidth - 1 : 0;
+            args.EnemyBrain.attackTimer += Time.deltaTime;
             
-            for (int col = scanStart; args.GridManager.invertSpawnPoints ? col <= scanEnd : col >= scanEnd; col += step)
+            //do we have an enemy?
+            if (args.EnemyBrain.Target)
             {
-                Vector3 cellPos = args.GridManager.gridPositions[col, args.EnemyBrain.laneIndex];
-                
-                if (args.GridManager.IsPositionOccupied(cellPos))
-                {
-                    targetFound = true;
-                    break;
-                }
-            }
-        
-            if (targetFound)
-            {
-                args.EnemyBrain.agent.isStopped = true;
-                args.EnemyBrain.attackTimer += Time.deltaTime;
+                //is our attack cd up?
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {
-                    args.EnemyBrain.GetComponent<Animator>()?.SetTrigger(Attack);
+                    //if can attack, shoot
+                    args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
                     args.EnemyBrain.attackTimer = 0f;
+                }
+            }
+            else //we don't have a target
+            {
+                //same behavior as if we had reached a cell then
+                OnCellReached(args);
+            }
+        }
+
+        private bool Scan(EnemyArgs args)
+        {
+            //let's scan to find the farthest enemy
+            bool targetFound = false;
+
+            if (args.GridManager.invertSpawnPoints)
+            {
+                for (int i = args.EnemyBrain.linha; i < args.GridManager.gridWidth; i++)
+                {
+                    Vector3 cellPos = args.GridManager.gridPositions[i, args.EnemyBrain.coluna];
+
+                    if (args.GridManager.IsPositionOccupied(cellPos))
+                    {
+                        targetFound = true;
+                        args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(cellPos));
+                        break;
+                    }
                 }
             }
             else
             {
-                if (args.EnemyBrain.agent.isStopped)
+                for (int i = args.EnemyBrain.linha; i >= 0; i--)
                 {
-                    args.EnemyBrain.agent.isStopped = false;
+                    Vector3 cellPos = args.GridManager.gridPositions[i, args.EnemyBrain.coluna];
+
+                    if (args.GridManager.IsPositionOccupied(cellPos))
+                    {
+                        targetFound = true;
+                        args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(cellPos));
+                        break;
+                    }
                 }
             }
-        }
 
+            return targetFound;
+        }
+        
         public override void OnCellReached(EnemyArgs args)
         {
+            bool targetFound = Scan(args);
             
+            if (targetFound) //is there enemy?
+            {
+                //check cooldown
+                if (args.EnemyBrain.attackTimer >= attackCooldown)
+                {
+                    //if can attack, shoot
+                    args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
+                    args.EnemyBrain.attackTimer = 0f;
+                }
+                
+                return;
+            }
+            
+            //if no enemy, walk
+            if (args.EnemyBrain.CheckNextPossibleLaneIndex())
+            {
+                args.EnemyBrain.GoToNext();
+            }
         }
 
         public override void DealDamage(EnemyArgs args)
         {
             // Mage deals AOE damage in a cross pattern.
-            // Find the farthest defense in the lane
-            
-            int step = args.GridManager.invertSpawnPoints ? 1 : -1;
-            int scanStart = args.EnemyBrain.currentColumn;
-            int scanEnd = args.GridManager.invertSpawnPoints ? args.GridManager.gridWidth - 1 : 0;
-            int targetCol = -1;
-            
-            for (int col = scanStart; args.GridManager.invertSpawnPoints ? col <= scanEnd : col >= scanEnd; col += step)
+            if (args.EnemyBrain.Target != null)
             {
-                Vector3 cellPos = args.GridManager.gridPositions[col, args.EnemyBrain.laneIndex];
-                if (args.GridManager.IsPositionOccupied(cellPos))
-                {
-                    targetCol = col;
-                    break;
-                }
-            }
-            
-            if (targetCol == -1) 
-                return;
-        
-            // Center cell gets full damage
-            Vector3 centerPos = args.GridManager.gridPositions[targetCol, args.EnemyBrain.laneIndex];
-            if (args.GridManager.IsPositionOccupied(centerPos))
-            {
-                IDamageable defense = args.GridManager.GetTargetOnPosition(centerPos).GetComponent<IDamageable>();
-                defense?.Damage(damage);
-            }
-        
-            // Adjacent cells (up and down in the args.GridManager) get half damage
-            int lane = args.EnemyBrain.laneIndex;
-            
-            int[] dRow = { -1, 1 };
-            
-            foreach (int dr in dRow)
-            {
-                int newRow = lane + dr;
+                // we have a target, now we need to get the units in front, back, right and left
+                // of it (if they even exist)
                 
-                if (newRow >= 0 && newRow < args.GridManager.gridHeight)
+                int targetLinha = args.EnemyBrain.Target.GetComponent<EnemyBrain>().linha;
+                int targetColuna = args.EnemyBrain.Target.GetComponent<EnemyBrain>().coluna;
+
+                Vector3[] possiblePositions = 
                 {
-                    Vector3 adjacentPos = args.GridManager.gridPositions[targetCol, newRow];
-                    
-                    if (args.GridManager.IsPositionOccupied(adjacentPos))
+                    new(targetLinha + 1, targetColuna, 0), // Front
+                    new(targetLinha - 1, targetColuna, 0), // Back
+                    new(targetLinha, targetColuna + 1, 0), // Right
+                    new(targetLinha, targetColuna - 1, 0)  // Left
+                };
+
+                List<GameObject> otherTargets = 
+                    (from pos in possiblePositions 
+                        where args.GridManager.IsPositionOccupied(pos) 
+                        select args.GridManager.GetTargetOnPosition(pos)).ToList();
+
+                // fully dmg the main target
+                if (projectilePrefab != null && args.EnemyBrain.firePoint != null)
+                {
+                    GameObject projectile = Instantiate(projectilePrefab, 
+                        args.EnemyBrain.firePoint.position, Quaternion.identity);
+                    Projectile projScript = projectile.GetComponent<Projectile>();
+                    projScript.Initialize(args.EnemyBrain.Target.transform, damage);
+                }
+                
+                // half dmg the other targets
+                foreach (var t in otherTargets)
+                {
+                    if (projectilePrefab != null && args.EnemyBrain.firePoint != null)
                     {
-                        IDamageable defense = args.GridManager.GetTargetOnPosition(adjacentPos).GetComponent<IDamageable>();
-                        defense?.Damage(damage/2f);
+                        GameObject projectile = Instantiate(projectilePrefab, 
+                            args.EnemyBrain.firePoint.position, Quaternion.identity);
+                        Projectile projScript = projectile.GetComponent<Projectile>();
+                        projScript.Initialize(t.transform, damage / 2f);
                     }
                 }
             }

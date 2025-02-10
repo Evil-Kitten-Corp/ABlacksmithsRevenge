@@ -157,7 +157,5 @@ namespace Placement
                 }
             }
         }
-
-        
     }
 }

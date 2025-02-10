@@ -3,6 +3,7 @@ using AYellowpaper;
 using Brains;
 using Data;
 using Game_Systems;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -15,6 +16,8 @@ namespace Placement
     {
         public InputActionReference[] placeActions;
         public InterfaceReference<IXRRayProvider> rayProvider;
+        
+        public NavMeshSurface navMeshSurface;
         
         private GridManager _gridManager;
         [Header("DEBUG ONLY")] [SerializeField] private GameObject _previewTurret;
@@ -54,23 +57,11 @@ namespace Placement
                     Vector3 closestGridPos = _gridManager.GetClosestGridPosition(rayProvider.Value.rayEndPoint);
                     _previewTurret.transform.position = closestGridPos;
                 }
-                
-                // if (Physics.Raycast(vrController.position, vrController.forward, 
-                //         out RaycastHit hit, 10f)) 
-                // {
-                //     Vector3 closestGridPos = _gridManager.GetClosestGridPosition(hit.point);
-                //     _previewTurret.transform.position = closestGridPos;
-                // }
 
                 if (placeActions.Any(input => input.action.triggered))
                 {
                     PlaceTurret();
                 }
-                
-                // if (placeAction.action.triggered) 
-                // {
-                //     PlaceTurret();
-                // }
             }
         }
 
@@ -94,6 +85,9 @@ namespace Placement
                 Debug.Log("Purchased: " + _placingTurret.name);
                 Destroy(_previewTurret);
                 _previewTurret = null;
+                
+                //rebuild navmesh
+                navMeshSurface.BuildNavMesh();
             }
         }
     }

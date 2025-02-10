@@ -46,6 +46,7 @@ namespace Data
             //check enemy
             if (args.GridManager.IsPositionOccupied(currentCell))
             {
+                args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(currentCell));
                 Debug.Log(currentCell + " is occupied and will be attacked");
                 
                 args.EnemyBrain.attackTimer += Time.deltaTime;
