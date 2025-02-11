@@ -672,7 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PermittedDisplacementAxes: -1
   m_ConstrainedAxisDisplacementMode: 1
-  m_TwoHandedRotationMode: 1
+  m_TwoHandedRotationMode: 0
   m_AllowOneHandedScaling: 1
   m_AllowTwoHandedScaling: 1
   m_OneHandedScaleSpeed: 0.5
@@ -1457,6 +1457,10 @@ PrefabInstance:
     - target: {fileID: 2739030724868961534, guid: 0b0c01f1d50cc2641af3cec2770678a7, type: 3}
       propertyPath: m_Name
       value: Crossbow_Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739030724868961534, guid: 0b0c01f1d50cc2641af3cec2770678a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6973686574709732245, guid: 0b0c01f1d50cc2641af3cec2770678a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2393,7 +2397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1178791450436251564, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_CameraYOffset
-      value: 1.1
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1178791450436251564, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_RequestedTrackingOriginMode
@@ -4070,6 +4074,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ballista
       objectReference: {fileID: 0}
+    - target: {fileID: 6156773842976612748, guid: 83cbd2703c44c81499d08c60ca0323ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6789899488148978486, guid: 83cbd2703c44c81499d08c60ca0323ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.934982
@@ -4932,6 +4940,7 @@ GameObject:
   - component: {fileID: 1237819242}
   - component: {fileID: 1237819241}
   - component: {fileID: 1237819240}
+  - component: {fileID: 1237819243}
   m_Layer: 0
   m_Name: InteractableShovel
   m_TagString: Untagged
@@ -5011,8 +5020,8 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 1371640654}
-  m_SecondaryAttachTransform: {fileID: 36427007}
+  m_AttachTransform: {fileID: 36427007}
+  m_SecondaryAttachTransform: {fileID: 1371640654}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
@@ -5097,8 +5106,8 @@ Transform:
   m_GameObject: {fileID: 1237819239}
   serializedVersion: 2
   m_LocalRotation: {x: -0.07495785, y: -0.70312256, z: 0.70312256, w: 0.07495785}
-  m_LocalPosition: {x: 23.976, y: 1.155, z: -0.18190287}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 23.976, y: 0.825, z: -0.18190287}
+  m_LocalScale: {x: 0.67364115, y: 0.67364115, z: 0.67364115}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3657266793719385324}
@@ -5106,6 +5115,29 @@ Transform:
   - {fileID: 36427007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -257.83002, y: 90, z: -90}
+--- !u!114 &1237819243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237819239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PermittedDisplacementAxes: -1
+  m_ConstrainedAxisDisplacementMode: 1
+  m_TwoHandedRotationMode: 0
+  m_AllowOneHandedScaling: 1
+  m_AllowTwoHandedScaling: 0
+  m_OneHandedScaleSpeed: 0.5
+  m_ThresholdMoveRatioForScale: 0.05
+  m_ClampScaling: 1
+  m_MinimumScaleRatio: 0.25
+  m_MaximumScaleRatio: 2
+  m_ScaleMultiplier: 0.25
 --- !u!1 &1249617917
 GameObject:
   m_ObjectHideFlags: 0
