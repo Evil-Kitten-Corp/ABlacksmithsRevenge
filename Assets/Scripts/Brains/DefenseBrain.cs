@@ -2,7 +2,6 @@ using System;
 using Data;
 using Data.Structs;
 using Effects;
-using Game_Systems;
 using Interfaces;
 using UnityEngine;
 
@@ -20,7 +19,13 @@ namespace Brains
         
         public Transform firePoint;
         private float _fireCooldown;
-        private float _manaTimer;
+        
+        private float _generalTimer;
+        private bool _generalActive;
+        
+        private Renderer _renderer;
+        
+        private bool _paused;
         
         public event Action OnDeath;
 
@@ -28,6 +33,10 @@ namespace Brains
         {
             _defenseVisualState = GetComponent<DefenseVisualState>();
             _defenseAudioState = GetComponent<DefenseAudioState>();
+            _renderer = GetComponent<Renderer>();
+            
+            GameData.Instance.Pause += () => _paused = true;
+            GameData.Instance.Resume += () => _paused = false;
         }
 
         public void AssignDefense(Defense def)
@@ -41,6 +50,9 @@ namespace Brains
 
         private void Update()
         {
+            if (_paused)
+                return;
+            
             if (defenseType != null)
             {
                 if (defenseType is Turret turret)
@@ -49,19 +61,41 @@ namespace Brains
 
                     if (_fireCooldown <= 0)
                     {
-                        turret.OnInterval(new DefenseIntervalArgs(transform, firePoint));
+                        turret.OnInterval(new DefenseIntervalArgs(transform, firePoint, this));
                         _fireCooldown = 1 / turret.fireRate;
                     }
                 }
                 
                 if (defenseType is ManaGenerator manaGenerator)
                 {
-                    _manaTimer += Time.deltaTime;
+                    _generalTimer += Time.deltaTime;
 
-                    if (_manaTimer >= manaGenerator.interval)
+                    if (_generalTimer >= manaGenerator.interval)
                     {
-                        ManaManager.instance.AddMana(manaGenerator.manaPerInterval);
-                        _manaTimer = 0f;
+                        defenseType.Special(new DefenseIntervalArgs(transform, firePoint, this));
+                        _generalTimer = 0f;
+                    }
+                }
+
+                if (defenseType is Trap trap)
+                {
+                    _generalTimer += Time.deltaTime;
+
+                    if (_generalTimer >= trap.timeToActivate)
+                    {
+                        _generalActive = true;
+
+                        if (_renderer.material.color != Color.white)
+                        {
+                            _renderer.material.color = Color.white;
+                        }
+                    }
+                    else
+                    {
+                        if (_renderer.material.color != Color.red)
+                        {
+                            _renderer.material.color = Color.red;
+                        }
                     }
                 }
                 
@@ -124,6 +158,14 @@ namespace Brains
             _defenseVisualState.UpdateVisualState(healthPercentage);
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (_generalActive && other.CompareTag("Enemy"))
+            {
+                defenseType.Special(new DefenseIntervalArgs(transform, firePoint, this));
+            }
+        }
+
         private void OnDrawGizmosSelected()
         {
             if (defenseType is Turret turret)
@@ -131,6 +173,12 @@ namespace Brains
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(transform.position, turret.range);
             }
+        }
+
+        public void FireSpecialVfx(GameObject explosionPrefab)
+        {
+            var exp = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(exp, 2f);
         }
     }
 }

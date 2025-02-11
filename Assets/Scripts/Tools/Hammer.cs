@@ -48,6 +48,7 @@ namespace Tools
             if (health != null) 
             {
                 health.Repair(repairPower);
+                Debug.Log($"Repaired turret {health.name}");
                 audioSource.PlayOneShot(repairSounds[Random.Range(0, repairSounds.Length)]);
             }
         }

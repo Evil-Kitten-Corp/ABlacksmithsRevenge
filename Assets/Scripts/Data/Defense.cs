@@ -15,6 +15,6 @@ namespace Data
         public bool unlocked;
         public Sprite icon;
 
-        public virtual void OnInterval(DefenseIntervalArgs args) {}
+        public virtual void Special(DefenseIntervalArgs args) {}
     }
 }

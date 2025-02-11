@@ -16,7 +16,7 @@ namespace Data
         public float fireRate = 1f;
         public LayerMask enemyLayer;
 
-        public override void OnInterval(DefenseIntervalArgs args)
+        public virtual void OnInterval(DefenseIntervalArgs args)
         {
             GameObject target = FindTarget(args.Transform);
             
