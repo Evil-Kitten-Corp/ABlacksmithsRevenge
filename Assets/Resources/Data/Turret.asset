@@ -15,12 +15,12 @@ MonoBehaviour:
   prefab: {fileID: 8850305557200353546, guid: 33ee190ab4319a2449c6322e4c1fe353, type: 3}
   health: 100
   manaCost: 20
-  unlocked: 0
-  icon: {fileID: 0}
+  unlocked: 1
+  icon: {fileID: 21300000, guid: 17c263f6077f14b218b13656aacd9551, type: 3}
   projectilePrefab: {fileID: 3352468297812342715, guid: c7f5ea282873e6b40a7db0429924adc6, type: 3}
   damage: 20
   range: 5
   fireRate: 1
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128

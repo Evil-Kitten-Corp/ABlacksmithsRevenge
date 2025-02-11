@@ -10,6 +10,8 @@ namespace Data
     public class MageEnemy : Enemy
     {
         private static readonly int Cast = Animator.StringToHash("Cast");
+        
+        public AudioClip[] weaponCastSounds;
 
         public GameObject projectilePrefab;
 
@@ -18,7 +20,7 @@ namespace Data
             args.EnemyBrain.attackTimer += Time.deltaTime;
             
             //do we have an enemy?
-            if (args.EnemyBrain.Target)
+            if (args.EnemyBrain.target)
             {
                 //is our attack cd up?
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
@@ -26,7 +28,7 @@ namespace Data
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
                     
-                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
                     args.EnemyBrain.audioSource.PlayOneShot(clip);
                     
                     args.EnemyBrain.attackTimer = 0f;
@@ -88,7 +90,7 @@ namespace Data
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
                     
-                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
                     args.EnemyBrain.audioSource.PlayOneShot(clip);
                     
                     args.EnemyBrain.attackTimer = 0f;
@@ -107,13 +109,13 @@ namespace Data
         public override void DealDamage(EnemyArgs args)
         {
             // Mage deals AOE damage in a cross pattern.
-            if (args.EnemyBrain.Target != null)
+            if (args.EnemyBrain.target != null)
             {
                 // we have a target, now we need to get the units in front, back, right and left
                 // of it (if they even exist)
                 
-                int targetLinha = args.EnemyBrain.Target.GetComponent<EnemyBrain>().linha;
-                int targetColuna = args.EnemyBrain.Target.GetComponent<EnemyBrain>().coluna;
+                int targetLinha = args.EnemyBrain.target.GetComponent<EnemyBrain>().linha;
+                int targetColuna = args.EnemyBrain.target.GetComponent<EnemyBrain>().coluna;
 
                 Vector3[] possiblePositions = 
                 {
@@ -134,7 +136,7 @@ namespace Data
                     GameObject projectile = Instantiate(projectilePrefab, 
                         args.EnemyBrain.firePoint.position, Quaternion.identity);
                     Projectile projScript = projectile.GetComponent<Projectile>();
-                    projScript.Initialize(args.EnemyBrain.Target.transform, damage);
+                    projScript.Initialize(args.EnemyBrain.target.transform, damage, weaponHitSounds);
                 }
                 
                 // half dmg the other targets
@@ -145,7 +147,7 @@ namespace Data
                         GameObject projectile = Instantiate(projectilePrefab, 
                             args.EnemyBrain.firePoint.position, Quaternion.identity);
                         Projectile projScript = projectile.GetComponent<Projectile>();
-                        projScript.Initialize(t.transform, damage / 2f);
+                        projScript.Initialize(t.transform, damage / 2f, weaponHitSounds);
                     }
                 }
             }

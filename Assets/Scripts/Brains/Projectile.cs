@@ -5,15 +5,25 @@ namespace Brains
 {
     public class Projectile : MonoBehaviour
     {
+        public AudioSource source;
         public float speed = 10f;
         
         private float _damage;
         private Transform _target;
+        
+        private AudioClip _impactSound;
 
-        public void Initialize(Transform target, float damage)
+        public void Initialize(Transform target, float damage, AudioClip[] weaponHitSounds)
         {
             _target = target;
             _damage = damage;
+
+            if (weaponHitSounds == null)
+            {
+                return;
+            }
+
+            _impactSound = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
         }
 
         private void Update()
@@ -47,6 +57,7 @@ namespace Brains
                 IDamageable enemy = _target.GetComponent<IDamageable>();
 
                 enemy?.Damage(_damage);
+                source.PlayOneShot(_impactSound);
             }
         
             Destroy(gameObject);

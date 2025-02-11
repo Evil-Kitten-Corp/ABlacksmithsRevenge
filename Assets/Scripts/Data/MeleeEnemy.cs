@@ -19,7 +19,7 @@ namespace Data
                 return;
             }
             
-            if (args.EnemyBrain.Target)
+            if (args.EnemyBrain.target)
             {
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {

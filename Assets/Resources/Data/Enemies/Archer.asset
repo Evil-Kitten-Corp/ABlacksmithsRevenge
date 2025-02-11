@@ -17,3 +17,47 @@ MonoBehaviour:
   speed: 1
   damage: 25
   attackCooldown: 1
+  damageSounds:
+  - {fileID: 8300000, guid: 90f7d53d6c99bc145a12a4b7dfeadc97, type: 3}
+  - {fileID: 8300000, guid: 0111fb6579343b340922e83102820a2d, type: 3}
+  - {fileID: 8300000, guid: be7adcaa70291b244bc5f4ae427ac43e, type: 3}
+  - {fileID: 8300000, guid: 93e06e46f53e9fb4da16faa7f8475066, type: 3}
+  - {fileID: 8300000, guid: 2e3c724438d486b44b7afff2d3fd298e, type: 3}
+  - {fileID: 8300000, guid: 446f33313c6140147b3d6fb0b532d00a, type: 3}
+  - {fileID: 8300000, guid: bf6e77999755fca45b0d7a61e3cc00c5, type: 3}
+  - {fileID: 8300000, guid: 3c4ffab74877fe44a8f8be6ec659e4b4, type: 3}
+  - {fileID: 8300000, guid: 4da6b5ce08e768547b76440909b3ef5c, type: 3}
+  - {fileID: 8300000, guid: 1ec5a70a8a26b0e4c81ec4edef83c863, type: 3}
+  - {fileID: 8300000, guid: 93042bf2d4ffe2d44a7e0053b17cf5ee, type: 3}
+  - {fileID: 8300000, guid: 07277a9f43b480148b563be273f9d013, type: 3}
+  - {fileID: 8300000, guid: 9a83a1afa8301bc449c7b2d8963d4db3, type: 3}
+  - {fileID: 8300000, guid: 5d7dae1a73c2dd944bfd44cfad5c38f6, type: 3}
+  - {fileID: 8300000, guid: bbe0f54f12e44e540af6f2d7ab1e44a6, type: 3}
+  weaponHitSounds:
+  - {fileID: 8300000, guid: 71412556bc10a8947aa18328e8515abf, type: 3}
+  - {fileID: 8300000, guid: 7eb71321f43ef4e4780a019141f6c9d3, type: 3}
+  - {fileID: 8300000, guid: 56fa08898603ad6439ef4e1984eb1213, type: 3}
+  - {fileID: 8300000, guid: 6167062727b00444a9dbfd97afd12bda, type: 3}
+  - {fileID: 8300000, guid: d8ecda114b67d1540bfd809bf7002155, type: 3}
+  - {fileID: 8300000, guid: e84e6b5dfcddf5743ad3b9f8b033dbbc, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 2fe715176780ae743b7fe8a802ba5c94, type: 3}
+  - {fileID: 8300000, guid: 0e3dbcbd1113bd64ebb0fa1b64221597, type: 3}
+  - {fileID: 8300000, guid: 723480f830687d74f9cf0fa606feef2a, type: 3}
+  - {fileID: 8300000, guid: 59f688287a7850f4a9728ea6628f7d1f, type: 3}
+  - {fileID: 8300000, guid: b1e8a312ce8183442aacd024ebe5ba1d, type: 3}
+  - {fileID: 8300000, guid: 16a0241daf081d14895d231921ae12d1, type: 3}
+  - {fileID: 8300000, guid: b3b86b916acce604eb8a27dd2df34ba1, type: 3}
+  - {fileID: 8300000, guid: 2451e5e2c51ed13488b9ccf98503c5ff, type: 3}
+  - {fileID: 8300000, guid: 9ce604b553887074981163626f971628, type: 3}
+  - {fileID: 8300000, guid: d226440a6cd48fe4e9169f9e9cb6072e, type: 3}
+  footstepSounds:
+  - {fileID: 8300000, guid: 7dce89813a80de1498978b9667f6d5c3, type: 3}
+  - {fileID: 8300000, guid: 4e326b38240058a42a1f9c294eaace35, type: 3}
+  - {fileID: 8300000, guid: 8906873e22442df49aa3f234fdc02f29, type: 3}
+  - {fileID: 8300000, guid: 1eb10ccd32abdef43afe6bd0198654bb, type: 3}
+  - {fileID: 8300000, guid: caa6fa719da129942bc7ed2673b6b138, type: 3}
+  weaponCastSounds:
+  - {fileID: 8300000, guid: 3c592e452b8267749b1c1452d98a0b27, type: 3}
+  - {fileID: 8300000, guid: 19517f42e9d4a2144ae9999aaa3068a9, type: 3}
+  projectilePrefab: {fileID: 3352468297812342715, guid: c7f5ea282873e6b40a7db0429924adc6, type: 3}

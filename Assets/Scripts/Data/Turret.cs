@@ -41,7 +41,7 @@ namespace Data
                 GameObject projectile = Instantiate(projectilePrefab, 
                     firePoint.position, Quaternion.identity);
                 Projectile projScript = projectile.GetComponent<Projectile>();
-                projScript.Initialize(target.transform, damage);
+                projScript.Initialize(target.transform, damage, null);
             }
         }
     }
