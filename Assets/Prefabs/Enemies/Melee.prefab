@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7844507947672936646}
   - component: {fileID: 1181109754239693273}
   m_Layer: 7
-  m_Name: Enemy Test
+  m_Name: Melee
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

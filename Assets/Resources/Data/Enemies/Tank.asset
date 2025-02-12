@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0c0d0685443db9f52abb37faf1478, type: 3}
   m_Name: Tank
   m_EditorClassIdentifier: 
-  prefab: {fileID: 13917699037941000, guid: db25047a1002cf8499e4354bc36c8eca, type: 3}
+  prefab: {fileID: 13917699037941000, guid: c66c911a9e9f2dc4a8c06fb1e5c255af, type: 3}
   health: 200
   speed: 0.5
   damage: 10
