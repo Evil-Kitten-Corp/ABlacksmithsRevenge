@@ -68,6 +68,7 @@ namespace Data
                 agent = gameObject.AddComponent<NavMeshAgent>();
 
             agent.speed = _enemySo.speed;
+            agent.stoppingDistance = _enemySo.minRange;
 
             int spawnColumn;
             int spawnRow;

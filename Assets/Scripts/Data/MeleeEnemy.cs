@@ -9,6 +9,7 @@ namespace Data
     public class MeleeEnemy : Enemy
     {
         private static readonly int Attack = Animator.StringToHash("Attack");
+
         
         public override void UpdateBehavior(EnemyArgs args)
         {

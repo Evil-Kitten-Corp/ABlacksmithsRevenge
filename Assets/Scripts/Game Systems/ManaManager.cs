@@ -29,7 +29,6 @@ namespace Game_Systems
 
         private void Start()
         {
-            currentMana = 0;
             InvokeRepeating(nameof(RegenerateMana), 1f, manaRegenTime);
         }
 

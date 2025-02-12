@@ -33,12 +33,12 @@ namespace Data
             
             foreach (var audioSource in _audioSources)
             {
-                sequence.Append(audioSource.DOFade(0f, 1f));
+                sequence.Append(audioSource.DOFade(0f, 3f));
             }
 
             sequence.Play();
             
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(3f);
             
             SceneManager.LoadScene(0);
         }

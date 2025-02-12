@@ -5540,11 +5540,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4911705236914629338, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -36.81
       objectReference: {fileID: 0}
     - target: {fileID: 4911705236914629338, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 19.57
       objectReference: {fileID: 0}
     - target: {fileID: 5365482949523158117, guid: 44ec5f1835e853e4b9b7f41229a25950, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10215,6 +10215,14 @@ PrefabInstance:
       propertyPath: alternativeInputAction
       value: 
       objectReference: {fileID: -8212880625336903624, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - target: {fileID: 7807946991711030965, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      propertyPath: currentMana
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807946991711030965, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      propertyPath: manaRegenRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8248629864731809888, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: m_Name
       value: Manager

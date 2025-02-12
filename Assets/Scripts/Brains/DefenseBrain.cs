@@ -56,9 +56,14 @@ namespace Brains
         {
             if (_paused)
                 return;
-            
+
             if (defenseType != null)
             {
+                if (currentHealth <= 0)
+                {
+                    Destroy();
+                }
+
                 if (defenseType is Turret turret)
                 {
                     _fireCooldown -= Time.deltaTime;
@@ -109,11 +114,6 @@ namespace Brains
                         }
                     }
                 }
-                
-                if (defenseState == DefenseState.Destroyed)
-                {
-                    Destroy();
-                }
             }
         }
 
@@ -127,7 +127,8 @@ namespace Brains
             }
             
             defenseType = null;
-            Destroy(gameObject, 2f);
+            Debug.Log("Calling destroy");
+            Destroy(gameObject, 1f);
         }
 
         public void ResetFireCooldown()
@@ -146,9 +147,9 @@ namespace Brains
             {
                 defenseState = DefenseState.Damaged;
             }
-            else if (currentHealth == 0)
+            else if (currentHealth <= 0)
             {
-                defenseState = DefenseState.Destroyed;
+                Destroy();
             }
             
             UpdateVisualState();

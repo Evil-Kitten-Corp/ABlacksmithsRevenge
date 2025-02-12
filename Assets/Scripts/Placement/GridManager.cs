@@ -42,6 +42,7 @@ namespace Placement
                 for (int y = 0; y < gridHeight; y++) 
                 {
                     Vector3 worldPos = transform.position + new Vector3(x * cellSize, 0, y * (cellSize + rowSpacing));
+                    worldPos = new Vector3(worldPos.x, 0, worldPos.z);
                     gridPositions[x, y] = worldPos;
 
                     if (invertSpawnPoints)
