@@ -961,6 +961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6800815093959782022}
+  - component: {fileID: 6135027923259566845}
   - component: {fileID: 8178911700963586764}
   - component: {fileID: 7910519564858060481}
   - component: {fileID: 1691339235886134819}
@@ -990,6 +991,33 @@ Transform:
   - {fileID: 5137276296854978602}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!54 &6135027923259566845
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6472588519553018238}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &8178911700963586764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +1034,6 @@ MonoBehaviour:
   firePoint: {fileID: 6800815093959782022}
   audioSource: {fileID: 4523046624860579215}
   defenseType: {fileID: 0}
-  defenseState: 0
   currentHealth: 0
 --- !u!95 &7910519564858060481
 Animator:
@@ -1049,7 +1076,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 2, y: 2, z: 3.63}
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!82 &4523046624860579215
 AudioSource:

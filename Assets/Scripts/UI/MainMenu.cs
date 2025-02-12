@@ -23,7 +23,16 @@ namespace UI
             
             if (PlayerPrefs.HasKey("FirstTime"))
             {
-                retryText.text = PlayerPrefs.GetInt("FirstTime") == 0 ? "Start" : "Retry";
+                if (PlayerPrefs.GetInt("FirstTime") == 0)
+                {
+                    retryText.text = "Start";
+                }
+                else
+                {
+                    int wv = PlayerPrefs.GetInt("WaveIndex");
+
+                    retryText.text = $"Retry Wave {wv + 1}";
+                }
             }
             else
             {
@@ -54,12 +63,12 @@ namespace UI
             
             foreach (var audioSource in _audioSources)
             {
-                sequence.Append(audioSource.DOFade(0f, 1f));
+                sequence.Append(audioSource.DOFade(0f, 2f));
             }
 
             sequence.Play();
             
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2.5f);
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }

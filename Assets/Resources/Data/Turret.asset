@@ -20,8 +20,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3352468297812342715, guid: c7f5ea282873e6b40a7db0429924adc6, type: 3}
   shootSound: {fileID: 8300000, guid: e18aaf71f5c334d4db73052dc1905ce1, type: 3}
   damage: 20
-  range: 5
   fireRate: 1
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1
+  halfExtents: {x: 3.1, y: 0.65, z: 0.5}
+  originOffset: {x: -3.35, y: 0.31, z: 0}

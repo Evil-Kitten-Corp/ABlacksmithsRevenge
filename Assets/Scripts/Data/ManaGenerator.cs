@@ -12,7 +12,18 @@ namespace Data
         public float interval = 5f;
         public AudioClip[] onGenManaSounds;
 
-        public override void Special(DefenseIntervalArgs args)
+        public override void Interval(DefenseArgs args)
+        {
+            args.Brain.generalTimer += Time.deltaTime;
+
+            if (args.Brain.generalTimer >= interval)
+            {
+                Special(args);
+                args.Brain.generalTimer = 0f;
+            }
+        }
+
+        public override void Special(DefenseArgs args)
         {
             ManaManager.instance.AddMana(manaPerInterval);
             args.Brain.PlaySound(onGenManaSounds[Random.Range(0, onGenManaSounds.Length)]);

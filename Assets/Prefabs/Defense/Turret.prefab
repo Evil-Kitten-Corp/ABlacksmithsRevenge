@@ -2121,7 +2121,6 @@ MonoBehaviour:
   firePoint: {fileID: 8091813922333648938}
   audioSource: {fileID: 4002686530320679654}
   defenseType: {fileID: 0}
-  defenseState: 0
   currentHealth: 0
 --- !u!95 &79264536453042973
 Animator:

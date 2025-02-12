@@ -20,6 +20,6 @@ MonoBehaviour:
   explosionPrefab: {fileID: 1444736189593238762, guid: 3a5b4f971c10bc840b74bdce5de5599e, type: 3}
   damage: 1000
   timeToActivate: 3
-  explosionRadius: 10
-  explodeSound: {fileID: 8300000, guid: bcc37603912f5b04c9bba4719e25c91e, type: 3}
+  explosionRadius: 8
+  explodeSound: {fileID: 8300000, guid: 28df94634c6822147b36904aeb5951fb, type: 3}
   onReadySound: {fileID: 8300000, guid: ad093f5cb99776945bb026682a19dd1b, type: 3}

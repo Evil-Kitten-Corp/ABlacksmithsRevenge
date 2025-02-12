@@ -3,16 +3,12 @@ using UnityEngine;
 
 namespace Data.Structs
 {
-    public struct DefenseIntervalArgs
+    public struct DefenseArgs
     {
         public readonly DefenseBrain Brain;
-        public readonly Transform Transform;
-        public readonly Transform FirePoint;
 
-        public DefenseIntervalArgs(Transform transform, Transform firePoint, DefenseBrain brain)
+        public DefenseArgs(DefenseBrain brain)
         {
-            Transform = transform;
-            FirePoint = firePoint;
             Brain = brain;
         }
     }

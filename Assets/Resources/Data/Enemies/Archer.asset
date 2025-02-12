@@ -17,6 +17,7 @@ MonoBehaviour:
   speed: 1
   damage: 25
   attackCooldown: 1
+  minRange: 10
   damageSounds:
   - {fileID: 8300000, guid: 90f7d53d6c99bc145a12a4b7dfeadc97, type: 3}
   - {fileID: 8300000, guid: 0111fb6579343b340922e83102820a2d, type: 3}

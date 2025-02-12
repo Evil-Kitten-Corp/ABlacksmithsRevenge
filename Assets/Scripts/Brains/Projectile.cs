@@ -43,10 +43,6 @@ namespace Brains
                 {
                     HitTarget();
                 }
-                else
-                {
-                    Destroy(gameObject);
-                }
             }
         }
 

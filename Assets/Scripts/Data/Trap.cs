@@ -15,22 +15,72 @@ namespace Data
         public AudioClip explodeSound;
         public AudioClip onReadySound;
 
-        public override void Special(DefenseIntervalArgs args)
+        public override void Interval(DefenseArgs args)
+        {
+            var b = args.Brain;
+            
+            if (args.Brain.generalActive == false)
+            {
+                b.generalTimer += Time.deltaTime;
+
+                if (b.generalTimer >= timeToActivate)
+                {
+                    if (b.modelRenderers[0].material.color != Color.white)
+                    {
+                        foreach (var m in b.modelRenderers)
+                        {
+                            m.material.color = Color.white;
+                        }
+                    }
+                        
+                    b.PlaySound(onReadySound);
+                        
+                    Debug.Log("Trap ready");
+                    b.generalActive = true;
+                }
+                else
+                {
+                    if (b.modelRenderers[0].material.color != Color.red)
+                    {
+                        foreach (var m in b.modelRenderers)
+                        {
+                            m.material.color = Color.red;
+                        }
+                    }
+                }
+            }
+        }
+
+        public override void Special(DefenseArgs args)
         {
             args.Brain.FireSpecialVfx(explosionPrefab);
             
-            var enemies = Physics.OverlapSphere(args.Transform.position, explosionRadius);
+            var enemies = Physics.OverlapSphere(args.Brain.transform.position, explosionRadius);
 
             foreach (var enemy in enemies)
             {
                 if (enemy.CompareTag("Enemy"))
                 {
-                    enemy.GetComponent<IDamageable>().Damage(damage);
+                    if (enemy.TryGetComponent<IDamageable>(out var id))
+                    {
+                        id.Damage(damage);
+                    }
                 }
             }
             
             args.Brain.PlaySound(explodeSound);
-            Destroy(args.Brain.gameObject, 1f);
+            
+            Transform[] model = args.Brain.transform.GetComponentsInChildren<Transform>();
+
+            foreach (var t in model)
+            {
+                if (t.gameObject != args.Brain.gameObject)
+                {
+                    t.gameObject.SetActive(false);
+                }
+            }
+            
+            Destroy(args.Brain.gameObject, 2f);
         }
     }
 }

@@ -12,42 +12,47 @@ namespace Brains
     {
         public Animator animator;
         public Transform firePoint;
-        private Renderer[] _modelRenderers;
         public AudioSource audioSource;
         
         [Header("Debug Only")] 
         [SerializeField] private Defense defenseType;
-        [SerializeField] private DefenseState defenseState;
         [SerializeField] private float currentHealth;
         
         private DefenseVisualState _defenseVisualState;
         private DefenseAudioState _defenseAudioState;
-        
-        private float _fireCooldown;
-        
-        private float _generalTimer;
-        private bool _generalActive;
-        
+
         private bool _paused;
-        
+        private Renderer[] _modelRenderers;
+
+        public float fireCooldown { get; set; }
+
+        public float generalTimer { get; set; }
+
+        public bool generalActive { get; set; }
+
+        public Renderer[] modelRenderers => _modelRenderers;
+
         public event Action OnDeath;
 
         private void Start()
         {
             _defenseVisualState = GetComponent<DefenseVisualState>();
             _defenseAudioState = GetComponent<DefenseAudioState>();
+            _modelRenderers = GetComponentsInChildren<Renderer>();
             
             GameData.Instance.Pause += () => _paused = true;
             GameData.Instance.Resume += () => _paused = false;
-            
-            _modelRenderers = GetComponentsInChildren<Renderer>();
+
+            if (defenseType != null)
+            {
+                AssignDefense(defenseType);
+            }
         }
 
         public void AssignDefense(Defense def)
         {
             defenseType = def;
             currentHealth = defenseType.health;
-            defenseState = DefenseState.Pristine;
         }
         
         public Defense GetDefenseType() => defenseType;
@@ -63,57 +68,8 @@ namespace Brains
                 {
                     Destroy();
                 }
-
-                if (defenseType is Turret turret)
-                {
-                    _fireCooldown -= Time.deltaTime;
-
-                    if (_fireCooldown <= 0)
-                    {
-                        turret.OnInterval(new DefenseIntervalArgs(transform, firePoint, this));
-                    }
-                }
                 
-                if (defenseType is ManaGenerator manaGenerator)
-                {
-                    _generalTimer += Time.deltaTime;
-
-                    if (_generalTimer >= manaGenerator.interval)
-                    {
-                        defenseType.Special(new DefenseIntervalArgs(transform, firePoint, this));
-                        _generalTimer = 0f;
-                    }
-                }
-
-                if (defenseType is Trap trap && !_generalActive)
-                {
-                    _generalTimer += Time.deltaTime;
-
-                    if (_generalTimer >= trap.timeToActivate)
-                    {
-                        if (_modelRenderers[0].material.color != Color.white)
-                        {
-                            foreach (var m in _modelRenderers)
-                            {
-                                m.material.color = Color.white;
-                            }
-                        }
-                        
-                        PlaySound(trap.onReadySound);
-                        
-                        _generalActive = true;
-                    }
-                    else
-                    {
-                        if (_modelRenderers[0].material.color != Color.red)
-                        {
-                            foreach (var m in _modelRenderers)
-                            {
-                                m.material.color = Color.red;
-                            }
-                        }
-                    }
-                }
+                defenseType.Interval(new DefenseArgs(this));
             }
         }
 
@@ -121,10 +77,7 @@ namespace Brains
         {
             OnDeath?.Invoke();
 
-            if (defenseType is Wall wall)
-            {
-                wall.PlayOnDestroySound(this);
-            }
+            defenseType.OnDeath(new DefenseArgs(this));
             
             defenseType = null;
             Debug.Log("Calling destroy");
@@ -133,25 +86,12 @@ namespace Brains
 
         public void ResetFireCooldown()
         {
-            if (defenseType is Turret turret)
-            {
-                _fireCooldown = 1 / turret.fireRate;
-            }
+            defenseType.ResetCooldown(new DefenseArgs(this));
         }
         
         public void Damage(float damage)
         {
             currentHealth -= damage;
-
-            if (currentHealth <= defenseType.health * .5f)
-            {
-                defenseState = DefenseState.Damaged;
-            }
-            else if (currentHealth <= 0)
-            {
-                Destroy();
-            }
-            
             UpdateVisualState();
         }
         
@@ -159,15 +99,6 @@ namespace Brains
         {
             float oldHealth = currentHealth;
             currentHealth = Mathf.Min(currentHealth + amount, defenseType.health);
-            
-            if (currentHealth <= defenseType.health * .5f)
-            {
-                defenseState = DefenseState.Damaged;
-            }
-            else if (currentHealth > defenseType.health * .5f)
-            {
-                defenseState = DefenseState.Pristine;
-            }
             
             if (currentHealth > oldHealth)
             {
@@ -192,18 +123,28 @@ namespace Brains
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_generalActive && other.CompareTag("Enemy"))
+            if (generalActive && other.CompareTag("Enemy"))
             {
-                defenseType.Special(new DefenseIntervalArgs(transform, firePoint, this));
+                defenseType.Special(new DefenseArgs(this));
             }
         }
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             if (defenseType is Turret turret)
             {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.position, turret.range);
+                Gizmos.color = Color.red;
+                
+                if (Application.isPlaying)
+                    Gizmos.DrawWireCube(transform.position + turret.originOffset, turret.halfExtents * 2);
+            }
+
+            if (defenseType is Trap trap)
+            {
+                Gizmos.color = Color.yellow;
+                
+                if (Application.isPlaying)
+                    Gizmos.DrawWireSphere(transform.position, trap.explosionRadius);
             }
         }
 
@@ -215,7 +156,7 @@ namespace Brains
         public void FireSpecialVfx(GameObject explosionPrefab)
         {
             var exp = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            Destroy(exp, 2f);
+            Destroy(exp, 2.5f);
         }
     }
 }
