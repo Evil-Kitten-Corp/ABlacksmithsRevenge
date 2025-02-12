@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Data;
 using Game_Systems;
@@ -22,18 +23,28 @@ namespace UI
         public GameObject buttonPrefab;
         public float wristShakeThreshold = 2.0f;
 
-        public bool useAlternativeInput;
-        public InputActionReference alternativeInputAction;
+        public InputActionReference input;
+        public GameObject placingGameObject;
 
         private float _lastShakeTime;
         private Vector3 _lastAccel;
         private readonly List<Defense> _buyableUnits = new();
         private ManaManager _manaManager;
         private TurretPlacer _turretPlacer;
+        
+        private bool _placing;
 
         private void Start()
         {
             EnemyWave.OnRewardUnlocked += PopulateButtons;
+            
+            _turretPlacer.OnTurretPlaced += () =>
+            {
+                placingGameObject.SetActive(false);
+                _placing = false;
+            };
+            
+            placingGameObject.SetActive(false);
             
             _turretPlacer = FindAnyObjectByType<TurretPlacer>();
             _manaManager = ManaManager.instance;
@@ -46,22 +57,15 @@ namespace UI
 
         private void Update()
         {
-            if (useAlternativeInput)
+            if (input.action.triggered)
             {
-                if (alternativeInputAction.action.triggered)
-                {
-                    Debug.Log("Menu toggled via alt input");
-                    ToggleMenu();
-                }
+                ToggleMenu();
             }
-            else
-            {
-                DetectWristShake(); 
-            }
-
+            
             UpdateManaUI();
         }
 
+        [Obsolete]
         private void DetectWristShake()
         {
             Vector3 accel = Input.acceleration;
@@ -122,6 +126,8 @@ namespace UI
             {
                 _turretPlacer.StartPlacing(unit);
                 UpdateButtonStates();
+                placingGameObject.SetActive(true);
+                _placing = true;
             }
         }
 
@@ -139,6 +145,16 @@ namespace UI
         {
             turretTab.SetActive(toTurretTab);
             cameraTab.SetActive(!toTurretTab);
+
+            switch (toTurretTab)
+            {
+                case true when _placing:
+                    placingGameObject.SetActive(true);
+                    break;
+                case false when _placing:
+                    placingGameObject.SetActive(false);
+                    break;
+            }
         }
     }
 }

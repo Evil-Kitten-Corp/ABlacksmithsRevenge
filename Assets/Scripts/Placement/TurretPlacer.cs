@@ -1,23 +1,20 @@
+using System;
 using System.Linq;
 using AYellowpaper;
 using Brains;
 using Data;
 using Game_Systems;
-using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using UnityEngine.XR.Interaction.Toolkit.Interactors.Casters;
 
 namespace Placement
 {
     public class TurretPlacer : MonoBehaviour
     {
+        public event Action OnTurretPlaced;
         public InputActionReference[] placeActions;
         public InterfaceReference<IXRRayProvider> rayProvider;
-        
-        public NavMeshSurface navMeshSurface;
         
         private GridManager _gridManager;
         [Header("DEBUG ONLY")] [SerializeField] private GameObject _previewTurret;
@@ -69,7 +66,7 @@ namespace Placement
         {
             Vector3 placementPos = _previewTurret.transform.position;
             
-            Collider[] colliders = Physics.OverlapSphere(placementPos, 0.5f);
+            Collider[] colliders = Physics.OverlapSphere(placementPos, 1f);
             
             if (colliders.Any(col => col.CompareTag("Enemy")))
             {
@@ -86,8 +83,7 @@ namespace Placement
                 Destroy(_previewTurret);
                 _previewTurret = null;
                 
-                //rebuild navmesh
-                navMeshSurface.BuildNavMesh();
+                OnTurretPlaced?.Invoke();
             }
         }
     }

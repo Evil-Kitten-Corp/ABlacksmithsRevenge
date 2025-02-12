@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Textures/kenney_fantasy-ui-borders/Vector/fantasy-ui-borders.svg.meta
 guid: 560ef658fe6a3ea4d885fe0e0a60ea16
+========
+guid: 89d1234a230362e4ea92007bd14f5650
+folderAsset: yes
+>>>>>>>> bow:Assets/Audio.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

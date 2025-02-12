@@ -16,7 +16,7 @@ namespace Data
         public float fireRate = 1f;
         public LayerMask enemyLayer;
 
-        public override void OnInterval(DefenseIntervalArgs args)
+        public virtual void OnInterval(DefenseIntervalArgs args)
         {
             GameObject target = FindTarget(args.Transform);
             
@@ -41,7 +41,7 @@ namespace Data
                 GameObject projectile = Instantiate(projectilePrefab, 
                     firePoint.position, Quaternion.identity);
                 Projectile projScript = projectile.GetComponent<Projectile>();
-                projScript.Initialize(target.transform, damage);
+                projScript.Initialize(target.transform, damage, null);
             }
         }
     }

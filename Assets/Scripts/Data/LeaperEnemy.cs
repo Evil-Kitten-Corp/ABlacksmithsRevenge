@@ -10,6 +10,9 @@ namespace Data
     public class LeaperEnemy : Enemy
     {
         private static readonly int Attack = Animator.StringToHash("Attack");
+        
+        public AudioClip jumpSound;
+        public AudioClip landSound;
 
         public override void UpdateBehavior(EnemyArgs args)
         {
@@ -21,7 +24,7 @@ namespace Data
                 return;
             }
             
-            if (args.EnemyBrain.Target)
+            if (args.EnemyBrain.target)
             {
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {
@@ -116,6 +119,7 @@ namespace Data
             float elapsedTime = 0f;
             Vector3 startPosition = args.EnemyBrain.transform.position;
             Vector3 peakPosition = (startPosition + targetPosition) / 2 + Vector3.up * 2f;
+            args.EnemyBrain.walkingSource.PlayOneShot(jumpSound);
 
             while (elapsedTime < jumpTime)
             {
@@ -128,6 +132,7 @@ namespace Data
                 yield return null;
             }
 
+            args.EnemyBrain.walkingSource.PlayOneShot(landSound);
             // reactivate NavMeshAgent
             args.EnemyBrain.agent.enabled = true;
             args.EnemyBrain.agent.isStopped = false;

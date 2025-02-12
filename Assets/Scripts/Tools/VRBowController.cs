@@ -41,7 +41,7 @@ namespace Tools
             {
                 Vector3 midPointLocalSpace = midPointParent.InverseTransformPoint(midPointGrabObject.position);
                 
-                float midPointLocalZAbs = Mathf.Abs(midPointLocalSpace.z);
+                float midPointLocalZAbs = Mathf.Abs(midPointLocalSpace.x);
 
                 _previousStrength = _strength;
                 
@@ -55,7 +55,7 @@ namespace Tools
 
         private void HandlePulling(float midPointLocalZAbs, Vector3 midPointLocalSpace)
         {
-            if (midPointLocalSpace.z < 0 && midPointLocalZAbs < bowStringStretchLimit)
+            if (midPointLocalSpace.x < 0 && midPointLocalZAbs < bowStringStretchLimit)
             {
                 if (audioSource.isPlaying == false && _strength <= 0.01f)
                 {
@@ -63,7 +63,7 @@ namespace Tools
                 }
                 
                 _strength = Remap(midPointLocalZAbs, 0, bowStringStretchLimit, 0, 1);
-                midPointVisualObject.localPosition = new Vector3(0, 0, midPointLocalSpace.z);
+                midPointVisualObject.localPosition = new Vector3(midPointLocalSpace.x, 0, 0);
 
                 PlayStringPullingSound();
             }
@@ -97,8 +97,9 @@ namespace Tools
 
         private void HandleStringPulledBack(float midPointLocalZAbs, Vector3 midPointLocalSpace)
         {
-            if (midPointLocalSpace.z < 0 && midPointLocalZAbs >= bowStringStretchLimit)
+            if (midPointLocalSpace.x < 0 && midPointLocalZAbs >= bowStringStretchLimit)
             {
+                Debug.Log("Pushed past limit");
                 audioSource.Pause();
                 _strength = 1;
                 midPointVisualObject.localPosition = new Vector3(0, 0, -bowStringStretchLimit);
@@ -107,8 +108,9 @@ namespace Tools
 
         private void HandleStringPushedBack(Vector3 midPointLocalSpace)
         {
-            if (midPointLocalSpace.z >= 0)
+            if (midPointLocalSpace.x >= 0)
             {
+                Debug.Log("Pushed way too much");
                 audioSource.pitch = 1;
                 audioSource.Stop();
                 _strength = 0;
@@ -118,12 +120,14 @@ namespace Tools
 
         private void PrepareBowString(SelectEnterEventArgs arg0)
         {
+            Debug.Log($"Pulling");
             _interactor = arg0.interactorObject.transform;
             onBowPulled?.Invoke();
         }
 
         private void ResetBowString(SelectExitEventArgs arg0)
         {
+            Debug.Log("Resetting bow");
             onBowReleased?.Invoke(_strength);
             _strength = 0;
             _previousStrength = 0;
