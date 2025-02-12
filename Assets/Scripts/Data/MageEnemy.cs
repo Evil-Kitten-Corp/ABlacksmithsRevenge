@@ -9,10 +9,9 @@ namespace Data
     [CreateAssetMenu(fileName = "Enemy", menuName = "Enemies/Mage", order = 0)]
     public class MageEnemy : Enemy
     {
-        private static readonly int Cast = Animator.StringToHash("Cast");
+        private static readonly int Cast = Animator.StringToHash("Attack");
         
         public AudioClip[] weaponCastSounds;
-
         public GameObject projectilePrefab;
 
         public override void UpdateBehavior(EnemyArgs args)
@@ -23,16 +22,7 @@ namespace Data
             if (args.EnemyBrain.target)
             {
                 //is our attack cd up?
-                if (args.EnemyBrain.attackTimer >= attackCooldown)
-                {
-                    //if can attack, shoot
-                    args.EnemyBrain.animator.SetTrigger(Cast);
-                    
-                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
-                    args.EnemyBrain.audioSource.PlayOneShot(clip);
-                    
-                    args.EnemyBrain.attackTimer = 0f;
-                }
+                TryAttack(args.EnemyBrain);
             }
             else //we don't have a target
             {
@@ -54,8 +44,15 @@ namespace Data
 
                     if (args.GridManager.IsPositionOccupied(cellPos))
                     {
+                        GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
+
+                        if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
+                        {
+                            continue;
+                        }
+                        
                         targetFound = true;
-                        args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(cellPos));
+                        args.EnemyBrain.AcquireTarget(target);
                         break;
                     }
                 }
@@ -68,8 +65,15 @@ namespace Data
 
                     if (args.GridManager.IsPositionOccupied(cellPos))
                     {
+                        GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
+
+                        if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
+                        {
+                            continue;
+                        }
+                        
                         targetFound = true;
-                        args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(cellPos));
+                        args.EnemyBrain.AcquireTarget(target);
                         break;
                     }
                 }
@@ -77,25 +81,29 @@ namespace Data
 
             return targetFound;
         }
+
+        private void TryAttack(EnemyBrain en)
+        {
+            //check cooldown
+            if (en.attackTimer >= attackCooldown)
+            {
+                //if can attack, shoot
+                en.animator.SetTrigger(Cast);
+                    
+                AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
+                en.audioSource.PlayOneShot(clip);
+                    
+                en.attackTimer = 0f;
+            }
+        }
         
         public override void OnCellReached(EnemyArgs args)
         {
             bool targetFound = Scan(args);
             
-            if (targetFound) //is there enemy?
+            if (targetFound) //is there an enemy?
             {
-                //check cooldown
-                if (args.EnemyBrain.attackTimer >= attackCooldown)
-                {
-                    //if can attack, shoot
-                    args.EnemyBrain.animator.SetTrigger(Cast);
-                    
-                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
-                    args.EnemyBrain.audioSource.PlayOneShot(clip);
-                    
-                    args.EnemyBrain.attackTimer = 0f;
-                }
-                
+                TryAttack(args.EnemyBrain);
                 return;
             }
             
@@ -119,15 +127,15 @@ namespace Data
 
                 Vector3[] possiblePositions = 
                 {
-                    new(targetLinha + 1, targetColuna, 0), // Front
-                    new(targetLinha - 1, targetColuna, 0), // Back
-                    new(targetLinha, targetColuna + 1, 0), // Right
-                    new(targetLinha, targetColuna - 1, 0)  // Left
+                    GetValidTargetPosition(targetLinha + 1, targetColuna, args), // Front
+                    GetValidTargetPosition(targetLinha - 1, targetColuna, args), // Back
+                    GetValidTargetPosition(targetLinha, targetColuna + 1, args), // Right
+                    GetValidTargetPosition(targetLinha, targetColuna - 1, args)  // Left
                 };
 
                 List<GameObject> otherTargets = 
                     (from pos in possiblePositions 
-                        where args.GridManager.IsPositionOccupied(pos) 
+                        where pos != Vector3.zero && args.GridManager.IsPositionOccupied(pos) 
                         select args.GridManager.GetTargetOnPosition(pos)).ToList();
 
                 // fully dmg the main target
@@ -151,6 +159,47 @@ namespace Data
                     }
                 }
             }
+        }
+        
+        /// <summary>
+        /// Gets a valid target position, skipping traps.
+        /// </summary>
+        private Vector3 GetValidTargetPosition(int linha, int coluna, EnemyArgs args)
+        {
+            Vector3 pos = new Vector3(linha, coluna, 0);
+
+            if (!args.GridManager.IsPositionOccupied(pos)) 
+                return pos; //if empty, also return as valid
+
+            GameObject potentialTarget = args.GridManager.GetTargetOnPosition(pos);
+            
+            if (potentialTarget == null) 
+                return pos;
+
+            DefenseBrain defense = potentialTarget.GetComponent<DefenseBrain>();
+            
+            if (defense != null && defense.GetDefenseType() is Trap)
+            {
+                //we move one more step in the same direction
+                int dLinha = linha - args.EnemyBrain.target.GetComponent<EnemyBrain>().linha;
+                int dColuna = coluna - args.EnemyBrain.target.GetComponent<EnemyBrain>().coluna;
+                
+                Vector3 newPos = new Vector3(linha + dLinha, coluna + dColuna, 0);
+
+                //if the new position is occupied and not a trap, return it; otherwise, return zero
+                if (args.GridManager.IsPositionOccupied(newPos))
+                {
+                    GameObject nextTarget = args.GridManager.GetTargetOnPosition(newPos);
+                    if (nextTarget != null && (nextTarget.GetComponent<DefenseBrain>() == null || 
+                                               nextTarget.GetComponent<DefenseBrain>().GetDefenseType() is not Trap))
+                    {
+                        return newPos;
+                    }
+                }
+                return Vector3.zero; //no valid target
+            }
+
+            return pos; //return original if not a trap
         }
     }
 }
