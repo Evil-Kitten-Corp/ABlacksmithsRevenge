@@ -12,7 +12,9 @@ namespace Data
         public float damage;
         public float timeToActivate;
         public float explosionRadius;
-        
+        public AudioClip explodeSound;
+        public AudioClip onReadySound;
+
         public override void Special(DefenseIntervalArgs args)
         {
             args.Brain.FireSpecialVfx(explosionPrefab);
@@ -27,7 +29,8 @@ namespace Data
                 }
             }
             
-            Destroy(args.Brain.gameObject);
+            args.Brain.PlaySound(explodeSound);
+            Destroy(args.Brain.gameObject, 1f);
         }
     }
 }

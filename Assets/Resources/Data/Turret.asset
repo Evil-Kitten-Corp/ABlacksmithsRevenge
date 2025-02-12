@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4435e45a3d43548d6cfc82801afaf8, type: 3}
   m_Name: Turret
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8850305557200353546, guid: 33ee190ab4319a2449c6322e4c1fe353, type: 3}
+  prefab: {fileID: 2803598307892882623, guid: 902587f51a6b1a9439ed3d3c4a258c1c, type: 3}
   health: 100
   manaCost: 20
   unlocked: 1
-  icon: {fileID: 21300000, guid: 17c263f6077f14b218b13656aacd9551, type: 3}
+  icon: {fileID: 21300000, guid: 781654fbc5850c9449f443b49db23fb7, type: 3}
   projectilePrefab: {fileID: 3352468297812342715, guid: c7f5ea282873e6b40a7db0429924adc6, type: 3}
+  shootSound: {fileID: 8300000, guid: e18aaf71f5c334d4db73052dc1905ce1, type: 3}
   damage: 20
   range: 5
   fireRate: 1

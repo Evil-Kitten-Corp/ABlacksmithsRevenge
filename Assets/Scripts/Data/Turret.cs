@@ -9,8 +9,9 @@ namespace Data
     public class Turret : Defense
     {
         public GameObject projectilePrefab;
-        
-        [Header("Turret")]
+
+        [Header("Turret")] 
+        public AudioClip shootSound;
         public float damage;
         public float range = 5f;
         public float fireRate = 1f;
@@ -22,7 +23,7 @@ namespace Data
             
             if (target != null)
             {
-                Shoot(target, args.FirePoint);
+                Shoot(target, args.Brain);
             }
         }
 
@@ -34,14 +35,24 @@ namespace Data
                 select hitCollider.gameObject).FirstOrDefault();
         }
 
-        private void Shoot(GameObject target, Transform firePoint)
+        private void Shoot(GameObject target, DefenseBrain brain)
         {
-            if (projectilePrefab != null && firePoint != null)
+            if (projectilePrefab != null && brain.firePoint != null)
             {
+                brain.animator.SetTrigger("Shoot");
+                Debug.Log($"{brain.name} tried to shoot {target.name}");
+                
+                if (shootSound != null)
+                {
+                    brain.PlaySound(shootSound);
+                }
+                
                 GameObject projectile = Instantiate(projectilePrefab, 
-                    firePoint.position, Quaternion.identity);
+                    brain.firePoint.position, Quaternion.identity);
                 Projectile projScript = projectile.GetComponent<Projectile>();
                 projScript.Initialize(target.transform, damage, null);
+                
+                brain.ResetFireCooldown();
             }
         }
     }

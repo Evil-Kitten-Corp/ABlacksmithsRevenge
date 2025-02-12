@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf291d2d8824b8d88cb6d48bb15b6a0, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8850305557200353546, guid: 33ee190ab4319a2449c6322e4c1fe353, type: 3}
+  prefab: {fileID: 9019726956410753260, guid: 88ce4a043c1a2cc4f8dcd4bf78e542aa, type: 3}
   health: 200
   manaCost: 30
   unlocked: 1
-  icon: {fileID: 21300000, guid: 4eb43321e418951499417cda6141b31a, type: 3}
+  icon: {fileID: 21300000, guid: b09c448ad63177f468c3ee51634b43c0, type: 3}
+  onDestroyClips:
+  - {fileID: 8300000, guid: 5d2f087032bc1c54580672e061390a71, type: 3}
+  - {fileID: 8300000, guid: b2efa27d6f79906459c68613222d0987, type: 3}
+  - {fileID: 8300000, guid: 654925a65d1db2549824d667768f9207, type: 3}
