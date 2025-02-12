@@ -1,4 +1,5 @@
-﻿using Data.Structs;
+﻿using Brains;
+using Data.Structs;
 using Interfaces;
 using UnityEngine;
 
@@ -21,24 +22,17 @@ namespace Data
             
             if (args.EnemyBrain.target)
             {
-                if (args.EnemyBrain.attackTimer >= attackCooldown)
-                {
-                    args.EnemyBrain.GetComponent<Animator>()?.SetTrigger(Attack);
-                    args.EnemyBrain.attackTimer = 0f;
-                }
+                TryAttack(args.EnemyBrain);
             }
             else
             {
-                if (args.EnemyBrain.CheckNextPossibleLaneIndex())
-                {
-                    args.EnemyBrain.GoToNext();
-                }
+                NextCell(args.EnemyBrain);
             }
         }
 
         public override void OnCellReached(EnemyArgs args)
         {
-            Debug.Log(name + " reached cell");
+            //Debug.Log(name + " reached cell");
             
             //arrived cell
             var currentCell = args.EnemyBrain.GetCurrentCellPosition();
@@ -46,24 +40,42 @@ namespace Data
             //check enemy
             if (args.GridManager.IsPositionOccupied(currentCell))
             {
-                args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(currentCell));
+                GameObject target = args.GridManager.GetTargetOnPosition(currentCell);
+                
+                if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
+                {
+                    NextCell(args.EnemyBrain);
+                    return;
+                }
+                
+                args.EnemyBrain.AcquireTarget(target);
                 Debug.Log(currentCell + " is occupied and will be attacked");
                 
                 args.EnemyBrain.attackTimer += Time.deltaTime;
                 
-                if (args.EnemyBrain.attackTimer >= attackCooldown)
-                {
-                    args.EnemyBrain.GetComponent<Animator>()?.SetTrigger(Attack);
-                    args.EnemyBrain.attackTimer = 0f;
-                }
+                TryAttack(args.EnemyBrain);
                 
                 return;
             }
 
             //if no enemy, next cell
-            if (args.EnemyBrain.CheckNextPossibleLaneIndex())
+            NextCell(args.EnemyBrain);
+        }
+
+        private void TryAttack(EnemyBrain en)
+        {
+            if (en.attackTimer >= attackCooldown)
             {
-                args.EnemyBrain.GoToNext();
+                en.animator.SetTrigger(Attack);
+                en.attackTimer = 0f;
+            }
+        }
+
+        private void NextCell(EnemyBrain en)
+        {
+            if (en.CheckNextPossibleLaneIndex())
+            {
+                en.GoToNext();
             }
         }
 
@@ -76,6 +88,9 @@ namespace Data
             var def = args.GridManager.GetTargetOnPosition(args.EnemyBrain.GetCurrentCellPosition());
             
             if (def == null) 
+                return;
+
+            if (def.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
                 return;
             
             IDamageable defense = def.GetComponent<IDamageable>();

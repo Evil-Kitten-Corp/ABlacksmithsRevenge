@@ -7,7 +7,7 @@ namespace Data
     [CreateAssetMenu(fileName = "Enemy", menuName = "Enemies/Archer", order = 0)]    
     public class ArcherEnemy : Enemy
     {
-        private static readonly int Shoot = Animator.StringToHash("Shoot");
+        private static readonly int Shoot = Animator.StringToHash("Attack");
 
         public AudioClip[] weaponCastSounds;
         
@@ -20,17 +20,7 @@ namespace Data
             //do we have an enemy?
             if (args.EnemyBrain.target)
             {
-                //is our attack cd up?
-                if (args.EnemyBrain.attackTimer >= attackCooldown)
-                {
-                    //if can attack, shoot
-                    args.EnemyBrain.GetComponent<Animator>().SetTrigger(Shoot);
-                    
-                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
-                    args.EnemyBrain.audioSource.PlayOneShot(clip);
-                    
-                    args.EnemyBrain.attackTimer = 0f;
-                }
+                TryAttack(args.EnemyBrain);
             }
             else //we don't have a target
             {
@@ -52,8 +42,15 @@ namespace Data
 
                     if (args.GridManager.IsPositionOccupied(cellPos))
                     {
+                        GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
+
+                        if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
+                        {
+                            continue;
+                        }
+                        
                         targetFound = true;
-                        args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(cellPos));
+                        args.EnemyBrain.AcquireTarget(target);
                         break;
                     }
                 }
@@ -66,8 +63,15 @@ namespace Data
 
                     if (args.GridManager.IsPositionOccupied(cellPos))
                     {
+                        GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
+
+                        if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
+                        {
+                            continue;
+                        }
+                        
                         targetFound = true;
-                        args.EnemyBrain.AcquireTarget(args.GridManager.GetTargetOnPosition(cellPos));
+                        args.EnemyBrain.AcquireTarget(target);
                         break;
                     }
                 }
@@ -76,24 +80,28 @@ namespace Data
             return targetFound;
         }
 
+        private void TryAttack(EnemyBrain en)
+        {
+            //check cooldown
+            if (en.attackTimer >= attackCooldown)
+            {
+                //if can attack, shoot
+                en.animator.SetTrigger(Shoot);
+                    
+                AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
+                en.audioSource.PlayOneShot(clip);
+                    
+                en.attackTimer = 0f;
+            }
+        }
+
         public override void OnCellReached(EnemyArgs args)
         {
             bool targetFound = Scan(args);
             
             if (targetFound) //is there enemy?
             {
-                //check cooldown
-                if (args.EnemyBrain.attackTimer >= attackCooldown)
-                {
-                    //if can attack, shoot
-                    args.EnemyBrain.GetComponent<Animator>().SetTrigger(Shoot);
-                    
-                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
-                    args.EnemyBrain.audioSource.PlayOneShot(clip);
-                    
-                    args.EnemyBrain.attackTimer = 0f;
-                }
-                
+                TryAttack(args.EnemyBrain);
                 return;
             }
             

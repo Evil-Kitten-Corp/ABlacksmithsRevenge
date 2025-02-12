@@ -105,7 +105,7 @@ namespace UI
                 {
                     GameObject buttonObj = Instantiate(buttonPrefab, buttonContainer);
                     Button button = buttonObj.GetComponent<Button>();
-                    Image image = buttonObj.GetComponentInChildren<Image>();
+                    Image image = buttonObj.transform.GetChild(1).GetComponentInChildren<Image>();
                     TextMeshProUGUI priceText = buttonObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                 
                     image.sprite = unit.icon;

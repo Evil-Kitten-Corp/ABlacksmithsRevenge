@@ -1992,6 +1992,30 @@ PrefabInstance:
       propertyPath: controllerInputActionManager
       value: 
       objectReference: {fileID: 1524764023}
+    - target: {fileID: 973468955250298348, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 973468955250298348, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a8b50d7f54e7e0e4bade7034a6b25174, type: 3}
+    - target: {fileID: 973468955250298348, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832257412742456314, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: fbb7c6a04be6d8341934b839f24b42e1, type: 2}
+    - target: {fileID: 3832257412742456314, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 4687939059374929122, guid: fbb7c6a04be6d8341934b839f24b42e1, type: 2}
+    - target: {fileID: 3832257412742456314, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7272860894018203967, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1999,6 +2023,10 @@ PrefabInstance:
     - target: {fileID: 8534642616802992930, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
       propertyPath: m_Name
       value: Normal Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820014389589817061, guid: 85319aeadf1d0b2458779c0eb2f9dcee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
