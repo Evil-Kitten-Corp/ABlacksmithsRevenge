@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 97f945e0e4a86b14f99eec2f5be52f43
+  - enabled: 1
+    path: Assets/Scenes/PVZ.unity
+    guid: eb140410bf71e524ba4bd1e2f5812ea2
+  - enabled: 1
+    path: Assets/Scenes/BasicScene.unity
+    guid: 4e9fef26e6adb88479ad1b9834a32d94
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 55daccc09a3b69647bbab145b54a3ab3
   m_configObjects:
@@ -17,3 +26,4 @@ EditorBuildSettings:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1a4c68ca72a83449f938d669337cb305, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: a9a6963505ddf7f4d886008c6dc86122, type: 2}
     xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: 2365943906f1e624abe8682f4edda4d9, type: 2}
+  m_UseUCBPForAssetBundles: 0

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Waves;
 
 namespace Data
 {
@@ -9,6 +10,8 @@ namespace Data
 
         private bool _gameOver;
         private bool _paused;
+
+        private int _waveIndex;
 
         private void Awake()
         {
@@ -22,11 +25,22 @@ namespace Data
             }
         }
         
+        public event Action<int> StartGame;
         public event Action GameOver;
         public event Action Pause;
         public event Action Resume;
 
-        public void OnGameOver()
+        private void Start()
+        {
+            _waveIndex = PlayerPrefs.HasKey("WaveIndex") ? PlayerPrefs.GetInt("WaveIndex") : 0;
+        }
+
+        public void Save()
+        {
+            PlayerPrefs.SetInt("WaveIndex", _waveIndex);
+        }
+
+        public void OnGameOver(int wave)
         {
             if (_gameOver)
             {
@@ -34,6 +48,7 @@ namespace Data
             }
             
             GameOver?.Invoke();
+            _waveIndex = wave;
             _gameOver = true;
         }
 
@@ -59,6 +74,23 @@ namespace Data
             
             Resume?.Invoke();
             _paused = false;
+        }
+
+        public virtual void OnStartGame()
+        {
+            StartGame?.Invoke(_waveIndex);
+        }
+
+        private void OnApplicationQuit()
+        {
+            var ews = FindAnyObjectByType<EnemyWaveSpawner>();
+            
+            if (ews != null)
+            {
+                _waveIndex = ews.GetWaveIndex();
+            }
+            
+            Save();
         }
     }
 }

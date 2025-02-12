@@ -4,6 +4,7 @@ using Interfaces;
 using Placement;
 using UnityEngine;
 using UnityEngine.AI;
+using Waves;
 using Random = UnityEngine.Random;
 
 namespace Data
@@ -185,7 +186,7 @@ namespace Data
                 }
             }
             
-            GameData.Instance.OnGameOver();
+            FindAnyObjectByType<EnemyWaveSpawner>().Defeat();
             return false;
         }
 

@@ -134,7 +134,6 @@ namespace Data.Old
                         }
                         else
                         {
-                            GameData.Instance.OnGameOver();
                         }
                     }
                 }

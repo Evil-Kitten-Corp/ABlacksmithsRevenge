@@ -40,6 +40,14 @@ namespace Waves
 
         private void Start()
         {
+            GameData.Instance.StartGame += i =>
+            {
+                if (doNotSpawn)
+                    return;
+
+                StartCoroutine(SpawnWaves(i));
+            };
+            
             GameData.Instance.Pause += OnPause;
             GameData.Instance.Resume += OnResume;
 
@@ -47,11 +55,6 @@ namespace Waves
             {
                 countdown.PlayOneShot(loseClip);
             };
-
-            if (doNotSpawn)
-                return;
-            
-            StartCoroutine(SpawnWaves());
         }
 
         private void OnDestroy()
@@ -73,8 +76,16 @@ namespace Waves
             _paused = false;
         }
 
-        private IEnumerator SpawnWaves()
+        public void Defeat()
         {
+            GameData.Instance.OnGameOver(_currentWaveIndex);
+            GameData.Instance.Save();
+        }
+
+        private IEnumerator SpawnWaves(int i)
+        {
+            _currentWaveIndex = i;
+            
             while (_currentWaveIndex < wavesInOrder.Count)
             {
                 yield return StartCoroutine(ShowCountdown(intervalBetweenWaves));
@@ -180,5 +191,7 @@ namespace Waves
             _activeEnemies.Add(enemy);
             enemy.GetComponent<EnemyBrain>().OnDeath += () => _activeEnemies.Remove(enemy);
         }
+
+        public int GetWaveIndex() => _currentWaveIndex;
     }
 }
