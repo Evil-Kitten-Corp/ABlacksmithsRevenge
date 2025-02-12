@@ -26,7 +26,7 @@ namespace Data
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {
                     //if can attack, shoot
-                    args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
+                    args.EnemyBrain.animator.SetTrigger(Cast);
                     
                     AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
                     args.EnemyBrain.audioSource.PlayOneShot(clip);
@@ -88,7 +88,7 @@ namespace Data
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {
                     //if can attack, shoot
-                    args.EnemyBrain.GetComponent<Animator>().SetTrigger(Cast);
+                    args.EnemyBrain.animator.SetTrigger(Cast);
                     
                     AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
                     args.EnemyBrain.audioSource.PlayOneShot(clip);

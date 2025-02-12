@@ -23,7 +23,7 @@ namespace Data
             {
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {
-                    args.EnemyBrain.GetComponent<Animator>()?.SetTrigger(Attack);
+                    args.EnemyBrain.animator.SetTrigger(Attack);
                     args.EnemyBrain.attackTimer = 0f;
                 }
             }
@@ -53,7 +53,7 @@ namespace Data
                 
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
                 {
-                    args.EnemyBrain.GetComponent<Animator>()?.SetTrigger(Attack);
+                    args.EnemyBrain.animator.SetTrigger(Attack);
                     args.EnemyBrain.attackTimer = 0f;
                 }
                 

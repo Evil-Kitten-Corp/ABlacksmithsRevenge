@@ -11,10 +11,14 @@ namespace Data
     [RequireComponent(typeof(Animator))]
     public class EnemyBrain : MonoBehaviour, IDamageable
     {
+        private static readonly int Death = Animator.StringToHash("Death");
+        private static readonly int DamageAnim = Animator.StringToHash("Damage");
         public float attackTimer { get; set; }
         public NavMeshAgent agent { get; private set; }
         
         public GameObject target { get; private set; }
+
+        public Animator animator;
 
         public AudioSource audioSource;
         public AudioSource speechSource;
@@ -43,6 +47,7 @@ namespace Data
             OnDeath += () =>
             {
                 speechSource.PlayOneShot(_enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)]);
+                animator.SetTrigger(Death);
             };
         }
 
@@ -150,6 +155,7 @@ namespace Data
             if (_health > 0)
             {
                 speechSource.PlayOneShot(_enemySo.damageSounds[Random.Range(0, _enemySo.damageSounds.Length)]);
+                animator.SetTrigger(DamageAnim);
             }
         }
 

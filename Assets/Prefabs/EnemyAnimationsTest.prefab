@@ -540,7 +540,7 @@ Animator:
   m_GameObject: {fileID: 5965494520265461696}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 008a09846468fc24c871142d2d6a0242, type: 3}
-  m_Controller: {fileID: 9100000, guid: 29ba4d200048c834690eb4ecf749fcd6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 732e475747e7c804f96c7602a142958a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -586,7 +586,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b74ff7137234949b724e473d76f3205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   audioSource: {fileID: 0}
+  speechSource: {fileID: 0}
+  walkingSource: {fileID: 0}
   firePoint: {fileID: 0}
   coluna: 0
   linha: 0
