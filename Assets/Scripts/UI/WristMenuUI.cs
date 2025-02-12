@@ -37,16 +37,17 @@ namespace UI
         private void Start()
         {
             EnemyWave.OnRewardUnlocked += PopulateButtons;
-            
+             
+            _turretPlacer = FindAnyObjectByType<TurretPlacer>();
             _turretPlacer.OnTurretPlaced += () =>
             {
                 placingGameObject.SetActive(false);
                 _placing = false;
             };
-            
+             
             placingGameObject.SetActive(false);
             
-            _turretPlacer = FindAnyObjectByType<TurretPlacer>();
+            
             _manaManager = ManaManager.instance;
             LoadBuyableUnits();
             menuPanel.SetActive(false);
@@ -116,7 +117,22 @@ namespace UI
 
         private void UpdateManaUI()
         {
-            manaText.text = "Mana: " + _manaManager.CurrentMana();
+            if (manaText == null)
+            {
+                Debug.Log("No mana text ig");
+            }
+
+            if (_manaManager == null)
+            {
+                Debug.Log("No mana manager ig");
+            }
+            else
+            {
+                manaText.text = "Mana: " + _manaManager.CurrentMana();
+            }
+            
+            
+            
             UpdateButtonStates();
         }
 
