@@ -1,3 +1,4 @@
+using System.Linq;
 using Brains;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,13 +9,17 @@ namespace Tools
     [RequireComponent(typeof(XRGrabInteractable))]
     public class Hammer : MonoBehaviour
     {
-        public InputActionReference useAction;
+        public InputActionReference[] useActions;
         public float repairPower = 20f;
+        
+        public AudioSource audioSource;
+        public AudioClip[] repairSounds;
+        
         private GameObject _heldObject;
 
         private void Update() 
         {
-            if (useAction.action.triggered && _heldObject != null) 
+            if (useActions.Any(x => x.action.triggered) && _heldObject != null) 
             {
                 RepairTurret(_heldObject);
             }
@@ -43,6 +48,8 @@ namespace Tools
             if (health != null) 
             {
                 health.Repair(repairPower);
+                Debug.Log($"Repaired turret {health.name}");
+                audioSource.PlayOneShot(repairSounds[Random.Range(0, repairSounds.Length)]);
             }
         }
     }

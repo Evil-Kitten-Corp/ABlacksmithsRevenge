@@ -2,14 +2,19 @@ using System;
 using Data;
 using Data.Structs;
 using Effects;
-using Game_Systems;
 using Interfaces;
 using UnityEngine;
 
 namespace Brains
 {
+    [RequireComponent(typeof(AudioSource), typeof(Collider))]
     public class DefenseBrain : MonoBehaviour, IDamageable
     {
+        public Animator animator;
+        public Transform firePoint;
+        private Renderer[] _modelRenderers;
+        public AudioSource audioSource;
+        
         [Header("Debug Only")] 
         [SerializeField] private Defense defenseType;
         [SerializeField] private DefenseState defenseState;
@@ -18,9 +23,12 @@ namespace Brains
         private DefenseVisualState _defenseVisualState;
         private DefenseAudioState _defenseAudioState;
         
-        public Transform firePoint;
         private float _fireCooldown;
-        private float _manaTimer;
+        
+        private float _generalTimer;
+        private bool _generalActive;
+        
+        private bool _paused;
         
         public event Action OnDeath;
 
@@ -28,6 +36,11 @@ namespace Brains
         {
             _defenseVisualState = GetComponent<DefenseVisualState>();
             _defenseAudioState = GetComponent<DefenseAudioState>();
+            
+            GameData.Instance.Pause += () => _paused = true;
+            GameData.Instance.Resume += () => _paused = false;
+            
+            _modelRenderers = GetComponentsInChildren<Renderer>();
         }
 
         public void AssignDefense(Defense def)
@@ -41,6 +54,9 @@ namespace Brains
 
         private void Update()
         {
+            if (_paused)
+                return;
+            
             if (defenseType != null)
             {
                 if (defenseType is Turret turret)
@@ -49,19 +65,48 @@ namespace Brains
 
                     if (_fireCooldown <= 0)
                     {
-                        turret.OnInterval(new DefenseIntervalArgs(transform, firePoint));
-                        _fireCooldown = 1 / turret.fireRate;
+                        turret.OnInterval(new DefenseIntervalArgs(transform, firePoint, this));
                     }
                 }
                 
                 if (defenseType is ManaGenerator manaGenerator)
                 {
-                    _manaTimer += Time.deltaTime;
+                    _generalTimer += Time.deltaTime;
 
-                    if (_manaTimer >= manaGenerator.interval)
+                    if (_generalTimer >= manaGenerator.interval)
                     {
-                        ManaManager.instance.AddMana(manaGenerator.manaPerInterval);
-                        _manaTimer = 0f;
+                        defenseType.Special(new DefenseIntervalArgs(transform, firePoint, this));
+                        _generalTimer = 0f;
+                    }
+                }
+
+                if (defenseType is Trap trap && !_generalActive)
+                {
+                    _generalTimer += Time.deltaTime;
+
+                    if (_generalTimer >= trap.timeToActivate)
+                    {
+                        if (_modelRenderers[0].material.color != Color.white)
+                        {
+                            foreach (var m in _modelRenderers)
+                            {
+                                m.material.color = Color.white;
+                            }
+                        }
+                        
+                        PlaySound(trap.onReadySound);
+                        
+                        _generalActive = true;
+                    }
+                    else
+                    {
+                        if (_modelRenderers[0].material.color != Color.red)
+                        {
+                            foreach (var m in _modelRenderers)
+                            {
+                                m.material.color = Color.red;
+                            }
+                        }
                     }
                 }
                 
@@ -75,10 +120,24 @@ namespace Brains
         private void Destroy()
         {
             OnDeath?.Invoke();
+
+            if (defenseType is Wall wall)
+            {
+                wall.PlayOnDestroySound(this);
+            }
+            
             defenseType = null;
-            Destroy(gameObject);
+            Destroy(gameObject, 2f);
         }
 
+        public void ResetFireCooldown()
+        {
+            if (defenseType is Turret turret)
+            {
+                _fireCooldown = 1 / turret.fireRate;
+            }
+        }
+        
         public void Damage(float damage)
         {
             currentHealth -= damage;
@@ -111,7 +170,10 @@ namespace Brains
             
             if (currentHealth > oldHealth)
             {
-                _defenseAudioState.PlayRepairSound();
+                if (_defenseAudioState != null)
+                {
+                    _defenseAudioState.PlayRepairSound();
+                }
             }
             
             UpdateVisualState();
@@ -121,7 +183,18 @@ namespace Brains
         {
             float healthPercentage = currentHealth / defenseType.health;
 
-            _defenseVisualState.UpdateVisualState(healthPercentage);
+            if (_defenseVisualState != null)
+            {
+                _defenseVisualState.UpdateVisualState(healthPercentage);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (_generalActive && other.CompareTag("Enemy"))
+            {
+                defenseType.Special(new DefenseIntervalArgs(transform, firePoint, this));
+            }
         }
 
         private void OnDrawGizmosSelected()
@@ -131,6 +204,17 @@ namespace Brains
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(transform.position, turret.range);
             }
+        }
+
+        public void PlaySound(AudioClip clip)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+
+        public void FireSpecialVfx(GameObject explosionPrefab)
+        {
+            var exp = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(exp, 2f);
         }
     }
 }

@@ -4,7 +4,6 @@ using Interfaces;
 using Placement;
 using UnityEngine;
 using UnityEngine.AI;
-using Waves;
 using Random = UnityEngine.Random;
 
 namespace Data
@@ -15,18 +14,16 @@ namespace Data
         public float attackTimer { get; set; }
         public NavMeshAgent agent { get; private set; }
         
-        public GameObject Target { get; set; }
+        public GameObject target { get; private set; }
 
         public AudioSource audioSource;
+        public AudioSource speechSource;
+        public AudioSource walkingSource;
 
         [Header("Transforms")] 
         public Transform firePoint;
 
         private bool _pausedGame;
-        
-        //TBD
-        public int laneIndex { get; private set; }
-        public int currentColumn { get; internal set; }
 
         private Enemy _enemySo;
         private GridManager _grid;
@@ -45,7 +42,7 @@ namespace Data
         {
             OnDeath += () =>
             {
-                audioSource.PlayOneShot(_enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)]);
+                speechSource.PlayOneShot(_enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)]);
             };
         }
 
@@ -85,10 +82,7 @@ namespace Data
                 spawnRow = _grid.gridWidth - 1;
                 Debug.Log("LINHA = " + (spawnRow + 1));
             }
-            
-            currentColumn = spawnColumn;
-            laneIndex = spawnRow;
-            
+
             coluna = spawnColumn;
             linha = spawnRow;
             
@@ -155,7 +149,7 @@ namespace Data
 
             if (_health > 0)
             {
-                audioSource.PlayOneShot(_enemySo.damageSounds[Random.Range(0, _enemySo.damageSounds.Length)]);
+                speechSource.PlayOneShot(_enemySo.damageSounds[Random.Range(0, _enemySo.damageSounds.Length)]);
             }
         }
 
@@ -208,7 +202,7 @@ namespace Data
         {
             if (getTargetOnPosition.TryGetComponent<IDamageable>(out _))
             {
-                Target = getTargetOnPosition;
+                target = getTargetOnPosition;
             }
         }
         
@@ -228,7 +222,7 @@ namespace Data
 
         public void OnFootstep()
         {
-            audioSource.PlayOneShot(_enemySo.footstepSounds[Random.Range(0, _enemySo.footstepSounds.Length)]);
+            walkingSource.PlayOneShot(_enemySo.footstepSounds[Random.Range(0, _enemySo.footstepSounds.Length)]);
         }
     }
 }

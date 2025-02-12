@@ -26,6 +26,9 @@ namespace Waves
         public AudioClip countdownClip;
         public AudioClip winClip;
         public AudioClip loseClip;
+
+        [Header("Debug")] 
+        public bool doNotSpawn;
         
         private int _currentWaveIndex;
         private readonly List<GameObject> _activeEnemies = new();
@@ -45,6 +48,9 @@ namespace Waves
                 countdown.PlayOneShot(loseClip);
             };
 
+            if (doNotSpawn)
+                return;
+            
             StartCoroutine(SpawnWaves());
         }
 

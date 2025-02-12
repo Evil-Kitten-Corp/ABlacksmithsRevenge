@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6130650df74081981122357385cd8a, type: 3}
   m_Name: ManaGenerator
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8850305557200353546, guid: 33ee190ab4319a2449c6322e4c1fe353, type: 3}
+  prefab: {fileID: 8315130429377429370, guid: fab59732e84bff242bdf3dbae38c5e3c, type: 3}
   health: 50
   manaCost: 5
   unlocked: 1
-  icon: {fileID: 21300000, guid: b342eb1e41a45ce41b5c7c684a17c465, type: 3}
+  icon: {fileID: 21300000, guid: 9d332104bb8a9dc4ca68447c02734992, type: 3}
   manaPerInterval: 5
   interval: 2
+  onGenManaSounds:
+  - {fileID: 8300000, guid: 1a04eadd196cba34a826dd1b593a1b73, type: 3}
+  - {fileID: 8300000, guid: 60470032f394de54b894a9d367a5feec, type: 3}
+  - {fileID: 8300000, guid: c79eeceddf2c23d448acedaf3a4ee63a, type: 3}

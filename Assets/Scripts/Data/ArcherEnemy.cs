@@ -8,6 +8,8 @@ namespace Data
     public class ArcherEnemy : Enemy
     {
         private static readonly int Shoot = Animator.StringToHash("Shoot");
+
+        public AudioClip[] weaponCastSounds;
         
         public GameObject projectilePrefab;
 
@@ -16,7 +18,7 @@ namespace Data
             args.EnemyBrain.attackTimer += Time.deltaTime;
             
             //do we have an enemy?
-            if (args.EnemyBrain.Target)
+            if (args.EnemyBrain.target)
             {
                 //is our attack cd up?
                 if (args.EnemyBrain.attackTimer >= attackCooldown)
@@ -24,7 +26,7 @@ namespace Data
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Shoot);
                     
-                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
                     args.EnemyBrain.audioSource.PlayOneShot(clip);
                     
                     args.EnemyBrain.attackTimer = 0f;
@@ -86,7 +88,7 @@ namespace Data
                     //if can attack, shoot
                     args.EnemyBrain.GetComponent<Animator>().SetTrigger(Shoot);
                     
-                    AudioClip clip = weaponHitSounds[Random.Range(0, weaponHitSounds.Length)];
+                    AudioClip clip = weaponCastSounds[Random.Range(0, weaponCastSounds.Length)];
                     args.EnemyBrain.audioSource.PlayOneShot(clip);
                     
                     args.EnemyBrain.attackTimer = 0f;
@@ -104,14 +106,14 @@ namespace Data
 
         public override void DealDamage(EnemyArgs args)
         {
-            if (args.EnemyBrain.Target != null)
+            if (args.EnemyBrain.target != null)
             {
                 if (projectilePrefab != null && args.EnemyBrain.firePoint != null)
                 {
                     GameObject projectile = Instantiate(projectilePrefab, 
                         args.EnemyBrain.firePoint.position, Quaternion.identity);
                     Projectile projScript = projectile.GetComponent<Projectile>();
-                    projScript.Initialize(args.EnemyBrain.Target.transform, damage);
+                    projScript.Initialize(args.EnemyBrain.target.transform, damage, weaponHitSounds);
                 }
             }
         }
