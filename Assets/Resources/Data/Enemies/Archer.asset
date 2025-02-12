@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62c305ee5a064dddb1038a398337c932, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5965494520265461696, guid: db25047a1002cf8499e4354bc36c8eca, type: 3}
+  prefab: {fileID: 13917699037941000, guid: db25047a1002cf8499e4354bc36c8eca, type: 3}
   health: 50
   speed: 1
   damage: 25
