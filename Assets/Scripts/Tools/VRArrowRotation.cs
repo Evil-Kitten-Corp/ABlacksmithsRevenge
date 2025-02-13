@@ -1,3 +1,4 @@
+using Interfaces;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,6 +21,7 @@ namespace Tools
             {
                 AudioClip clip = impactSounds[Random.Range(0, impactSounds.Length)];
                 audioSource.PlayOneShot(clip);
+                other.GetComponent<IDamageable>().Damage(50);
                 Destroy(gameObject, clip.length);
             }
         }

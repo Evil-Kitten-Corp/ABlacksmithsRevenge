@@ -66,7 +66,7 @@ namespace Data
                 Projectile projScript = projectile.GetComponent<Projectile>();
                 projScript.Initialize(target.transform, damage, null);
                 
-                brain.ResetFireCooldown();
+                //brain.ResetFireCooldown();
             }
         }
 

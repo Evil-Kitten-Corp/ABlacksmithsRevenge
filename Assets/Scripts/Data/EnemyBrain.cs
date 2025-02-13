@@ -1,4 +1,5 @@
 ﻿using System;
+using Brains;
 using Data.Structs;
 using Interfaces;
 using Placement;
@@ -212,8 +213,28 @@ namespace Data
         {
             if (getTargetOnPosition.TryGetComponent<IDamageable>(out _))
             {
+                if (target != null)
+                {
+                    target.GetComponent<DefenseBrain>().OnDeath -= OnTargetDeath;
+                }
+                
                 target = getTargetOnPosition;
+                target.GetComponent<DefenseBrain>().OnDeath += OnTargetDeath;
             }
+        }
+
+        private void OnDestroy()
+        {
+            if (target != null)
+            {
+                target.GetComponent<DefenseBrain>().OnDeath -= OnTargetDeath;
+            }
+        }
+
+        private void OnTargetDeath()
+        {
+            target = null;
+            _enemySo.OnCellReached(new EnemyArgs(_grid, this));
         }
         
         private bool IsAtEndOfPath()

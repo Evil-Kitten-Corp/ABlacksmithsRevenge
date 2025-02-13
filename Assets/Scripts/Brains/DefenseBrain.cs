@@ -3,6 +3,7 @@ using Data;
 using Data.Structs;
 using Effects;
 using Interfaces;
+using Placement;
 using UnityEngine;
 
 namespace Brains
@@ -29,9 +30,15 @@ namespace Brains
         public float generalTimer { get; set; }
 
         public bool generalActive { get; set; }
+        
+        public bool exploding {get; set;}
 
         public Renderer[] modelRenderers => _modelRenderers;
 
+        private GridManager _grid;
+
+        public Vector3 intendedPos { get; private set; }
+        
         public event Action OnDeath;
 
         private void Start()
@@ -39,20 +46,22 @@ namespace Brains
             _defenseVisualState = GetComponent<DefenseVisualState>();
             _defenseAudioState = GetComponent<DefenseAudioState>();
             _modelRenderers = GetComponentsInChildren<Renderer>();
+            _grid = FindAnyObjectByType<GridManager>();
             
             GameData.Instance.Pause += () => _paused = true;
             GameData.Instance.Resume += () => _paused = false;
 
             if (defenseType != null)
             {
-                AssignDefense(defenseType);
+                AssignDefense(defenseType, transform.position);
             }
         }
 
-        public void AssignDefense(Defense def)
+        public void AssignDefense(Defense def, Vector3 pos)
         {
             defenseType = def;
             currentHealth = defenseType.health;
+            intendedPos = pos;
         }
         
         public Defense GetDefenseType() => defenseType;
@@ -66,16 +75,18 @@ namespace Brains
             {
                 if (currentHealth <= 0)
                 {
-                    Destroy();
+                    TryDestroy();
                 }
                 
                 defenseType.Interval(new DefenseArgs(this));
             }
         }
 
-        private void Destroy()
+        public void TryDestroy()
         {
             OnDeath?.Invoke();
+            
+            _grid.ClearOccupied(intendedPos);
 
             defenseType.OnDeath(new DefenseArgs(this));
             
@@ -123,7 +134,15 @@ namespace Brains
 
         private void OnTriggerEnter(Collider other)
         {
-            if (generalActive && other.CompareTag("Enemy"))
+            if (generalActive && other.CompareTag("Enemy") && !exploding)
+            {
+                defenseType.Special(new DefenseArgs(this));
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (generalActive && other.CompareTag("Enemy") && !exploding)
             {
                 defenseType.Special(new DefenseArgs(this));
             }

@@ -77,7 +77,7 @@ namespace Placement
             if (!_gridManager.IsPositionOccupied(placementPos)) 
             {
                 GameObject myTurret = Instantiate(_placingTurret.prefab, _previewTurret.transform.position, Quaternion.identity);
-                myTurret.GetComponent<DefenseBrain>().AssignDefense(_placingTurret);
+                myTurret.GetComponent<DefenseBrain>().AssignDefense(_placingTurret, placementPos);
                 _gridManager.SetOccupied(placementPos, myTurret);
                 Debug.Log("Purchased: " + _placingTurret.name);
                 Destroy(_previewTurret);

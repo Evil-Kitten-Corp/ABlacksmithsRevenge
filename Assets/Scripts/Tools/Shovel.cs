@@ -1,4 +1,5 @@
 using System.Linq;
+using Brains;
 using Placement;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,18 +16,17 @@ namespace Tools
         public AudioClip[] useSounds;
         
         private GameObject _heldObject;
-        private GridManager _gridManager;
 
         private void Start() 
         {
-            _gridManager = FindAnyObjectByType<GridManager>();
+            FindAnyObjectByType<GridManager>();
         }
 
         private void Update() 
         {
             if (useActions.Any(x => x.action.triggered) && _heldObject != null) 
             {
-                RemoveTurret(_heldObject);
+                RemoveTurret(_heldObject.GetComponent<DefenseBrain>());
             }
         }
 
@@ -46,12 +46,10 @@ namespace Tools
             }
         }
 
-        void RemoveTurret(GameObject turret) 
+        void RemoveTurret(DefenseBrain turret)
         {
-            Vector3 turretPos = turret.transform.position;
+            turret.TryDestroy();
             audioSource.PlayOneShot(useSounds[Random.Range(0, useSounds.Length)]);
-            _gridManager.ClearOccupied(turretPos);
-            Destroy(turret);
         }
     }
 }

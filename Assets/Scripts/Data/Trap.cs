@@ -53,6 +53,7 @@ namespace Data
 
         public override void Special(DefenseArgs args)
         {
+            args.Brain.exploding = true;
             args.Brain.FireSpecialVfx(explosionPrefab);
             
             var enemies = Physics.OverlapSphere(args.Brain.transform.position, explosionRadius);
