@@ -32,6 +32,8 @@ namespace Waves
         public bool doNotSpawn;
         
         private int _currentWaveIndex;
+
+        private bool _spawnComplete = false;
         private readonly List<GameObject> _activeEnemies = new();
 
         private bool _paused;
@@ -92,7 +94,7 @@ namespace Waves
                 yield return StartCoroutine(ShowCountdown(intervalBetweenWaves));
                 StartWave();
 
-                yield return new WaitUntil(() => _activeEnemies.Count == 0);
+                yield return new WaitUntil(() => _activeEnemies.Count == 0 && _spawnComplete);
 
                 countdown.PlayOneShot(winClip);
                 Debug.Log("Enemies dead, rewarding now");
@@ -190,6 +192,8 @@ namespace Waves
                 SpawnEnemy();
                 yield return new WaitForSeconds(wavesInOrder[_currentWaveIndex].spawnInterval);
             }
+
+            _spawnComplete = true;
         }
 
         void SpawnEnemy()

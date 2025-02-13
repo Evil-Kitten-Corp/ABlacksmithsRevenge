@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 9019726956410753260, guid: 88ce4a043c1a2cc4f8dcd4bf78e542aa, type: 3}
   health: 200
   manaCost: 30
-  unlocked: 1
+  unlocked: 0
   icon: {fileID: 21300000, guid: b09c448ad63177f468c3ee51634b43c0, type: 3}
   onDestroyClips:
   - {fileID: 8300000, guid: 5d2f087032bc1c54580672e061390a71, type: 3}

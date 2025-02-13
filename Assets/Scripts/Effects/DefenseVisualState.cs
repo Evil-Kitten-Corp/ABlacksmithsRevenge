@@ -7,10 +7,11 @@ namespace Effects
         public GameObject normalModel;
         public GameObject damagedModel;
         public GameObject sparksEffect;
-        public GameObject smokeEffect;
+        public ParticleSystem smokeEffect;
         public FlickeringLight flickeringLight; 
         
         private bool _sparking;
+        private bool _smokeOn;
         
         public void UpdateVisualState(float healthPercentage)
         {
@@ -22,7 +23,22 @@ namespace Effects
 
             if (smokeEffect) 
             {
-                smokeEffect.SetActive(healthPercentage <= 0.5f);
+                if (healthPercentage <= 0.5f)
+                {
+                    if (!_smokeOn)
+                    {
+                        smokeEffect.Play();
+                        _smokeOn = true;
+                    }
+                }
+                else
+                {
+                    if (_smokeOn)
+                    {
+                        smokeEffect.Stop();
+                        _smokeOn = false;
+                    }
+                }
             }
 
             if (sparksEffect)

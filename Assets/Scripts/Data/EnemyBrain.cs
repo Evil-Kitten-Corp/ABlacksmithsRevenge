@@ -51,7 +51,11 @@ namespace Data
         {
             OnDeath += () =>
             {
-                StartCoroutine(Die());
+                animator.SetTrigger(Death);
+                AudioClip death = _enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)];
+                speechSource.PlayOneShot(death);
+                Destroy(gameObject, .8f);
+                //StartCoroutine(Die());
             };
         }
 

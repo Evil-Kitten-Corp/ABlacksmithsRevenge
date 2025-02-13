@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88691ac015104ff688912eaa201b655e, type: 3}
-  m_Name: FirstWave
+  m_Name: ThirdWave
   m_EditorClassIdentifier: 
   enemiesSpawn:
     _serializedList:
-    - Key: {fileID: 11400000, guid: bc5a86228efc54146aa3a5f15663727e, type: 2}
+    - Key: {fileID: 11400000, guid: db15621b3e7e3e74b9ebfdc1febaf8da, type: 2}
       Value: 0.5
+    - Key: {fileID: 11400000, guid: 6a06c7da841c1f74881a7d8d9f488c0a, type: 2}
+      Value: 0.5
+    - Key: {fileID: 11400000, guid: bc5a86228efc54146aa3a5f15663727e, type: 2}
+      Value: 0.2
     - Key: {fileID: 11400000, guid: 6ab3509e348e6f44ab2ae897a0993bb4, type: 2}
       Value: 0.3
-  spawnInterval: 20
-  maxEnemiesToSpawn: 5
-  reward: {fileID: 11400000, guid: 1066736c15e17b0488eb8b8704821ff8, type: 2}
+  spawnInterval: 5
+  maxEnemiesToSpawn: 10
+  reward: {fileID: 11400000, guid: d9cb627c663ad2441b3809507776f9f2, type: 2}

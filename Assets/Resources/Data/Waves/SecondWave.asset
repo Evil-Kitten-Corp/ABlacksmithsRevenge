@@ -22,6 +22,6 @@ MonoBehaviour:
       Value: 0.6
     - Key: {fileID: 11400000, guid: 6ab3509e348e6f44ab2ae897a0993bb4, type: 2}
       Value: 0.2
-  spawnInterval: 5
+  spawnInterval: 10
   maxEnemiesToSpawn: 7
   reward: {fileID: 11400000, guid: d85361ef9d61c484cb1f2e73facf576b, type: 2}
