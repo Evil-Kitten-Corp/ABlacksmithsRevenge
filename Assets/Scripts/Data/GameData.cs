@@ -35,9 +35,16 @@ namespace Data
             _waveIndex = PlayerPrefs.HasKey("WaveIndex") ? PlayerPrefs.GetInt("WaveIndex") : 0;
         }
 
-        public void Save()
+        public void Save(int waveIndex = 0)
         {
-            PlayerPrefs.SetInt("WaveIndex", _waveIndex);
+            if (waveIndex != 0)
+            {
+                PlayerPrefs.SetInt("WaveIndex", waveIndex);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("WaveIndex", _waveIndex);
+            }
         }
 
         public void OnGameOver(int wave)

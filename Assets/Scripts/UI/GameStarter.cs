@@ -1,10 +1,11 @@
 using System.Collections;
+using Data;
 using DG.Tweening;
 using Textures;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Data
+namespace UI
 {
     public class GameStarter : MonoBehaviour
     {
@@ -23,7 +24,7 @@ namespace Data
             GameData.Instance.GameOver += ReturnToMainMenu;
         }
 
-        private void ReturnToMainMenu()
+        public void ReturnToMainMenu()
         {
             LoadingOverlay overlay = GameObject.Find("LoadingOverlay").gameObject.GetComponent<LoadingOverlay>();
             overlay.FadeIn();

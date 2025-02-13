@@ -5,6 +5,7 @@ using Data;
 using DG.Tweening;
 using Placement;
 using TMPro;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -98,9 +99,7 @@ namespace Waves
                 yield return new WaitUntil(() => _activeEnemies.Count == 0 && _spawnComplete);
 
                 countdown.PlayOneShot(winClip);
-                Debug.Log("Enemies dead, rewarding now");
                 wavesInOrder[_currentWaveIndex].Reward();
-
                 Cleanup();
 
                 yield return new WaitForSeconds(restTime);
@@ -110,7 +109,14 @@ namespace Waves
             
             Debug.Log("All waves completed!");
             countdown.PlayOneShot(definitiveWin);
-            Defeat();
+            StartCoroutine(Win());
+        }
+        
+        private IEnumerator Win() 
+        {
+            yield return new WaitForSeconds(1f);
+            GameData.Instance.Save(_currentWaveIndex);
+            FindAnyObjectByType<GameStarter>().ReturnToMainMenu();
         }
 
         private void Cleanup()
