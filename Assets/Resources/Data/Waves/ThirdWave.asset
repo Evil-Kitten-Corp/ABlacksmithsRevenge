@@ -24,4 +24,4 @@ MonoBehaviour:
       Value: 0.3
   spawnInterval: 5
   maxEnemiesToSpawn: 10
-  reward: {fileID: 11400000, guid: d9cb627c663ad2441b3809507776f9f2, type: 2}
+  reward: {fileID: 0}
