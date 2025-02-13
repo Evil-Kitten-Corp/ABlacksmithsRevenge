@@ -45,6 +45,11 @@ namespace Data
                     {
                         GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
 
+                        if (!target)
+                        {
+                            continue;
+                        }
+
                         if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
                         {
                             continue;
@@ -66,6 +71,11 @@ namespace Data
                     {
                         GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
 
+                        if (!target)
+                        {
+                            continue;
+                        }
+                        
                         if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
                         {
                             continue;

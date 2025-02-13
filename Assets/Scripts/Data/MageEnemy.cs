@@ -47,6 +47,11 @@ namespace Data
                     {
                         GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
 
+                        if (!target)
+                        {
+                            continue;
+                        }
+                        
                         if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
                         {
                             continue;
@@ -68,6 +73,11 @@ namespace Data
                     {
                         GameObject target = args.GridManager.GetTargetOnPosition(cellPos);
 
+                        if (!target)
+                        {
+                            continue;
+                        }
+                        
                         if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
                         {
                             continue;
@@ -151,7 +161,7 @@ namespace Data
                 // half dmg the other targets
                 foreach (var t in otherTargets)
                 {
-                    if (projectilePrefab != null && args.EnemyBrain.firePoint != null)
+                    if (projectilePrefab != null && args.EnemyBrain.firePoint != null && t != null)
                     {
                         GameObject projectile = Instantiate(projectilePrefab, 
                             args.EnemyBrain.firePoint.position, Quaternion.identity);

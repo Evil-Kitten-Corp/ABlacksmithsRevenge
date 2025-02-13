@@ -113,7 +113,7 @@ namespace Placement
         
         public GameObject GetTargetOnPosition(Vector3 target)
         {
-            return _occupiedGridSpots[target];
+            return _occupiedGridSpots.GetValueOrDefault(target);
         }
 
         private void OnDrawGizmosSelected()

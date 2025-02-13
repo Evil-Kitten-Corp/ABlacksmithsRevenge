@@ -43,6 +43,12 @@ namespace Data
             {
                 GameObject target = args.GridManager.GetTargetOnPosition(currentCell);
                 
+                if (!target)
+                {
+                    NextCell(args.EnemyBrain);
+                    return;
+                }
+                
                 if (target.GetComponent<DefenseBrain>().GetDefenseType() is Trap)
                 {
                     NextCell(args.EnemyBrain);
