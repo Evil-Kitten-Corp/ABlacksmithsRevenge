@@ -17,7 +17,7 @@ namespace Placement
         public InterfaceReference<IXRRayProvider> rayProvider;
         
         private GridManager _gridManager;
-        [Header("DEBUG ONLY")] [SerializeField] private GameObject _previewTurret;
+        private GameObject _previewTurret;
         private Defense _placingTurret;
 
         private void Start() 
@@ -27,7 +27,7 @@ namespace Placement
         
         public void StartPlacing(Defense turret) 
         {
-            if (_previewTurret != null)
+            if (_previewTurret)
             {
                 Debug.Log("Can't place new turret.");
                 return;
@@ -76,7 +76,8 @@ namespace Placement
     
             if (!_gridManager.IsPositionOccupied(placementPos)) 
             {
-                GameObject myTurret = Instantiate(_placingTurret.prefab, _previewTurret.transform.position, Quaternion.identity);
+                GameObject myTurret = Instantiate(_placingTurret.prefab, _previewTurret.transform.position, 
+                    Quaternion.identity);
                 myTurret.GetComponent<DefenseBrain>().AssignDefense(_placingTurret, placementPos);
                 _gridManager.SetOccupied(placementPos, myTurret);
                 Debug.Log("Purchased: " + _placingTurret.name);

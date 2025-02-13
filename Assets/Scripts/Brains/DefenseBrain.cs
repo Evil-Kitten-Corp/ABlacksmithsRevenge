@@ -20,7 +20,6 @@ namespace Brains
         [SerializeField] private float currentHealth;
         
         private DefenseVisualState _defenseVisualState;
-        private DefenseAudioState _defenseAudioState;
 
         private bool _paused;
         private Renderer[] _modelRenderers;
@@ -44,7 +43,6 @@ namespace Brains
         private void Start()
         {
             _defenseVisualState = GetComponent<DefenseVisualState>();
-            _defenseAudioState = GetComponent<DefenseAudioState>();
             _modelRenderers = GetComponentsInChildren<Renderer>();
             _grid = FindAnyObjectByType<GridManager>();
             
@@ -115,17 +113,7 @@ namespace Brains
         
         public void Repair(float amount) 
         {
-            float oldHealth = currentHealth;
             currentHealth = Mathf.Min(currentHealth + amount, defenseType.health);
-            
-            if (currentHealth > oldHealth)
-            {
-                if (_defenseAudioState != null)
-                {
-                    _defenseAudioState.PlayRepairSound();
-                }
-            }
-            
             UpdateVisualState();
         }
         

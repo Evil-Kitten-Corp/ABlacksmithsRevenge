@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class FPSTarget : MonoBehaviour
+namespace Effects
 {
-    [SerializeField] int FPS = 72;
-
-    void Start()
+    public class FPSTarget : MonoBehaviour
     {
-        Application.targetFrameRate = FPS;
+        [FormerlySerializedAs("FPS")] [SerializeField] private int fps = 72;
+
+        private void Start()
+        {
+            Application.targetFrameRate = fps;
+        }
     }
 }

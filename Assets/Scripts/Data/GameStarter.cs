@@ -14,7 +14,6 @@ namespace Data
         public IEnumerator Start()
         {
             loadingOverlay.FadeOut();
-            Debug.Log("Called Loading Fade Out on GAME");
 
             _audioSources = FindObjectsByType<AudioSource>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             

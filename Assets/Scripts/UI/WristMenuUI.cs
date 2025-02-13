@@ -117,12 +117,12 @@ namespace UI
 
         private void UpdateManaUI()
         {
-            if (manaText == null)
+            if (!manaText)
             {
                 Debug.Log("No mana text ig");
             }
 
-            if (_manaManager == null)
+            if (!_manaManager)
             {
                 Debug.Log("No mana manager ig");
             }
@@ -130,8 +130,6 @@ namespace UI
             {
                 manaText.text = "Mana: " + _manaManager.CurrentMana();
             }
-            
-            
             
             UpdateButtonStates();
         }

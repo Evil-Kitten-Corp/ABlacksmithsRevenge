@@ -6,30 +6,27 @@ namespace Tools
 {
     public class VRArrowRotation : MonoBehaviour
     {
-        [SerializeField] private Rigidbody rb;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip[] impactSounds;
         [SerializeField] private float homingSpeed = 15f;
         [SerializeField] private float baseDamage = 50f;
-        
+        [SerializeField] private float turnSpeed = 5f; 
+
+        private float _speed;
         private Transform _homingTarget;
         private bool _isHoming;
-        
-        private void FixedUpdate()
+
+        private void Update()
         {
-            if (_isHoming && _homingTarget != null)
+            if (_isHoming)
             {
-                //Vector3 direction = (_homingTarget.position - transform.position).normalized;
-                transform.position = Vector3.MoveTowards(transform.position, _homingTarget.position, 
-                    homingSpeed * Time.fixedDeltaTime);
-                transform.LookAt(_homingTarget);
-                //transform.forward = Vector3.Slerp(transform.forward, direction, Time.fixedDeltaTime * 10);
+                Vector3 direction = (_homingTarget.position - transform.position).normalized;
+                transform.forward = Vector3.Slerp(transform.forward, direction, Time.deltaTime * turnSpeed);
+                transform.position += transform.forward * (homingSpeed * Time.deltaTime);
             }
-            else if (rb != null)
+            else
             {
-                transform.LookAt(_homingTarget);
-                // transform.forward = Vector3.Slerp(transform.forward, rb.linearVelocity.normalized, 
-                //     Time.fixedDeltaTime * 10);
+                transform.position += transform.forward * (_speed * Time.deltaTime);
             }
         }
         
@@ -37,7 +34,11 @@ namespace Tools
         {
             _homingTarget = target;
             _isHoming = true;
-            rb.isKinematic = true;
+        }
+        
+        public void SetSpeed(float arrowSpeed)
+        {
+            _speed = arrowSpeed;
         }
 
         private void OnTriggerEnter(Collider other)

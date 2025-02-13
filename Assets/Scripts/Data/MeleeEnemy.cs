@@ -33,8 +33,6 @@ namespace Data
 
         public override void OnCellReached(EnemyArgs args)
         {
-            //Debug.Log(name + " reached cell");
-            
             //arrived cell
             var currentCell = args.EnemyBrain.GetCurrentCellPosition();
 

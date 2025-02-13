@@ -139,9 +139,6 @@ namespace Data
                 // we have a target, now we need to get the units in front, back, right and left
                 // of it (if they even exist)
                 
-                //int targetLinha = args.EnemyBrain.target.GetComponent<EnemyBrain>().linha;
-                //int targetColuna = args.EnemyBrain.target.GetComponent<EnemyBrain>().coluna;
-                
                 GridManager gridManager = args.GridManager;
                 Transform targetTransform = args.EnemyBrain.target.transform;
 
@@ -154,19 +151,6 @@ namespace Data
                     new(0, 0, gridManager.cellSize + gridManager.rowSpacing),  // Up
                     new(0, 0, -gridManager.cellSize - gridManager.rowSpacing) // Down
                 };
-                
-                /*Vector3[] possiblePositions = 
-                {
-                    GetValidTargetPosition(targetLinha + 1, targetColuna, args), // Front
-                    GetValidTargetPosition(targetLinha - 1, targetColuna, args), // Back
-                    GetValidTargetPosition(targetLinha, targetColuna + 1, args), // Right
-                    GetValidTargetPosition(targetLinha, targetColuna - 1, args)  // Left
-                };
-
-                List<GameObject> otherTargets = 
-                    (from pos in possiblePositions 
-                        where pos != Vector3.zero && args.GridManager.IsPositionOccupied(pos) 
-                        select args.GridManager.GetTargetOnPosition(pos)).ToList();*/
                 
                 List<GameObject> otherTargets = new();
 
@@ -202,7 +186,8 @@ namespace Data
                     GameObject projectile = Instantiate(projectilePrefab, 
                         args.EnemyBrain.firePoint.position, Quaternion.identity);
                     Projectile projScript = projectile.GetComponent<Projectile>();
-                    projScript.Initialize(args.EnemyBrain.target.transform, args.EnemyBrain.target.GetComponent<IDamageable>(), damage, weaponHitSounds);
+                    projScript.Initialize(args.EnemyBrain.target.transform, 
+                        args.EnemyBrain.target.GetComponent<IDamageable>(), damage, weaponHitSounds);
                 }
                 
                 // half dmg the other targets
@@ -213,51 +198,11 @@ namespace Data
                         GameObject projectile = Instantiate(projectilePrefab, 
                             args.EnemyBrain.firePoint.position, Quaternion.identity);
                         Projectile projScript = projectile.GetComponent<Projectile>();
-                        projScript.Initialize(t.transform, t.GetComponent<IDamageable>(),damage / 2f, weaponHitSounds);
+                        projScript.Initialize(t.transform, t.GetComponent<IDamageable>(),
+                            damage / 2f, weaponHitSounds);
                     }
                 }
             }
-        }
-        
-        /// <summary>
-        /// Gets a valid target position, skipping traps.
-        /// </summary>
-        private Vector3 GetValidTargetPosition(int linha, int coluna, EnemyArgs args)
-        {
-            Vector3 pos = new Vector3(linha, coluna, 0);
-
-            if (!args.GridManager.IsPositionOccupied(pos)) 
-                return pos; //if empty, also return as valid
-
-            GameObject potentialTarget = args.GridManager.GetTargetOnPosition(pos);
-            
-            if (potentialTarget == null) 
-                return pos;
-
-            DefenseBrain defense = potentialTarget.GetComponent<DefenseBrain>();
-            
-            if (defense != null && defense.GetDefenseType() is Trap)
-            {
-                //we move one more step in the same direction
-                int dLinha = linha - args.EnemyBrain.target.GetComponent<EnemyBrain>().linha;
-                int dColuna = coluna - args.EnemyBrain.target.GetComponent<EnemyBrain>().coluna;
-                
-                Vector3 newPos = new Vector3(linha + dLinha, coluna + dColuna, 0);
-
-                //if the new position is occupied and not a trap, return it; otherwise, return zero
-                if (args.GridManager.IsPositionOccupied(newPos))
-                {
-                    GameObject nextTarget = args.GridManager.GetTargetOnPosition(newPos);
-                    if (nextTarget != null && (nextTarget.GetComponent<DefenseBrain>() == null || 
-                                               nextTarget.GetComponent<DefenseBrain>().GetDefenseType() is not Trap))
-                    {
-                        return newPos;
-                    }
-                }
-                return Vector3.zero; //no valid target
-            }
-
-            return pos; //return original if not a trap
         }
     }
 }

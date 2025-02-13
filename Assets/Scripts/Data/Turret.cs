@@ -65,7 +65,8 @@ namespace Data
                 GameObject projectile = Instantiate(projectilePrefab, 
                     brain.firePoint.position, Quaternion.identity);
                 Projectile projScript = projectile.GetComponent<Projectile>();
-                projScript.Initialize(target.GetComponent<EnemyBrain>().head, target.GetComponent<IDamageable>(), damage, null);
+                projScript.Initialize(target.GetComponent<EnemyBrain>().head, 
+                    target.GetComponent<IDamageable>(), damage, null);
                 
                 brain.ResetFireCooldown();
             }

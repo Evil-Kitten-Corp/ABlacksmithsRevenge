@@ -11,7 +11,7 @@ namespace Placement
         public float rowSpacing = 1.0f;
         public float cellSize = 1.5f;
         public float laneSeparation = 2f;
-        public bool invertSpawnPoints = false;
+        public bool invertSpawnPoints;
 
         public bool debug;
 

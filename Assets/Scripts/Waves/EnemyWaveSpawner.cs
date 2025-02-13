@@ -34,7 +34,7 @@ namespace Waves
         
         private int _currentWaveIndex;
 
-        private bool _spawnComplete = false;
+        private bool _spawnComplete;
         private readonly List<GameObject> _activeEnemies = new();
 
         private bool _paused;
@@ -174,8 +174,8 @@ namespace Waves
             yield return new WaitForSeconds(0.5f);
             countdownText.DOFade(0, 0.5f);
         }
-        
-        void StartWave()
+
+        private void StartWave()
         {
             horn.Play();
             Debug.Log("Starting wave " +  _currentWaveIndex);
@@ -184,7 +184,7 @@ namespace Waves
             StartCoroutine(StartSpawning());
         }
 
-        IEnumerator StartSpawning()
+        private IEnumerator StartSpawning()
         {
             for (int i = 0; i < wavesInOrder[_currentWaveIndex].maxEnemiesToSpawn; i++)
             {
@@ -200,7 +200,7 @@ namespace Waves
             _spawnComplete = true;
         }
 
-        void SpawnEnemy()
+        private void SpawnEnemy()
         {
             if (gridManager.spawnPositions.Count == 0) 
                 return;

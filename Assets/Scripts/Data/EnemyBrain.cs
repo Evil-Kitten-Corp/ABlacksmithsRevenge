@@ -55,35 +55,9 @@ namespace Data
                 AudioClip death = _enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)];
                 speechSource.PlayOneShot(death);
                 Destroy(gameObject, .8f);
-                //StartCoroutine(Die());
             };
         }
 
-        private IEnumerator Die()
-        {
-            animator.SetTrigger(Death);
-            AudioClip death = _enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)];
-            speechSource.PlayOneShot(death);
-            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-            
-            Transform[] model = GetComponentsInChildren<Transform>();
-
-            foreach (var t in model)
-            {
-                if (t.gameObject != gameObject)
-                {
-                    t.gameObject.SetActive(false);
-                }
-            }
-            
-            yield return new WaitUntil(() => !speechSource.isPlaying);
-            Destroy(gameObject);
-        }
-
-        /// <summary>
-        /// Call this method from the spawner.
-        /// It sets up the enemy using its data, spawn position, and the GridManager.
-        /// </summary>
         public void Activate(Enemy enemyData, Vector3 spawnPos)
         {
             _enemySo = enemyData;
@@ -166,17 +140,11 @@ namespace Data
             }
         }
 
-        /// <summary>
-        /// This is intended to be called from an Animation Event when the enemy’s attack animation should deal damage.
-        /// </summary>
         public void AnimationAttackEvent()
         {
             _enemySo.DealDamage(new EnemyArgs(_grid, this));
         }
 
-        /// <summary>
-        /// Apply damage to this enemy.
-        /// </summary>
         public void Damage(float damageAmount)
         {
             _health -= damageAmount;
@@ -286,7 +254,6 @@ namespace Data
             
             if (_hasPath && agent.remainingDistance <= agent.stoppingDistance + 0.01f)
             {
-                //arrived
                 _hasPath = false;
                 return true;
             }
