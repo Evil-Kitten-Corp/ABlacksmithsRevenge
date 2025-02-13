@@ -10,6 +10,7 @@ namespace Tools
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip[] impactSounds;
         [SerializeField] private float homingSpeed = 15f;
+        [SerializeField] private float baseDamage = 50f;
         
         private Transform _homingTarget;
         private bool _isHoming;
@@ -45,7 +46,7 @@ namespace Tools
             {
                 AudioClip clip = impactSounds[Random.Range(0, impactSounds.Length)];
                 audioSource.PlayOneShot(clip);
-                other.GetComponent<IDamageable>().Damage(50);
+                other.GetComponent<IDamageable>().Damage(baseDamage);
                 Destroy(gameObject, clip.length);
             }
         }
