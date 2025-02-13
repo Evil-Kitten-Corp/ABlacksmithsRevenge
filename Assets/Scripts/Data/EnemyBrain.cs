@@ -187,6 +187,8 @@ namespace Data
                 }
             }
             
+            Debug.Log("Apparently we're in the last lane...");
+            
             FindAnyObjectByType<EnemyWaveSpawner>().Defeat();
             return false;
         }

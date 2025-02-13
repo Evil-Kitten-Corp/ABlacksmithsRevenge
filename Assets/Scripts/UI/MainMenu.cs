@@ -43,7 +43,7 @@ namespace UI
         
         public void GoToGame()
         {
-            StartCoroutine(LoadGame());
+            LoadGame();
         }
 
         public void Quit()
@@ -55,7 +55,7 @@ namespace UI
             #endif
         }
 
-        private IEnumerator LoadGame()
+        private void LoadGame()
         {
             loadingOverlay.FadeIn();
             
@@ -63,14 +63,11 @@ namespace UI
             
             foreach (var audioSource in _audioSources)
             {
-                sequence.Append(audioSource.DOFade(0f, 2f));
+                sequence.Append(audioSource.DOFade(0f, .5f));
             }
 
+            sequence.onComplete += () => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             sequence.Play();
-            
-            yield return new WaitForSeconds(2.5f);
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }

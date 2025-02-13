@@ -21,10 +21,10 @@ namespace Data
             yield return new WaitUntil(() => GameData.Instance != null);
             GameData.Instance.OnStartGame();
 
-            GameData.Instance.GameOver += () => StartCoroutine(ReturnToMainMenu());
+            GameData.Instance.GameOver += ReturnToMainMenu;
         }
 
-        private IEnumerator ReturnToMainMenu()
+        private void ReturnToMainMenu()
         {
             LoadingOverlay overlay = GameObject.Find("LoadingOverlay").gameObject.GetComponent<LoadingOverlay>();
             overlay.FadeIn();
@@ -33,14 +33,11 @@ namespace Data
             
             foreach (var audioSource in _audioSources)
             {
-                sequence.Append(audioSource.DOFade(0f, 3f));
+                sequence.Append(audioSource.DOFade(0f, .5f));
             }
 
+            sequence.onComplete += () => SceneManager.LoadScene(0);
             sequence.Play();
-            
-            yield return new WaitForSeconds(3f);
-            
-            SceneManager.LoadScene(0);
         }
     }
 }

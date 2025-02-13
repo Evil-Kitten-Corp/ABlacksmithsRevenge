@@ -102,6 +102,7 @@ namespace Waves
             }
             
             Debug.Log("All waves completed!");
+            countdown.PlayOneShot(winClip);
         }
 
         private IEnumerator ShowCountdown(float duration)
