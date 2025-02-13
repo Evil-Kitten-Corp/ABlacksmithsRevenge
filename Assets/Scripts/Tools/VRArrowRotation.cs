@@ -21,7 +21,7 @@ namespace Tools
                 Vector3 direction = (_homingTarget.position - transform.position).normalized;
                 transform.position = Vector3.MoveTowards(transform.position, _homingTarget.position, 
                     homingSpeed * Time.fixedDeltaTime);
-                transform.forward = Vector3.Slerp(transform.forward, direction, Time.fixedDeltaTime * 10);
+                //transform.forward = Vector3.Slerp(transform.forward, direction, Time.fixedDeltaTime * 10);
             }
             else if (rb != null)
             {

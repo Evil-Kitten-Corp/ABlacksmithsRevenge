@@ -38,8 +38,11 @@ namespace Data
 
         public void Reward()
         {
-            reward.unlocked = true;
-            OnRewardUnlocked?.Invoke();
+            if (reward != null)
+            {
+                reward.unlocked = true;
+                OnRewardUnlocked?.Invoke();
+            }
         }
     }
 }
