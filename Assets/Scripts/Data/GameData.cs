@@ -78,6 +78,7 @@ namespace Data
 
         public virtual void OnStartGame()
         {
+            _gameOver = false;
             StartGame?.Invoke(_waveIndex);
         }
 

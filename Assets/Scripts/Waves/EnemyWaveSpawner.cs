@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using Brains;
 using Data;
 using DG.Tweening;
 using Placement;
@@ -24,6 +24,7 @@ namespace Waves
         
         [Header("Audio")]
         public AudioClip countdownClip;
+        public AudioClip definitiveWin;
         public AudioClip winClip;
         public AudioClip loseClip;
 
@@ -93,8 +94,11 @@ namespace Waves
 
                 yield return new WaitUntil(() => _activeEnemies.Count == 0);
 
+                countdown.PlayOneShot(winClip);
                 Debug.Log("Enemies dead, rewarding now");
                 wavesInOrder[_currentWaveIndex].Reward();
+
+                Cleanup();
 
                 yield return new WaitForSeconds(restTime);
 
@@ -102,7 +106,18 @@ namespace Waves
             }
             
             Debug.Log("All waves completed!");
-            countdown.PlayOneShot(winClip);
+            countdown.PlayOneShot(definitiveWin);
+            Defeat();
+        }
+
+        private void Cleanup()
+        {
+            var turrets = GameObject.FindGameObjectsWithTag("Turret");
+
+            foreach (var t in turrets)
+            {
+                t.GetComponent<DefenseBrain>().TryDestroy(0.2f);
+            }
         }
 
         private IEnumerator ShowCountdown(float duration)

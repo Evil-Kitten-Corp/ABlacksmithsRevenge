@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Brains;
 using Data.Structs;
 using Interfaces;
@@ -42,6 +43,7 @@ namespace Data
         public int linha = 0;
 
         private bool _hasPath;
+        private bool _isVictorious;
 
         public event Action OnDeath;
 
@@ -49,9 +51,29 @@ namespace Data
         {
             OnDeath += () =>
             {
-                speechSource.PlayOneShot(_enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)]);
-                animator.SetTrigger(Death);
+                StartCoroutine(Die());
             };
+        }
+
+        private IEnumerator Die()
+        {
+            animator.SetTrigger(Death);
+            AudioClip death = _enemySo.deathSounds[Random.Range(0, _enemySo.deathSounds.Length)];
+            speechSource.PlayOneShot(death);
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+            
+            Transform[] model = GetComponentsInChildren<Transform>();
+
+            foreach (var t in model)
+            {
+                if (t.gameObject != gameObject)
+                {
+                    t.gameObject.SetActive(false);
+                }
+            }
+            
+            yield return new WaitUntil(() => !speechSource.isPlaying);
+            Destroy(gameObject);
         }
 
         /// <summary>
@@ -126,7 +148,6 @@ namespace Data
             if (_health <= 0)
             {
                 OnDeath?.Invoke();
-                Destroy(gameObject, 1f);
                 return;
             }
 
@@ -189,10 +210,27 @@ namespace Data
                 }
             }
             
-            Debug.Log("Apparently we're in the last lane...");
-            
-            FindAnyObjectByType<EnemyWaveSpawner>().Defeat();
+            SetDefeat();
             return false;
+        }
+
+        private void SetDefeat()
+        {
+            if (_isVictorious)
+                return;
+            
+            _isVictorious = true;
+            
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            agent.SetDestination(player.position);
+            
+            StartCoroutine(DefeatRoutine());
+        }
+
+        private IEnumerator DefeatRoutine()
+        {
+            yield return new WaitForSeconds(2f);
+            FindAnyObjectByType<EnemyWaveSpawner>().Defeat();
         }
 
         public void GoToNext()

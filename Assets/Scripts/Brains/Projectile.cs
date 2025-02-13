@@ -19,6 +19,9 @@ namespace Brains
             _target = target;
             _targetDmg = targetDamageable;
             _damage = damage;
+            
+            Debug.Log($"PROJECTILE: Initialized with {target.name} as target and damage " +
+                      $"is {damage}, and IDamageable is {targetDamageable != null}");
 
             if (weaponHitSounds == null)
             {
@@ -43,6 +46,7 @@ namespace Brains
             {
                 if (other.transform == _target)
                 {
+                    Debug.Log("PROJECTILE: Detected other is target");
                     HitTarget();
                 }
             }
@@ -52,6 +56,7 @@ namespace Brains
         {
             if (_target != null)
             {
+                Debug.Log("PROJECTILE: Damaging enemy");
                 _targetDmg.Damage(_damage);
                 source.PlayOneShot(_impactSound);
             }

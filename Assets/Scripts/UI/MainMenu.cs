@@ -1,4 +1,5 @@
 using System.Collections;
+using Data;
 using DG.Tweening;
 using Textures;
 using TMPro;
@@ -11,6 +12,7 @@ namespace UI
     {
         public LoadingOverlay loadingOverlay;
         public TMP_Text retryText;
+        public GameObject newGameButton;
 
         private AudioSource[] _audioSources;
         
@@ -21,23 +23,25 @@ namespace UI
             loadingOverlay.FadeOut();
             Debug.Log("Called Loading Fade Out on MENU");
             
-            if (PlayerPrefs.HasKey("FirstTime"))
+            if (PlayerPrefs.HasKey("WaveIndex"))
             {
-                if (PlayerPrefs.GetInt("FirstTime") == 0)
+                if (PlayerPrefs.GetInt("WaveIndex") == 0)
                 {
                     retryText.text = "Start";
+                    newGameButton.SetActive(false);
                 }
                 else
                 {
                     int wv = PlayerPrefs.GetInt("WaveIndex");
 
                     retryText.text = $"Retry Wave {wv + 1}";
+                    newGameButton.SetActive(true);
                 }
             }
             else
             {
                 retryText.text = "Start";
-                PlayerPrefs.SetInt("FirstTime", 1);
+                newGameButton.SetActive(false);
             }
         }
         
@@ -53,6 +57,13 @@ namespace UI
             #else
                 Application.Quit();
             #endif
+        }
+
+        public void NewGame()
+        {
+            GameData.Instance.OnGameOver(0);
+            GameData.Instance.Save();
+            LoadGame();
         }
 
         private void LoadGame()

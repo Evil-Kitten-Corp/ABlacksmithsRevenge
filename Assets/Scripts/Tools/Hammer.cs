@@ -11,17 +11,20 @@ namespace Tools
     {
         public InputActionReference[] useActions;
         public float repairPower = 20f;
+        public float cooldownTime = 10f;
         
         public AudioSource audioSource;
         public AudioClip[] repairSounds;
         
         private GameObject _heldObject;
+        private float _nextUseTime;
 
         private void Update() 
         {
-            if (useActions.Any(x => x.action.triggered) && _heldObject != null) 
+            if (Time.time >= _nextUseTime && useActions.Any(x => x.action.triggered) && _heldObject != null) 
             {
                 RepairTurret(_heldObject);
+                _nextUseTime = Time.time + cooldownTime;
             }
         }
 

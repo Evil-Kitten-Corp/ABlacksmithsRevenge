@@ -76,6 +76,7 @@ namespace Brains
                 if (currentHealth <= 0)
                 {
                     TryDestroy();
+                    return;
                 }
                 
                 defenseType.Interval(new DefenseArgs(this));
@@ -97,7 +98,10 @@ namespace Brains
 
         public void ResetFireCooldown()
         {
-            defenseType.ResetCooldown(new DefenseArgs(this));
+            if (defenseType)
+            {
+                defenseType.ResetCooldown(new DefenseArgs(this));
+            }
         }
         
         public void Damage(float damage)

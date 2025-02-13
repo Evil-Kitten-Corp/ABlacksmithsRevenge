@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b74ff7137234949b724e473d76f3205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 1143659856193450141}
+  head: {fileID: 827152419737507762}
   animator: {fileID: 3155563492132596751}
   audioSource: {fileID: 1372547902504464941}
   speechSource: {fileID: 4852978451990733005}

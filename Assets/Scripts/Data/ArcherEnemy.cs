@@ -18,6 +18,11 @@ namespace Data
         {
             args.EnemyBrain.attackTimer += Time.deltaTime;
             
+            if (args.EnemyBrain.agent.hasPath)
+            {
+                return;
+            }
+            
             //do we have an enemy?
             if (args.EnemyBrain.target)
             {
