@@ -12,10 +12,12 @@ namespace Brains
         private Transform _target;
         
         private AudioClip _impactSound;
+        private IDamageable _targetDmg;
 
-        public void Initialize(Transform target, float damage, AudioClip[] weaponHitSounds)
+        public void Initialize(Transform target, IDamageable targetDamageable, float damage, AudioClip[] weaponHitSounds)
         {
             _target = target;
+            _targetDmg = targetDamageable;
             _damage = damage;
 
             if (weaponHitSounds == null)
@@ -28,7 +30,7 @@ namespace Brains
 
         private void Update()
         {
-            if (_target != null)
+            if (_target)
             {
                 transform.position = Vector3.MoveTowards(transform.position, _target.position, 
                     speed * Time.deltaTime);
@@ -50,9 +52,7 @@ namespace Brains
         {
             if (_target != null)
             {
-                IDamageable enemy = _target.GetComponent<IDamageable>();
-
-                enemy?.Damage(_damage);
+                _targetDmg.Damage(_damage);
                 source.PlayOneShot(_impactSound);
             }
         

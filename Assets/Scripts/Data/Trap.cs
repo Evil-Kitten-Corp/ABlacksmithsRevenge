@@ -81,7 +81,7 @@ namespace Data
                 }
             }
             
-            Destroy(args.Brain.gameObject, 2f);
+            args.Brain.TryDestroy(2f);
         }
     }
 }

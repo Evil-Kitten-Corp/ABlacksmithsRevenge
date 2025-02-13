@@ -1,6 +1,7 @@
 using System.Linq;
 using Brains;
 using Data.Structs;
+using Interfaces;
 using UnityEngine;
 
 namespace Data
@@ -64,7 +65,7 @@ namespace Data
                 GameObject projectile = Instantiate(projectilePrefab, 
                     brain.firePoint.position, Quaternion.identity);
                 Projectile projScript = projectile.GetComponent<Projectile>();
-                projScript.Initialize(target.transform, damage, null);
+                projScript.Initialize(target.GetComponent<EnemyBrain>().head, target.GetComponent<IDamageable>(), damage, null);
                 
                 //brain.ResetFireCooldown();
             }

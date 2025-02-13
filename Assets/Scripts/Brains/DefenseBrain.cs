@@ -82,7 +82,7 @@ namespace Brains
             }
         }
 
-        public void TryDestroy()
+        public void TryDestroy(float f = 1f)
         {
             OnDeath?.Invoke();
             
@@ -92,7 +92,7 @@ namespace Brains
             
             defenseType = null;
             Debug.Log("Calling destroy");
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, f);
         }
 
         public void ResetFireCooldown()

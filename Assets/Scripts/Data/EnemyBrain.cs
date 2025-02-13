@@ -19,6 +19,7 @@ namespace Data
         public NavMeshAgent agent { get; private set; }
         
         public GameObject target { get; private set; }
+        public Transform head;
 
         public Animator animator;
 

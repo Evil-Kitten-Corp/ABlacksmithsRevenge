@@ -1,5 +1,6 @@
 ﻿using Brains;
 using Data.Structs;
+using Interfaces;
 using UnityEngine;
 
 namespace Data
@@ -121,7 +122,7 @@ namespace Data
                     GameObject projectile = Instantiate(projectilePrefab, 
                         args.EnemyBrain.firePoint.position, Quaternion.identity);
                     Projectile projScript = projectile.GetComponent<Projectile>();
-                    projScript.Initialize(args.EnemyBrain.target.transform, damage, weaponHitSounds);
+                    projScript.Initialize(args.EnemyBrain.target.transform, args.EnemyBrain.target.GetComponent<IDamageable>(), damage, weaponHitSounds);
                 }
             }
         }

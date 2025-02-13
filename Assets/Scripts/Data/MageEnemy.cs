@@ -2,6 +2,7 @@
 using System.Linq;
 using Brains;
 using Data.Structs;
+using Interfaces;
 using UnityEngine;
 
 namespace Data
@@ -144,7 +145,7 @@ namespace Data
                     GameObject projectile = Instantiate(projectilePrefab, 
                         args.EnemyBrain.firePoint.position, Quaternion.identity);
                     Projectile projScript = projectile.GetComponent<Projectile>();
-                    projScript.Initialize(args.EnemyBrain.target.transform, damage, weaponHitSounds);
+                    projScript.Initialize(args.EnemyBrain.target.transform, args.EnemyBrain.target.GetComponent<IDamageable>(), damage, weaponHitSounds);
                 }
                 
                 // half dmg the other targets
@@ -155,7 +156,7 @@ namespace Data
                         GameObject projectile = Instantiate(projectilePrefab, 
                             args.EnemyBrain.firePoint.position, Quaternion.identity);
                         Projectile projScript = projectile.GetComponent<Projectile>();
-                        projScript.Initialize(t.transform, damage / 2f, weaponHitSounds);
+                        projScript.Initialize(t.transform, t.GetComponent<IDamageable>(),damage / 2f, weaponHitSounds);
                     }
                 }
             }
