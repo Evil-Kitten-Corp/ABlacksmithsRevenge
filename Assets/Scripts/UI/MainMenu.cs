@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using Textures;
@@ -63,6 +65,15 @@ namespace UI
         {
             GameData.Instance.OnGameOver(0);
             GameData.Instance.Save();
+
+            List<EnemyWave> resetRewards = new List<EnemyWave>();
+            resetRewards.AddRange(Resources.LoadAll<EnemyWave>("Data/Waves"));
+
+            foreach (var r in resetRewards)
+            {
+                r.reward.unlocked = false;
+            }
+            
             LoadGame();
         }
 

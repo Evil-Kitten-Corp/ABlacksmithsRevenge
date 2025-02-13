@@ -3,6 +3,7 @@ using System.Linq;
 using Brains;
 using Data.Structs;
 using Interfaces;
+using Placement;
 using UnityEngine;
 
 namespace Data
@@ -138,10 +139,23 @@ namespace Data
                 // we have a target, now we need to get the units in front, back, right and left
                 // of it (if they even exist)
                 
-                int targetLinha = args.EnemyBrain.target.GetComponent<EnemyBrain>().linha;
-                int targetColuna = args.EnemyBrain.target.GetComponent<EnemyBrain>().coluna;
+                //int targetLinha = args.EnemyBrain.target.GetComponent<EnemyBrain>().linha;
+                //int targetColuna = args.EnemyBrain.target.GetComponent<EnemyBrain>().coluna;
+                
+                GridManager gridManager = args.GridManager;
+                Transform targetTransform = args.EnemyBrain.target.transform;
 
-                Vector3[] possiblePositions = 
+                Vector3 targetGridPos = gridManager.GetClosestGridPosition(targetTransform.position);
+                
+                Vector3[] directions = 
+                {
+                    new(gridManager.cellSize, 0, 0),  // Right
+                    new(-gridManager.cellSize, 0, 0), // Left
+                    new(0, 0, gridManager.cellSize + gridManager.rowSpacing),  // Up
+                    new(0, 0, -gridManager.cellSize - gridManager.rowSpacing) // Down
+                };
+                
+                /*Vector3[] possiblePositions = 
                 {
                     GetValidTargetPosition(targetLinha + 1, targetColuna, args), // Front
                     GetValidTargetPosition(targetLinha - 1, targetColuna, args), // Back
@@ -152,7 +166,35 @@ namespace Data
                 List<GameObject> otherTargets = 
                     (from pos in possiblePositions 
                         where pos != Vector3.zero && args.GridManager.IsPositionOccupied(pos) 
-                        select args.GridManager.GetTargetOnPosition(pos)).ToList();
+                        select args.GridManager.GetTargetOnPosition(pos)).ToList();*/
+                
+                List<GameObject> otherTargets = new();
+
+                foreach (Vector3 dir in directions)
+                {
+                    Vector3 checkPos = targetGridPos + dir;
+                    GameObject possibleTarget = gridManager.GetTargetOnPosition(checkPos);
+
+                    if (possibleTarget != null)
+                    {
+                        DefenseBrain defense = possibleTarget.GetComponent<DefenseBrain>();
+                
+                        if (defense != null && defense.GetDefenseType() is Trap)
+                        {
+                            Vector3 nextPos = checkPos + dir;
+                            GameObject nextTarget = gridManager.GetTargetOnPosition(nextPos);
+
+                            if (nextTarget != null)
+                            {
+                                otherTargets.Add(nextTarget);
+                            }
+                        }
+                        else
+                        {
+                            otherTargets.Add(possibleTarget);
+                        }
+                    }
+                }
 
                 // fully dmg the main target
                 if (projectilePrefab != null && args.EnemyBrain.firePoint != null)

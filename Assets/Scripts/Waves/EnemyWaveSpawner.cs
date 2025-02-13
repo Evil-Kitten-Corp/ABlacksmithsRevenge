@@ -123,6 +123,7 @@ namespace Waves
             }
             
             countdown.PlayOneShot(nextLevelClip);
+            _spawnComplete = false;
         }
 
         private IEnumerator ShowCountdown(float duration)

@@ -89,7 +89,10 @@ namespace Brains
             
             _grid.ClearOccupied(intendedPos);
 
-            defenseType.OnDeath(new DefenseArgs(this));
+            if (defenseType)
+            {
+                defenseType.OnDeath(new DefenseArgs(this));
+            }
             
             defenseType = null;
             Debug.Log("Calling destroy");

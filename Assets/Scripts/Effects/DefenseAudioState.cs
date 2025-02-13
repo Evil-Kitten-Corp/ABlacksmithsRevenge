@@ -19,16 +19,20 @@ namespace Effects
         {
             return;
             
+/*
             AudioClip clip = repairSounds[Random.Range(0, repairSounds.Length)];
             _source.PlayOneShot(clip);
+*/
         }
 
         public void PlayShovelSound()
         {
             return;
             
+/*
             AudioClip clip = shovelSounds[Random.Range(0, shovelSounds.Length)];
             _source.PlayOneShot(clip);
+*/
         }
     }
 }

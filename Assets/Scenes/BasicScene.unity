@@ -1021,8 +1021,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5668248830024701860, guid: dae658026d14d5b44985f26d8c03ce7a, type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5668248830024701860, guid: dae658026d14d5b44985f26d8c03ce7a, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5668248830024701860, guid: dae658026d14d5b44985f26d8c03ce7a, type: 3}
+      propertyPath: aimAssistRadius
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 5738542807254572374, guid: dae658026d14d5b44985f26d8c03ce7a, type: 3}
       propertyPath: m_Name
