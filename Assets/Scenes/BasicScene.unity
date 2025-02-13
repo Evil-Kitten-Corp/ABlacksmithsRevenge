@@ -10456,6 +10456,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: c3d438a0b5ca0f1479cce4b88c16f44d, type: 3}
     - target: {fileID: 3703169154741624166, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
+      propertyPath: nextLevelClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b0bc4b043db4cc24bbc36326538f8f9a, type: 3}
+    - target: {fileID: 3703169154741624166, guid: 87d12f566ed6c18448331f7d1205ae2f, type: 3}
       propertyPath: wavesInOrder.Array.size
       value: 3
       objectReference: {fileID: 0}

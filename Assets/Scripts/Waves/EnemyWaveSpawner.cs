@@ -27,6 +27,7 @@ namespace Waves
         public AudioClip definitiveWin;
         public AudioClip winClip;
         public AudioClip loseClip;
+        public AudioClip nextLevelClip;
 
         [Header("Debug")] 
         public bool doNotSpawn;
@@ -120,6 +121,8 @@ namespace Waves
             {
                 t.GetComponent<DefenseBrain>().TryDestroy(0.2f);
             }
+            
+            countdown.PlayOneShot(nextLevelClip);
         }
 
         private IEnumerator ShowCountdown(float duration)
