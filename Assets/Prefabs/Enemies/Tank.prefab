@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4852978451990733005}
   - component: {fileID: 7844507947672936646}
   - component: {fileID: 1181109754239693273}
+  - component: {fileID: 3162199680736895475}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Enemy
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b74ff7137234949b724e473d76f3205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 5580250343985021022}
   animator: {fileID: 3155563492132596751}
   audioSource: {fileID: 1372547902504464941}
   speechSource: {fileID: 4852978451990733005}
@@ -410,6 +412,27 @@ MonoBehaviour:
   gainBoostDb: 0
   enableAcoustics: 1
   reverbSendDb: 0
+--- !u!65 &3162199680736895475
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13917699037941000}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 2.5, z: 0.1}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &56966972940134476
 GameObject:
   m_ObjectHideFlags: 0

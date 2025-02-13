@@ -19,8 +19,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 781654fbc5850c9449f443b49db23fb7, type: 3}
   projectilePrefab: {fileID: 3352468297812342715, guid: c7f5ea282873e6b40a7db0429924adc6, type: 3}
   shootSound: {fileID: 8300000, guid: e18aaf71f5c334d4db73052dc1905ce1, type: 3}
-  damage: 20
-  fireRate: 1
+  damage: 1000
+  fireRate: 10
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1
