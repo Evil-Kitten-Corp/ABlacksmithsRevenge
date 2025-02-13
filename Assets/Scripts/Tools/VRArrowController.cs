@@ -67,7 +67,8 @@ namespace Tools
             else
             {
                 Rigidbody rb = arrow.GetComponent<Rigidbody>();
-                rb.AddForce(midPointVisual.transform.forward * strength * arrowMaxSpeed, ForceMode.Impulse);
+                rb.linearVelocity = midPointVisual.transform.forward * strength * arrowMaxSpeed;
+                //rb.AddForce(midPointVisual.transform.forward * strength * arrowMaxSpeed);
             }
             
             Debug.Log($"Bow strength is {strength}, Target: {(target != null ? target.name : "None")}");

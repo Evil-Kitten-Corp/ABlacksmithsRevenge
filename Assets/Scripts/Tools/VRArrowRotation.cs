@@ -18,15 +18,17 @@ namespace Tools
         {
             if (_isHoming && _homingTarget != null)
             {
-                Vector3 direction = (_homingTarget.position - transform.position).normalized;
+                //Vector3 direction = (_homingTarget.position - transform.position).normalized;
                 transform.position = Vector3.MoveTowards(transform.position, _homingTarget.position, 
                     homingSpeed * Time.fixedDeltaTime);
+                transform.LookAt(_homingTarget);
                 //transform.forward = Vector3.Slerp(transform.forward, direction, Time.fixedDeltaTime * 10);
             }
             else if (rb != null)
             {
-                transform.forward = Vector3.Slerp(transform.forward, rb.linearVelocity.normalized, 
-                    Time.fixedDeltaTime * 10);
+                transform.LookAt(_homingTarget);
+                // transform.forward = Vector3.Slerp(transform.forward, rb.linearVelocity.normalized, 
+                //     Time.fixedDeltaTime * 10);
             }
         }
         
