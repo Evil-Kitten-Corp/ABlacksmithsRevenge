@@ -3109,6 +3109,8 @@ GameObject:
   - component: {fileID: 336083491}
   - component: {fileID: 336083490}
   - component: {fileID: 336083489}
+  - component: {fileID: 336083493}
+  - component: {fileID: 336083492}
   m_Layer: 0
   m_Name: InteractableShovel
   m_TagString: Tool
@@ -3440,6 +3442,43 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3a42c522bbde5e447aa25542eaa8261e, type: 3}
   - {fileID: 8300000, guid: 40009fcabd410944e963efdce71fae8e, type: 3}
   - {fileID: 8300000, guid: 8208a25a126b9094e978be6d875093d7, type: 3}
+--- !u!208 &336083492
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336083484}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.06, y: 0.175, z: 1.4}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.63}
+  m_TimeToStationary: 0.5
+--- !u!65 &336083493
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336083484}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.45, y: 0.43, z: 1.67}
+  m_Center: {x: 0, y: 0, z: 1.06}
 --- !u!1 &341575015
 GameObject:
   m_ObjectHideFlags: 0
@@ -4916,7 +4955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4508691648621678, guid: a25996a7d0674de40a8273b54b50aa7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -55.72999
+      value: -55.775
       objectReference: {fileID: 0}
     - target: {fileID: 4508691648621678, guid: a25996a7d0674de40a8273b54b50aa7b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7293,6 +7332,8 @@ GameObject:
   - component: {fileID: 909074076}
   - component: {fileID: 909074075}
   - component: {fileID: 909074074}
+  - component: {fileID: 909074078}
+  - component: {fileID: 909074077}
   m_Layer: 0
   m_Name: 'InteractableHammer '
   m_TagString: Tool
@@ -7627,6 +7668,43 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7713e40081af4d243b7cdd48a2393e61, type: 3}
   - {fileID: 8300000, guid: 8ed060e25b7a1324293b675dd98836eb, type: 3}
   - {fileID: 8300000, guid: 7ea1b479ebb35ca448a24a20f784352a, type: 3}
+--- !u!208 &909074077
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909074069}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.02, y: 0.015, z: 0.03}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -0.02}
+  m_TimeToStationary: 0.5
+--- !u!65 &909074078
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909074069}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.06, y: 0.02, z: 0.02}
+  m_Center: {x: 0, y: 0, z: -0.0093}
 --- !u!1 &950943594
 GameObject:
   m_ObjectHideFlags: 0
