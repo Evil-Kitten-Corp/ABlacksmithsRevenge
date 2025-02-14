@@ -44,7 +44,7 @@ You play as a **blacksmith** (more specifically, a NPC in a RPG-type world) who 
 
 
 ## Screenshots & GIFs
-(*To be added later. Alternatively, see our itch.io page.*)
+(*To be added later. Alternatively, see our [itch.io](https://francisco-anjos.itch.io/blacksmiths-revenge) page.*)
 
 ---
 
