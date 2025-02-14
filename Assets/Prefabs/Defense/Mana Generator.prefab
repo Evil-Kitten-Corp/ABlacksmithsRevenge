@@ -212,7 +212,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3529810191651868228}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 0, g: 0.038430948, b: 0.4867924, a: 1}
@@ -954,11 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49e79dab61f4520af62e94bf54dc705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalModel: {fileID: 0}
-  damagedModel: {fileID: 0}
-  sparksEffect: {fileID: 0}
   smokeEffect: {fileID: 4310796735166098278, guid: 108f60ff1f3e1fa44a4f71a8a0a913a9, type: 3}
-  flickeringLight: {fileID: 0}
 --- !u!1001 &9101978688024406868
 PrefabInstance:
   m_ObjectHideFlags: 0
